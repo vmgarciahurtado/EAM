@@ -20,6 +20,10 @@
         <activity
             android:name=".registro_control.PrincipalRegistroControl"
             android:label="@string/title_activity_principal_registro_control"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".estudiante.PrincipalEstudiante"
+            android:label="@string/title_activity_principal_estudiante"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
