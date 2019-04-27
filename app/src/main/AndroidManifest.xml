@@ -16,9 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".actividades.SplasScreen"></activity>
-
+        <activity android:name=".actividades.SplasScreen" />
+        <activity
+            android:name=".registro_control.PrincipalRegistroControl"
+            android:label="@string/title_activity_principal_registro_control"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
