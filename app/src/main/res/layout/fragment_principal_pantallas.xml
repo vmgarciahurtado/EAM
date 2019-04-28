@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registro_control.RegistroEstudiantes">
+    tools:context=".entidades.PrincipalPantallas">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -13,6 +13,6 @@
         android:textSize="44dp"
         android:textColor="#000"
         android:gravity="center"
-        android:text="Registro estudiantes"  />
+        android:text="Principal"  />
 
 </FrameLayout>

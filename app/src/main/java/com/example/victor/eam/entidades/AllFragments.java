@@ -10,7 +10,7 @@ import com.example.victor.eam.estudiante.RegistroMaterias;
 import com.example.victor.eam.registro_control.CreacionMaterias;
 import com.example.victor.eam.registro_control.RegistroAulas;
 import com.example.victor.eam.registro_control.RegistroDocentes;
-import com.example.victor.eam.registro_control.RegistroUsuarios;
+import com.example.victor.eam.registro_control.RegistroEstudiantes;
 
 public interface AllFragments extends
         AsignarMaterias.OnFragmentInteractionListener,
@@ -24,7 +24,8 @@ public interface AllFragments extends
         CreacionMaterias.OnFragmentInteractionListener,
         RegistroAulas.OnFragmentInteractionListener,
         RegistroDocentes.OnFragmentInteractionListener,
-        RegistroUsuarios.OnFragmentInteractionListener
+        RegistroEstudiantes.OnFragmentInteractionListener,
+        PrincipalPantallas.OnFragmentInteractionListener
 
 {
 }

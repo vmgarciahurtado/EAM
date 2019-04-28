@@ -5,7 +5,6 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.victor.eam.LoginActivity;
 import com.example.victor.eam.R;
 
 public class SplasScreen extends AppCompatActivity {

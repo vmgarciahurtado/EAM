@@ -1,22 +1,22 @@
 package com.example.victor.eam.registro_control;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.AllFragments;
+import com.example.victor.eam.entidades.PrincipalPantallas;
 
 public class PrincipalRegistroControl extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,AllFragments {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,11 @@ public class PrincipalRegistroControl extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Este es el fragmet que se carga de primero
+        Fragment miFragment = new PrincipalPantallas();
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
     }
 
     @Override
@@ -54,8 +59,12 @@ public class PrincipalRegistroControl extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Fragment miFragment = new PrincipalPantallas();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
+
         } else if (id == R.id.nav_gallery) {
+            Fragment miFragment = new RegistroEstudiantes();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -70,5 +79,10 @@ public class PrincipalRegistroControl extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
