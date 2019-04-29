@@ -6,18 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".actividades.LoginActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello putos!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:onClick="ventana"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:onClick="estudiante"
+            android:text="Ventana estudiante"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:onClick="registroControl"
+            android:text="Ventana registro y control"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:onClick="directorPrograma"
+            android:text="Ventana director programa"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:onClick="estudiante"
+            android:text="Ventana docente"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
