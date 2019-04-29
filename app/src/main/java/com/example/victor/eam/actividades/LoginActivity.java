@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.victor.eam.R;
 import com.example.victor.eam.director_programa.PrincipalDirectorPrograma;
+import com.example.victor.eam.docente.PrincipalDocente;
 import com.example.victor.eam.estudiante.PrincipalEstudiante;
 import com.example.victor.eam.registro_control.PrincipalRegistroControl;
 
@@ -33,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-   /* public void docente(View view) {
-        Intent intent = new Intent(getApplicationContext(),Principal.class);
+    public void docente(View view) {
+        Intent intent = new Intent(getApplicationContext(),PrincipalDocente.class);
         startActivity(intent);
-    }*/
+    }
 }

@@ -25,10 +25,14 @@
         <activity
             android:name=".estudiante.PrincipalEstudiante"
             android:label="@string/title_activity_principal_estudiante"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".director_programa.PrincipalDirectorPrograma"
             android:label="@string/title_activity_principal_director_programa"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".docente.PrincipalDocente"
+            android:label="@string/title_activity_principal_docente"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
