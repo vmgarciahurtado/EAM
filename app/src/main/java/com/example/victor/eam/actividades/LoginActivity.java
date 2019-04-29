@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.victor.eam.R;
+import com.example.victor.eam.estudiante.PrincipalEstudiante;
 import com.example.victor.eam.registro_control.PrincipalRegistroControl;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void ventana(View view) {
-        Intent intent = new Intent(getApplicationContext(),PrincipalRegistroControl.class);
+        Intent intent = new Intent(getApplicationContext(),PrincipalEstudiante.class);
         startActivity(intent);
     }
 }

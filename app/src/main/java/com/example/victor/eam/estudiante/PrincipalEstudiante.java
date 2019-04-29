@@ -1,8 +1,10 @@
 package com.example.victor.eam.estudiante;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.victor.eam.R;
+import com.example.victor.eam.docente.ConsultarHorario;
+import com.example.victor.eam.entidades.AllFragments;
+import com.example.victor.eam.entidades.PrincipalPantallas;
 
 public class PrincipalEstudiante extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,AllFragments {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,10 @@ public class PrincipalEstudiante extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Este es el fragmet que se carga de primero
+        Fragment miFragment = new PrincipalPantallas();
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
     }
 
     @Override
@@ -45,28 +54,6 @@ public class PrincipalEstudiante extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.principal_estudiante, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -74,21 +61,34 @@ public class PrincipalEstudiante extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Fragment miFragment = new PrincipalPantallas();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
+
         } else if (id == R.id.nav_gallery) {
+            Fragment miFragment = new RegistroMaterias();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
+            Fragment miFragment = new ConsultarSeguimiento();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
 
         } else if (id == R.id.nav_manage) {
+            Fragment miFragment = new com.example.victor.eam.estudiante.ConsultarHorario();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
 
         } else if (id == R.id.nav_share) {
-
+            //Cerrar sesion
         } else if (id == R.id.nav_send) {
-
+            //Salir de la aplicacion
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
