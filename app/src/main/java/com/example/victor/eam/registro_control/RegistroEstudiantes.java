@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -54,13 +55,16 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
-    
-    EditText campoCodigo,campoCedula,campoNombre,campoEstado,campoDireccion,campoTelefono,campoCoreo;
-    Spinner spinnerFacultad,spinnerPrograma;
+
+    int accion;
+    EditText campoCodigo, campoCedula, campoNombre, campoEstado, campoDireccion, campoTelefono, campoCoreo;
+    Spinner spinnerFacultad, spinnerPrograma;
     TextView campoFecha;
     Button btnRegistrar;
     String ip;
     ArrayList arrayFacultades;
+    ArrayList arrayProgramas;
+
     public RegistroEstudiantes() {
         // Required empty public constructor
     }
@@ -124,15 +128,25 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
     }
 
     private void cargarFacultad() {
+        accion = 1;
         String url;
-        url = ip+getContext().getString(R.string.ipFacultades);
+        url = ip + getContext().getString(R.string.ipFacultades);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
+    private void cargarPrograma(int position) {
+
+        String url;
+        url = ip + getContext().getString(R.string.ipProgramas)+(position+1);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+        accion = 2;
+    }
+
     private void registrar() {
         String url;
-        url = ip+getContext().getString(R.string.ipRegistro);
+        url = ip + getContext().getString(R.string.ipRegistro);
     }
 
     private void capturarFecha() {
@@ -174,26 +188,69 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
 
     @Override
     public void onResponse(JSONObject response) {
-        //Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
-        JSONArray json = response.optJSONArray("facultad");
-        JSONObject jsonObject;
-        arrayFacultades = new ArrayList();
-        try {
-            for (int i = 0; i < json.length(); i++) {
-                jsonObject = json.getJSONObject(i);
-                arrayFacultades.add(jsonObject.getString("facul"));
-            }
+        switch (accion) {
+            case 1:
+                JSONArray jsonFacultad = response.optJSONArray("facultad");
+                JSONObject jsonObjectFacultad;
+                arrayFacultades = new ArrayList();
+                try {
+                    for (int i = 0; i < jsonFacultad.length(); i++) {
+                        jsonObjectFacultad = jsonFacultad.getJSONObject(i);
+                        arrayFacultades.add(jsonObjectFacultad.getString("facultad"));
+                    }
 
-            ArrayAdapter<CharSequence> adapterFacultad = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayFacultades);
-            spinnerFacultad.setAdapter(adapterFacultad);
-        }catch (Exception e){
+                    ArrayAdapter<CharSequence> adapterFacultad = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayFacultades);
+                    spinnerFacultad.setAdapter(adapterFacultad);
+                    spinnerFacultad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            cargarPrograma(position);
+                        }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+                break;
+
+            case 2:
+                JSONArray jsonPrograma = response.optJSONArray("programa");
+                JSONObject jsonObjectPrograma;
+                arrayProgramas = new ArrayList();
+                try {
+                    for (int i = 0; i < jsonPrograma.length(); i++) {
+                        jsonObjectPrograma = jsonPrograma.getJSONObject(i);
+                        arrayProgramas.add(jsonObjectPrograma.getString("programa"));
+                    }
+
+                    ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayProgramas);
+                    spinnerPrograma.setAdapter(adapterPrograma);
+                    spinnerPrograma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+                break;
         }
+
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        //Toast.makeText(getContext(), ""+error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "" + error, Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -41,7 +41,7 @@
             android:layout_marginTop="10dp"
             android:inputType="textPersonName"
             android:text="Fecha nacimiento"
-            android:textColor="#fff" />
+            android:textColor="#000" />
 
         <EditText
             android:layout_width="match_parent"
