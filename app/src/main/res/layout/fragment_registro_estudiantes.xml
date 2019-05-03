@@ -5,14 +5,80 @@
     android:layout_height="match_parent"
     tools:context=".registro_control.RegistroEstudiantes">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:textSize="44dp"
-        android:textColor="#000"
-        android:gravity="center"
-        android:text="Registro estudiantes"  />
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Codigo"
+            android:id="@+id/campoCodigo"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Cedula"
+            android:id="@+id/campoCedula"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Nombre"
+            android:id="@+id/campoNombre"/>
+
+        <TextView
+            android:id="@+id/campoFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:background="@drawable/borde_cuadrado_transparente"
+            android:ems="10"
+            android:layout_marginTop="10dp"
+            android:inputType="textPersonName"
+            android:text="Fecha nacimiento"
+            android:textColor="#fff" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Direccion"
+            android:id="@+id/campoDireccion"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number|phone"
+            android:hint="Telefono"
+            android:id="@+id/campoTelefono"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Correo"
+            android:id="@+id/campoCorreo"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:id="@+id/spinnerFacultad"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:id="@+id/spinnerPrograma"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar"
+            android:id="@+id/btnTegirtrar"/>
+
+    </LinearLayout>
 
 </FrameLayout>

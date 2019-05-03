@@ -1,5 +1,6 @@
 package com.example.victor.eam.registro_control;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,8 +8,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpResponse;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +41,7 @@ import com.example.victor.eam.R;
  * Use the {@link RegistroEstudiantes#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistroEstudiantes extends Fragment {
+public class RegistroEstudiantes extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +52,15 @@ public class RegistroEstudiantes extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private RequestQueue request;
+    private StringRequest stringRequest;
+    
+    EditText campoCodigo,campoCedula,campoNombre,campoEstado,campoDireccion,campoTelefono,campoCoreo;
+    Spinner spinnerFacultad,spinnerPrograma;
+    TextView campoFecha;
+    Button btnRegistrar;
+    String ip;
+    ArrayList arrayFacultades;
     public RegistroEstudiantes() {
         // Required empty public constructor
     }
@@ -62,10 +93,59 @@ public class RegistroEstudiantes extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registro_estudiantes, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View vista = inflater.inflate(R.layout.fragment_registro_estudiantes, container, false);
+        ip = getContext().getString(R.string.ip);
+        campoCodigo = vista.findViewById(R.id.campoCodigo);
+        campoCedula = vista.findViewById(R.id.campoCedula);
+        campoNombre = vista.findViewById(R.id.campoNombre);
+        campoDireccion = vista.findViewById(R.id.campoDireccion);
+        campoTelefono = vista.findViewById(R.id.campoTelefono);
+        campoCoreo = vista.findViewById(R.id.campoCorreo);
+        spinnerFacultad = vista.findViewById(R.id.spinnerFacultad);
+        spinnerPrograma = vista.findViewById(R.id.spinnerPrograma);
+        campoFecha = vista.findViewById(R.id.campoFecha);
+        campoFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capturarFecha();
+            }
+        });
+        btnRegistrar = vista.findViewById(R.id.btnTegirtrar);
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrar();
+            }
+        });
+        request = Volley.newRequestQueue(getContext());
+        cargarFacultad();
+        return vista;
+    }
+
+    private void cargarFacultad() {
+        String url;
+        url = ip+getContext().getString(R.string.ipFacultades);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void registrar() {
+        String url;
+        url = ip+getContext().getString(R.string.ipRegistro);
+    }
+
+    private void capturarFecha() {
+        Calendar mcurrentDate = Calendar.getInstance();
+        DatePickerDialog mDatePicker = new DatePickerDialog(getContext(), R.style.DialogTheme,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                        campoFecha.setText("" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                    }
+                }, mcurrentDate.get(Calendar.YEAR), mcurrentDate.get(Calendar.MONTH), mcurrentDate.get(Calendar.DAY_OF_MONTH));
+        mDatePicker.setInverseBackgroundForced(false);
+        mDatePicker.show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,6 +170,30 @@ public class RegistroEstudiantes extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        //Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+        JSONArray json = response.optJSONArray("facultad");
+        JSONObject jsonObject;
+        arrayFacultades = new ArrayList();
+        try {
+            for (int i = 0; i < json.length(); i++) {
+                jsonObject = json.getJSONObject(i);
+                arrayFacultades.add(jsonObject.getString("facul"));
+            }
+
+            ArrayAdapter<CharSequence> adapterFacultad = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayFacultades);
+            spinnerFacultad.setAdapter(adapterFacultad);
+        }catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        //Toast.makeText(getContext(), ""+error, Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">EAM</string>
+    <string name="ip">http://192.168.43.61/eam/</string>
+    <string name="ipRegistro">registroPrueba.php</string>
+    <string name="ipFacultades">consultaFacultades.php</string>
+
+
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

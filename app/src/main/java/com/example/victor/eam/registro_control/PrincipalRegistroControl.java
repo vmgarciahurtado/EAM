@@ -64,6 +64,7 @@ public class PrincipalRegistroControl extends AppCompatActivity
 
         } else if (id == R.id.nav_gallery) {
             Fragment miFragment = new RegistroEstudiantes();
+            setTitle("Registro  de estudiantes");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
