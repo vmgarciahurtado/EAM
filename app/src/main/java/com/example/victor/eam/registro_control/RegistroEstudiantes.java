@@ -159,53 +159,61 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
 
     private void registrar() {
 
-        String url;
-        url = ip + getContext().getString(R.string.ipRegistro);
+        final String codigo = campoCodigo.getText().toString();
+        final String cedula = campoCedula.getText().toString();
+        final String nombre = campoNombre.getText().toString();
+        final String fecha = campoFecha.getText().toString();
+        final String direccion = campoDireccion.getText().toString();
+        final String telefono = campoTelefono.getText().toString();
+        final String correo = campoCoreo.getText().toString();
 
-        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.trim().equalsIgnoreCase("registra")) {
-                    Log.i("********RESULTADO", "Respuesta server" + response);
-                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")){
+            String url;
+            url = ip + getContext().getString(R.string.ipRegistro);
+
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("registra")) {
+                        Log.i("********RESULTADO", "Respuesta server" + response);
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                String codigo = campoCodigo.getText().toString();
-                String cedula = campoCedula.getText().toString();
-                String nombre = campoNombre.getText().toString();
-                String fecha = campoFecha.getText().toString();
-                String direccion = campoDireccion.getText().toString();
-                String telefono = campoTelefono.getText().toString();
-                String correo = campoCoreo.getText().toString();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
 
 
-                Map<String, String> parametros = new HashMap<>();
-                parametros.put("codigo", codigo);
-                parametros.put("cedula", cedula);
-                parametros.put("nombre", nombre);
-                parametros.put("fechaNacimiento", fecha);
-                parametros.put("estado", "1");
-                parametros.put("direccion", direccion);
-                parametros.put("telefono", telefono);
-                parametros.put("correo", correo);
-                parametros.put("programaAcademico", programaAcademico);
-                Log.i("--------PARAMETROS ", parametros.toString());
-                return parametros;
 
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        request.add(stringRequest);
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("codigo", codigo);
+                    parametros.put("cedula", cedula);
+                    parametros.put("nombre", nombre);
+                    parametros.put("fechaNacimiento", fecha);
+                    parametros.put("estado", "1");
+                    parametros.put("direccion", direccion);
+                    parametros.put("telefono", telefono);
+                    parametros.put("correo", correo);
+                    parametros.put("programaAcademico", programaAcademico);
+                    Log.i("--------PARAMETROS ", parametros.toString());
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+        }else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 
