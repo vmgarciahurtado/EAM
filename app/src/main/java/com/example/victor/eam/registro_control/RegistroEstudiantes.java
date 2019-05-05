@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,13 +28,24 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.api.RegisterAPI;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.http.Field;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +74,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
     Spinner spinnerFacultad, spinnerPrograma;
     TextView campoFecha;
     Button btnRegistrar;
-    String ip;
+    String ip, programaAcademico;
     ArrayList arrayFacultades;
     ArrayList arrayProgramas;
 
@@ -138,16 +151,65 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
     private void cargarPrograma(int position) {
 
         String url;
-        url = ip + getContext().getString(R.string.ipProgramas)+(position+1);
+        url = ip + getContext().getString(R.string.ipProgramas) + (position + 1);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
         accion = 2;
     }
 
     private void registrar() {
+
         String url;
         url = ip + getContext().getString(R.string.ipRegistro);
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    Log.i("********RESULTADO", "Respuesta server" + response);
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                String codigo = campoCodigo.getText().toString();
+                String cedula = campoCedula.getText().toString();
+                String nombre = campoNombre.getText().toString();
+                String fecha = campoFecha.getText().toString();
+                String direccion = campoDireccion.getText().toString();
+                String telefono = campoTelefono.getText().toString();
+                String correo = campoCoreo.getText().toString();
+
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("codigo", codigo);
+                parametros.put("cedula", cedula);
+                parametros.put("nombre", nombre);
+                parametros.put("fechaNacimiento", fecha);
+                parametros.put("estado", "1");
+                parametros.put("direccion", direccion);
+                parametros.put("telefono", telefono);
+                parametros.put("correo", correo);
+                parametros.put("programaAcademico", programaAcademico);
+                Log.i("--------PARAMETROS ", parametros.toString());
+                return parametros;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.add(stringRequest);
     }
+
+
+
 
     private void capturarFecha() {
         Calendar mcurrentDate = Calendar.getInstance();
@@ -232,9 +294,8 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
                     spinnerPrograma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                            programaAcademico = String.valueOf(position + 1 );
                         }
-
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
 
