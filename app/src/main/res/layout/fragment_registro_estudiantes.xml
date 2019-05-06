@@ -7,77 +7,79 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <EditText
+            android:id="@+id/campoCodigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:background="@drawable/borde_cuadrado_transparente"
+            android:editable="false"
             android:hint="Codigo"
-            android:id="@+id/campoCodigo"/>
+            android:inputType="number" />
 
         <EditText
+            android:id="@+id/campoCedula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:hint="Cedula"
-            android:id="@+id/campoCedula"/>
+            android:inputType="number" />
 
         <EditText
+            android:id="@+id/campoNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:hint="Nombre"
-            android:id="@+id/campoNombre"/>
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/campoFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/borde_cuadrado_transparente"
             android:ems="10"
-            android:layout_marginTop="10dp"
             android:inputType="textPersonName"
             android:text="Fecha nacimiento"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:textSize="18dp" />
 
         <EditText
+            android:id="@+id/campoDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Direccion"
-            android:id="@+id/campoDireccion"/>
+            android:hint="Direccion" />
 
         <EditText
+            android:id="@+id/campoTelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number|phone"
             android:hint="Telefono"
-            android:id="@+id/campoTelefono"/>
+            android:inputType="number|phone" />
 
         <EditText
+            android:id="@+id/campoCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
             android:hint="Correo"
-            android:id="@+id/campoCorreo"/>
+            android:inputType="textEmailAddress" />
 
         <Spinner
-            android:layout_width="match_parent"
             android:id="@+id/spinnerFacultad"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Spinner
-            android:layout_width="match_parent"
             android:id="@+id/spinnerPrograma"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btnTegirtrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrar"
-            android:id="@+id/btnTegirtrar"/>
+            android:text="Registrar" />
 
     </LinearLayout>
 

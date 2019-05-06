@@ -3,9 +3,8 @@
     <string name="ip">http://192.168.0.8/eam/</string>
     <string name="ipRegistro">registroEstudiantes.php</string>
     <string name="ipFacultades">consultaFacultades.php</string>
-    <string name="ipProgramas">conultaProgramas.php?id=</string>
-
-
+    <string name="ipProgramas">consultaProgramas.php?id=</string>
+    <string name="ipDocentes">registroDocentes.php</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
