@@ -149,7 +149,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy", Locale.getDefault());
         Date date = new Date();
         String fecha = dateFormat.format(date);
-        campoFecha.setText(fecha+codigo);
+        campoCodigo.setText(fecha+codigo);
         Toast.makeText(getContext(), "Codigo: "+ fecha+codigo, Toast.LENGTH_SHORT).show();
     }
 
@@ -183,7 +183,6 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
         if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")){
             String url;
             url = ip + getContext().getString(R.string.ipRegistro);
-
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

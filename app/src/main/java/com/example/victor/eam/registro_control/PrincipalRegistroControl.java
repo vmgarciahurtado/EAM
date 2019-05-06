@@ -75,11 +75,17 @@ public class PrincipalRegistroControl extends AppCompatActivity
             Fragment miFragment = new RegistroAulas();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.registroDocentes) {
+            Fragment miFragment = new RegistroDocentes();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
+        }
+
+        else if (id == R.id.nav_share) {
             //Cerrar Sesion
 
         } else if (id == R.id.nav_send) {
             //Salir de la aplicacion
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -20,6 +20,11 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Registro de aulas" />
+
+        <item
+            android:id="@+id/registroDocentes"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Registro de docentes" />
     </group>
 
     <item android:title="Communicate">

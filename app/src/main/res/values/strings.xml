@@ -4,7 +4,8 @@
     <string name="ipRegistro">registroEstudiantes.php</string>
     <string name="ipFacultades">consultaFacultades.php</string>
     <string name="ipProgramas">consultaProgramas.php?id=</string>
-    <string name="ipDocentes">registroDocentes.php</string>
+    <string name="ipRegistroDocentes">registroDocentes.php</string>
+    <string name="ipConsultaTipoDocente">consultaTipoDocente.php</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
