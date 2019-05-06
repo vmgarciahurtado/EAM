@@ -126,8 +126,25 @@
             android:layout_marginTop="12dp"
             android:id="@+id/spinnerEntorno"
             android:layout_height="wrap_content">
-
         </Spinner>
+
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/btnActaDescriptiva"
+            android:text="Redactar acta descriptiva"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/btnPrerrequisitos"
+            android:text="Añadir prerequisitos"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/btnRegistrar"
+            android:text="Registrar"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
