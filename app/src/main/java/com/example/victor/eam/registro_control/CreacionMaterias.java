@@ -11,14 +11,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.VolleySingleton;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -29,7 +43,7 @@ import java.util.Objects;
  * Use the {@link CreacionMaterias#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreacionMaterias extends Fragment {
+public class CreacionMaterias extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,13 +55,20 @@ public class CreacionMaterias extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     Button btnRegistrar, btnSumarHoras, btnRestarHoras, btnSumarCreditos, btnRestarCreditos, btnActa, btnPrerrequisitos;
-    TextView campoHoras, campoCreditos;
+    TextView campoHoras, campoCreditos,campoNombre,campoCosto;
+    Spinner spinnerEntorno;
     private Dialog dialogoPrerequisitos;
     private Dialog dialogActa;
+    private RequestQueue request;
+    private StringRequest stringRequest;
+
+    ArrayList arrayEntornos;
 
     //VARIABLES
     String prerrequisitos;
     String actaDescriptiva;
+    String ip;
+    String entorno;
 
     int contadorHoras = 0, contadorCreditos = 0;
 
@@ -86,7 +107,9 @@ public class CreacionMaterias extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View vista = inflater.inflate(R.layout.fragment_creacion_materias, container, false);
-        btnRegistrar = vista.findViewById(R.id.btnRegistrar);
+        ip = getContext().getString(R.string.ip);
+        request = Volley.newRequestQueue(getContext());
+
         btnActa = vista.findViewById(R.id.btnActaDescriptiva);
         btnActa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,10 +153,34 @@ public class CreacionMaterias extends Fragment {
             }
         });
         campoCreditos = vista.findViewById(R.id.campoCreditos);
+        campoNombre = vista.findViewById(R.id.campoNombre);
+        campoCosto = vista.findViewById(R.id.campoCosto);
         campoHoras = vista.findViewById(R.id.campoHoras);
+        btnRegistrar = vista.findViewById(R.id.btnRegistrar);
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registrar();
+            }
+        });
         dialogoPrerequisitos = new Dialog(this.getContext());
         dialogActa = new Dialog(this.getContext());
+
+        cargarEntorno();
         return vista;
+    }
+
+    private void cargarEntorno() {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultaEntornos);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void registrar() {
+        final String nombre = campoNombre.getText().toString();
+        final String costo = campoCosto.getText().toString();
+
     }
 
     private void sumar(int i) {
@@ -257,6 +304,41 @@ public class CreacionMaterias extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        JSONArray jsonFacultad = response.optJSONArray("entorno");
+        JSONObject jsonObjectFacultad;
+        arrayEntornos = new ArrayList();
+        try {
+            for (int i = 0; i < jsonFacultad.length(); i++) {
+                jsonObjectFacultad = jsonFacultad.getJSONObject(i);
+                arrayEntornos.add(jsonObjectFacultad.getString("entorno"));
+            }
+
+            ArrayAdapter<CharSequence> adapterFacultad = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayEntornos);
+            spinnerEntorno.setAdapter(adapterFacultad);
+            spinnerEntorno.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    entorno = String.valueOf(position + 1 );
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
     }
 
     /**
