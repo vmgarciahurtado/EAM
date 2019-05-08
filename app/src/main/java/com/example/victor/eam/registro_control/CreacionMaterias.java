@@ -1,14 +1,25 @@
-    package com.example.victor.eam.registro_control;
+package com.example.victor.eam.registro_control;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.victor.eam.R;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +40,16 @@ public class CreacionMaterias extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    Button btnRegistrar, btnSumarHoras, btnRestarHoras, btnSumarCreditos, btnRestarCreditos, btnActa, btnPrerrequisitos;
+    TextView campoHoras, campoCreditos;
+    private Dialog dialogoPrerequisitos;
+    private Dialog dialogActa;
+
+    //VARIABLES
+    String prerrequisitos;
+    String actaDescriptiva;
+
+    int contadorHoras = 0, contadorCreditos = 0;
 
     public CreacionMaterias() {
         // Required empty public constructor
@@ -62,10 +83,155 @@ public class CreacionMaterias extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_creacion_materias, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View vista = inflater.inflate(R.layout.fragment_creacion_materias, container, false);
+        btnRegistrar = vista.findViewById(R.id.btnRegistrar);
+        btnActa = vista.findViewById(R.id.btnActaDescriptiva);
+        btnActa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupActa();
+            }
+        });
+        btnPrerrequisitos = vista.findViewById(R.id.btnPrerrequisitos);
+        btnPrerrequisitos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupPrerrequisitos();
+            }
+        });
+        btnRestarCreditos = vista.findViewById(R.id.btnRestarCreditos);
+        btnRestarCreditos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restar(1);
+            }
+        });
+        btnRestarHoras = vista.findViewById(R.id.btnRestarHoras);
+        btnRestarHoras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restar(2);
+            }
+        });
+        btnSumarCreditos = vista.findViewById(R.id.btnSumarCreditos);
+        btnSumarCreditos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sumar(1);
+            }
+        });
+        btnSumarHoras = vista.findViewById(R.id.btnSumarHoras);
+        btnSumarHoras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sumar(2);
+            }
+        });
+        campoCreditos = vista.findViewById(R.id.campoCreditos);
+        campoHoras = vista.findViewById(R.id.campoHoras);
+        dialogoPrerequisitos = new Dialog(this.getContext());
+        dialogActa = new Dialog(this.getContext());
+        return vista;
+    }
+
+    private void sumar(int i) {
+        switch (i) {
+            case 1:
+                //+
+                contadorCreditos ++;
+                campoCreditos.setText(""+contadorCreditos);
+                break;
+
+            case 2:
+                contadorHoras ++;
+                campoHoras.setText(""+contadorHoras);
+                break;
+        }
+
+    }
+
+    private void restar(int i) {
+        switch (i) {
+            case 1:
+                contadorCreditos --;
+                if (contadorCreditos <=0){
+                    contadorCreditos = 0;
+                }
+                campoCreditos.setText(""+contadorCreditos);
+                break;
+
+            case 2:
+                contadorHoras --;
+                if (contadorHoras <=0){
+                    contadorHoras = 0;
+                }
+                campoHoras.setText(""+contadorHoras);
+                break;
+        }
+    }
+
+    private void showPopupActa() {
+        Button aceptar, cancelar;
+        EditText campoActa;
+
+        try {
+            dialogActa.setContentView(R.layout.popup_redactaracta);
+            Objects.requireNonNull(dialogActa.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogActa.show();
+        } catch (Exception e) {
+            Log.i("Error ", e.toString());
+        }
+
+        campoActa = dialogActa.findViewById(R.id.campoActaDescrptiva);
+        aceptar = dialogActa.findViewById(R.id.btnAceptarActa);
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Captura el dato del campo acta
+            }
+        });
+
+        cancelar = dialogActa.findViewById(R.id.btnCancelarActa);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogActa.hide();
+                Toast.makeText(getContext(), "No se ha guardado el acta", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showPopupPrerrequisitos() {
+        Button aceptar, cancelar;
+        Spinner spinnerMaterias;
+
+        try {
+            dialogoPrerequisitos.setContentView(R.layout.popup_prerrequisito);
+            Objects.requireNonNull(dialogoPrerequisitos.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogoPrerequisitos.show();
+        } catch (Exception e) {
+            Log.i("Error ", e.toString());
+        }
+
+        spinnerMaterias = dialogoPrerequisitos.findViewById(R.id.spinnerPrerrequisitos);
+        aceptar = dialogoPrerequisitos.findViewById(R.id.btnAceptarPrerrequisitos);
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Guardar la materia que escoja en el spinner
+            }
+        });
+
+        cancelar = dialogoPrerequisitos.findViewById(R.id.btnCancelarPrerrequisitos);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogoPrerequisitos.hide();
+                Toast.makeText(getContext(), "No ha elegido nungiun prerrequisito ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -75,6 +241,7 @@ public class CreacionMaterias extends Fragment {
         }
     }
 
+//=================================================================================================================================
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

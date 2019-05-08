@@ -52,6 +52,7 @@ public class RegistroDocentes extends Fragment implements Response.ErrorListener
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
     Spinner spinnerTipoDocente;
     EditText campoNombre,campoCedula;
     String ip,tipoDocente;
