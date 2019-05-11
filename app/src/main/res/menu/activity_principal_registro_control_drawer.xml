@@ -16,10 +16,6 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Registro de materias" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Registro de aulas" />
 
         <item
             android:id="@+id/registroDocentes"
