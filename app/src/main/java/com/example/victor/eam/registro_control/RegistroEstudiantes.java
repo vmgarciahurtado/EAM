@@ -142,6 +142,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
         cargarFacultad();
         asignarCodigo();
         return vista;
+        //Victor la mama cagada
     }
 
     private void asignarCodigo() {
