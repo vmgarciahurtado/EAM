@@ -7,6 +7,8 @@
     <string name="ipRegistroDocentes">registroDocentes.php</string>
     <string name="ipConsultaTipoDocente">consultaTipoDocente.php</string>
     <string name="ipConsultaEntornos">consultarEntornos.php</string>
+    <string name="ipConsultaDocentes">consultaDocentes.php</string>
+    <string name="ipConsultaMaterias">consultaMateria.php</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
