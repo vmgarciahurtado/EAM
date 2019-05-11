@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +56,7 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
     String ip, materia, docente;
     ArrayList arrayMaterias, arrayDocentes;
     Spinner spnMateria, spnDocente;
+    Button btnAsignar;
     public AsignarMaterias() {
         // Required empty public constructor
     }
@@ -89,10 +96,62 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
         ip = getContext().getString(R.string.ip);
         spnMateria = vista.findViewById(R.id.spnMateria);
         spnDocente = vista.findViewById(R.id.spnDocente);
+        btnAsignar = vista.findViewById(R.id.btnAsignar);
+        btnAsignar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                asignar();
+            }
+        });
         request = Volley.newRequestQueue(getContext());
         cargarDocente();
         cargarMaterias();
         return vista;
+    }
+
+    private void asignar() {
+        final int idCurso=1;
+        final String nombreCurso="Base de datos";
+        final String añoEnCurso="2019";
+        final int materia=Integer.parseInt(spnMateria.getSelectedItem().toString());
+        final int docente=Integer.parseInt(spnDocente.getSelectedItem().toString());
+        if (idCurso==1){
+            String url;
+            url = ip + getContext().getString(R.string.ipRegistrarCurso);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("registra")) {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("idcurso", String.valueOf(idCurso));
+                    parametros.put("nombrecurso", nombreCurso);
+                    parametros.put("añoencurso", añoEnCurso);
+                    parametros.put("materia_idmateria", String.valueOf(materia));
+                    parametros.put("docente_iddocente", String.valueOf(docente));
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+
+        }else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void cargarMaterias() {
