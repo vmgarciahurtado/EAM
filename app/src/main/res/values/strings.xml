@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">EAM</string>
+    <string name="ip">http://192.168.0.8/eam/</string>
+    <string name="ipRegistro">registroEstudiantes.php</string>
+    <string name="ipFacultades">consultaFacultades.php</string>
+    <string name="ipProgramas">consultaProgramas.php?id=</string>
+    <string name="ipRegistroDocentes">registroDocentes.php</string>
+    <string name="ipConsultaTipoDocente">consultaTipoDocente.php</string>
+    <string name="ipConsultaEntornos">consultarEntornos.php</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -14,3 +22,4 @@
     <string name="title_activity_principal_director_programa">PrincipalDirectorPrograma</string>
     <string name="title_activity_principal_docente">PrincipalDocente</string>
 </resources>
+

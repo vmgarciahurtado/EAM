@@ -6,13 +6,37 @@
     tools:context=".registro_control.RegistroDocentes">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+
+
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:textSize="44dp"
-        android:textColor="#000"
-        android:gravity="center"
-        android:text="Registro docentes"  />
+        android:hint="Nombre y apellidos"
+        android:id="@+id/campoNombre"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:hint="Nombre y apellidos"
+        android:id="@+id/campoCedula"
+        android:inputType="number"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:id="@+id/spinnerTipoDocente"
+        android:layout_height="wrap_content"></Spinner>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegistrar"
+        android:text="registrar"/>
+</LinearLayout>
 
 </FrameLayout>

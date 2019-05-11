@@ -1,14 +1,54 @@
 package com.example.victor.eam.registro_control;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpResponse;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.api.RegisterAPI;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.http.Field;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,8 +58,7 @@ import com.example.victor.eam.R;
  * Use the {@link RegistroEstudiantes#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistroEstudiantes extends Fragment {
-//Juanfer la mama
+public class RegistroEstudiantes extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +69,17 @@ public class RegistroEstudiantes extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RequestQueue request;
+    private StringRequest stringRequest;
+
+    int accion;
+    EditText campoCodigo, campoCedula, campoNombre, campoEstado, campoDireccion, campoTelefono, campoCoreo;
+    Spinner spinnerFacultad, spinnerPrograma;
+    TextView campoFecha;
+    Button btnRegistrar;
+    String ip, programaAcademico;
+    ArrayList arrayFacultades;
+    ArrayList arrayProgramas;
 
     public RegistroEstudiantes() {
         // Required empty public constructor
@@ -63,10 +113,136 @@ public class RegistroEstudiantes extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registro_estudiantes, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View vista = inflater.inflate(R.layout.fragment_registro_estudiantes, container, false);
+        ip = getContext().getString(R.string.ip);
+        campoCodigo = vista.findViewById(R.id.campoCodigo);
+        campoCedula = vista.findViewById(R.id.campoCedula);
+        campoNombre = vista.findViewById(R.id.campoNombre);
+        campoDireccion = vista.findViewById(R.id.campoDireccion);
+        campoTelefono = vista.findViewById(R.id.campoTelefono);
+        campoCoreo = vista.findViewById(R.id.campoCorreo);
+        spinnerFacultad = vista.findViewById(R.id.spinnerFacultad);
+        spinnerPrograma = vista.findViewById(R.id.spinnerPrograma);
+        campoFecha = vista.findViewById(R.id.campoFecha);
+        campoFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capturarFecha();
+            }
+        });
+        btnRegistrar = vista.findViewById(R.id.btnTegirtrar);
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrar();
+            }
+        });
+        request = Volley.newRequestQueue(getContext());
+        cargarFacultad();
+        asignarCodigo();
+        return vista;
+        //Victor la mama cagada
+    }
+
+    private void asignarCodigo() {
+        int codigo = (int) (Math.random()*9999+1);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy", Locale.getDefault());
+        Date date = new Date();
+        String fecha = dateFormat.format(date);
+        campoCodigo.setText(fecha+codigo);
+        Toast.makeText(getContext(), "Codigo: "+ fecha+codigo, Toast.LENGTH_SHORT).show();
+    }
+
+    private void cargarFacultad() {
+        accion = 1;
+        String url;
+        url = ip + getContext().getString(R.string.ipFacultades);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void cargarPrograma(int position) {
+
+        String url;
+        url = ip + getContext().getString(R.string.ipProgramas) + (position + 1);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+        accion = 2;
+    }
+
+    private void registrar() {
+
+        final String codigo = campoCodigo.getText().toString();
+        final String cedula = campoCedula.getText().toString();
+        final String nombre = campoNombre.getText().toString();
+        final String fecha = campoFecha.getText().toString();
+        final String direccion = campoDireccion.getText().toString();
+        final String telefono = campoTelefono.getText().toString();
+        final String correo = campoCoreo.getText().toString();
+
+        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")){
+            String url;
+            url = ip + getContext().getString(R.string.ipRegistro);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("registra")) {
+                        Log.i("********RESULTADO", "Respuesta server" + response);
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+
+
+
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("codigo", codigo);
+                    parametros.put("cedula", cedula);
+                    parametros.put("nombre", nombre);
+                    parametros.put("fechaNacimiento", fecha);
+                    parametros.put("estado", "1");
+                    parametros.put("direccion", direccion);
+                    parametros.put("telefono", telefono);
+                    parametros.put("correo", correo);
+                    parametros.put("programaAcademico", programaAcademico);
+                    Log.i("--------PARAMETROS ", parametros.toString());
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+        }else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
+
+
+    private void capturarFecha() {
+        Calendar mcurrentDate = Calendar.getInstance();
+        DatePickerDialog mDatePicker = new DatePickerDialog(getContext(), R.style.DialogTheme,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                        campoFecha.setText("" + dayOfMonth + "/" + (month + 1) + "/" + year);
+                    }
+                }, mcurrentDate.get(Calendar.YEAR), mcurrentDate.get(Calendar.MONTH), mcurrentDate.get(Calendar.DAY_OF_MONTH));
+        mDatePicker.setInverseBackgroundForced(false);
+        mDatePicker.show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +267,72 @@ public class RegistroEstudiantes extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        switch (accion) {
+            case 1:
+                JSONArray jsonFacultad = response.optJSONArray("facultad");
+                JSONObject jsonObjectFacultad;
+                arrayFacultades = new ArrayList();
+                try {
+                    for (int i = 0; i < jsonFacultad.length(); i++) {
+                        jsonObjectFacultad = jsonFacultad.getJSONObject(i);
+                        arrayFacultades.add(jsonObjectFacultad.getString("facultad"));
+                    }
+
+                    ArrayAdapter<CharSequence> adapterFacultad = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayFacultades);
+                    spinnerFacultad.setAdapter(adapterFacultad);
+                    spinnerFacultad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            cargarPrograma(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+                break;
+
+            case 2:
+                JSONArray jsonPrograma = response.optJSONArray("programa");
+                JSONObject jsonObjectPrograma;
+                arrayProgramas = new ArrayList();
+                try {
+                    for (int i = 0; i < jsonPrograma.length(); i++) {
+                        jsonObjectPrograma = jsonPrograma.getJSONObject(i);
+                        arrayProgramas.add(jsonObjectPrograma.getString("programa"));
+                    }
+
+                    ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayProgramas);
+                    spinnerPrograma.setAdapter(adapterPrograma);
+                    spinnerPrograma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            programaAcademico = String.valueOf(position + 1 );
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+                break;
+        }
+
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(getContext(), "" + error, Toast.LENGTH_SHORT).show();
     }
 
     /**

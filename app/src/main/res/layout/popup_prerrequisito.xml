@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="375dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="63dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="275dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp"
+        android:background="@drawable/borde_cuadrado"
+        android:padding="22dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="200dp"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/btnCancelarPrerrequisitos"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:background="@color/colorAzul"
+                android:layout_marginRight="22dp"
+                android:text="Cancelar"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/btnAceptarPrerrequisitos"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="52dp"
+                android:background="@color/colorAzul"
+                android:text="Aceptar"
+                android:textColor="#fff" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/campoActa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
+            android:text="Agregar prerrequisitos"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+        <Spinner
+            android:id="@+id/spinnerPrerrequisitos"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/campoActa"
+            android:layout_height="wrap_content"></Spinner>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginRight="7dp">
+
+    </RelativeLayout>
+
+</RelativeLayout>
