@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/campoNombre"
+            android:id="@+id/campoNombreMateria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre materia" />

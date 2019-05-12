@@ -89,9 +89,7 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_asignar_materias, container, false);
         ip = getContext().getString(R.string.ip);
         spnMateria = vista.findViewById(R.id.spnMateria);
@@ -113,8 +111,8 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
         final int idCurso=1;
         final String nombreCurso="Base de datos";
         final String añoEnCurso="2019";
-        final int materia=Integer.parseInt(spnMateria.getSelectedItem().toString());
-        final int docente=Integer.parseInt(spnDocente.getSelectedItem().toString());
+        //final int materia=Integer.parseInt(spnMateria.getSelectedItem().toString());
+        //final int docente=Integer.parseInt(spnDocente.getSelectedItem().toString());
         if (idCurso==1){
             String url;
             url = ip + getContext().getString(R.string.ipRegistrarCurso);
@@ -140,8 +138,8 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
                     parametros.put("idcurso", String.valueOf(idCurso));
                     parametros.put("nombrecurso", nombreCurso);
                     parametros.put("añoencurso", añoEnCurso);
-                    parametros.put("materia_idmateria", String.valueOf(materia));
-                    parametros.put("docente_iddocente", String.valueOf(docente));
+                    parametros.put("materia_idmateria", materia);
+                    parametros.put("docente_iddocente", docente);
                     return parametros;
 
                 }

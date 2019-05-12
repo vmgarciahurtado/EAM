@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -153,7 +156,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             }
         });
         campoCreditos = vista.findViewById(R.id.campoCreditos);
-        campoNombre = vista.findViewById(R.id.campoNombre);
+        campoNombre = vista.findViewById(R.id.campoNombreMateria);
         campoCosto = vista.findViewById(R.id.campoCosto);
         campoHoras = vista.findViewById(R.id.campoHoras);
         btnRegistrar = vista.findViewById(R.id.btnRegistrar);
@@ -163,6 +166,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 registrar();
             }
         });
+        spinnerEntorno = vista.findViewById(R.id.spinnerEntorno);
         dialogoPrerequisitos = new Dialog(this.getContext());
         dialogActa = new Dialog(this.getContext());
 
@@ -178,10 +182,58 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     }
 
     private void registrar() {
-        final String nombre = campoNombre.getText().toString();
-        final String costo = campoCosto.getText().toString();
+        String url;
+        url = ip + getContext().getString(R.string.ipRegistroMaterias);
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    //Log.i("********RESULTADO", "Respuesta server" + response);
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
 
+                
+                /*
+    * $intensidadhoraria= $_POST["intensidadhoraria"];
+	$numerocreditos= $_POST["nucreditoacademico"];
+	$actadescriptiva= $_POST["actadescriptiva"];
+	$costomateria= $_POST["costomateria"];
+	$entornomateria= $_POST["entorno_identorno"];
+	$prerrequisito= $_POST["prer_idprerequisito"];u
+    $materia= $_POST["materia_idmateria"];*/
+
+
+                String nombre = campoNombre.getText().toString();
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("$intensidadhoraria", String.valueOf(contadorHoras));
+                parametros.put("$numerocreditos", String.valueOf(contadorCreditos));
+                parametros.put("$actadescriptiva", String.valueOf(contadorCreditos));
+                parametros.put("$costomateria", String.valueOf(contadorCreditos));
+                parametros.put("$entornomateria", String.valueOf(contadorCreditos));
+                parametros.put("$prerrequisito", String.valueOf(contadorCreditos));
+                parametros.put("$numerocreditos", String.valueOf(contadorCreditos));
+
+                Log.i("--------PARAMETROS ", parametros.toString());
+                return parametros;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.add(stringRequest);
     }
+
 
     private void sumar(int i) {
         switch (i) {
@@ -309,17 +361,17 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     @Override
     public void onResponse(JSONObject response) {
 
-        JSONArray jsonFacultad = response.optJSONArray("entorno");
-        JSONObject jsonObjectFacultad;
+        JSONArray jsonEntorno = response.optJSONArray("entorno");
+        JSONObject jsonObjectEntorno;
         arrayEntornos = new ArrayList();
         try {
-            for (int i = 0; i < jsonFacultad.length(); i++) {
-                jsonObjectFacultad = jsonFacultad.getJSONObject(i);
-                arrayEntornos.add(jsonObjectFacultad.getString("entorno"));
+            for (int i = 0; i < jsonEntorno.length(); i++) {
+                jsonObjectEntorno = jsonEntorno.getJSONObject(i);
+                arrayEntornos.add(jsonObjectEntorno.getString("entorno"));
             }
 
-            ArrayAdapter<CharSequence> adapterFacultad = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayEntornos);
-            spinnerEntorno.setAdapter(adapterFacultad);
+            ArrayAdapter<CharSequence> adapterEntorno = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayEntornos);
+            spinnerEntorno.setAdapter(adapterEntorno);
             spinnerEntorno.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
