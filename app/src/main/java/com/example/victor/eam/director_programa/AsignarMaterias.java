@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.Docente;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
@@ -54,9 +55,12 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
     private RequestQueue request;
     private StringRequest stringRequest;
     String ip, materia, docente;
-    ArrayList arrayMaterias, arrayDocentes;
+    ArrayList arrayMaterias;
+    ArrayList<Docente>arrayDocentes;
     Spinner spnMateria, spnDocente;
     Button btnAsignar;
+    //================================================
+    private Docente docenteVo;
     public AsignarMaterias() {
         // Required empty public constructor
     }
@@ -137,7 +141,7 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
                     Map<String, String> parametros = new HashMap<>();
                     parametros.put("idcurso", String.valueOf(idCurso));
                     parametros.put("nombrecurso", nombreCurso);
-                    parametros.put("añoencurso", añoEnCurso);
+                    parametros.put("anoencurso", añoEnCurso);
                     parametros.put("materia_idmateria", materia);
                     parametros.put("docente_iddocente", docente);
                     return parametros;
@@ -218,21 +222,31 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
 
         }
         //----------------------------------
+        docenteVo = null;
         JSONArray jsonDocente = response.optJSONArray("docente");
         JSONObject jsonObjectDocente;
         arrayDocentes = new ArrayList();
+        //final ArrayList listaNombres = new ArrayList();
+
         try {
             for (int i = 0; i < jsonDocente.length(); i++) {
                 jsonObjectDocente = jsonDocente.getJSONObject(i);
-                arrayDocentes.add(jsonObjectDocente.getString("docente"));
+                docenteVo = new Docente();
+                docenteVo.setNombre(jsonObjectDocente.getString("docente"));
+                docenteVo.setId(jsonObjectDocente.getString("id"));
+                //listaNombres.add(jsonObjectDocente.getString("docente" ) + " - "+ jsonObjectDocente.getString("id"));
+                arrayDocentes.add(docenteVo);
             }
 
-            ArrayAdapter<CharSequence> adapterDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayDocentes);
+            ArrayAdapter<CharSequence> adapterDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item,arrayDocentes);
             spnDocente.setAdapter(adapterDocente);
             spnDocente.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    docente = String.valueOf(position + 1 );
+                    //docente = String.valueOf(position + 1 );
+
+                    String codigo = arrayDocentes.get(spnDocente.getPositionForView(view)).getId();
+                    Toast.makeText(getContext(), "Codigo: " + codigo, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
