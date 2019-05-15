@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.example.victor.eam.R;
 
@@ -29,6 +30,7 @@ public class PrincipalPantallas extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    WebView webView;
 
     public PrincipalPantallas() {
         // Required empty public constructor
@@ -62,10 +64,14 @@ public class PrincipalPantallas extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_principal_pantallas, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View vista = inflater.inflate(R.layout.fragment_principal_pantallas, container, false);
+
+        webView = vista.findViewById(R.id.webViewPrincipal);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("https://www.eam.edu.co/");
+        return vista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

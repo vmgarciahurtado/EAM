@@ -59,6 +59,7 @@ public class PrincipalRegistroControl extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            setTitle("Registro y control");
             Fragment miFragment = new PrincipalPantallas();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
@@ -69,6 +70,7 @@ public class PrincipalRegistroControl extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
             Fragment miFragment = new CreacionMaterias();
+            setTitle("Creacion de materias");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         } else if (id == R.id.nav_manage) {
@@ -77,6 +79,7 @@ public class PrincipalRegistroControl extends AppCompatActivity
 
         } else if (id == R.id.registroDocentes) {
             Fragment miFragment = new RegistroDocentes();
+            setTitle("Registro  de docentes");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
         }
 
