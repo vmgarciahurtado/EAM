@@ -13,14 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.AndroidAuthenticator;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,6 +133,51 @@ String ip;
     }
 
     private void crearAgenda() {
+        final String dia = spnDiaAgenda.getSelectedItem().toString();
+        final String horaInicioClase = txtHoraIClase.getText().toString();
+        final String horaFinClase = txtHoraFClase.getText().toString();
+        final String horaInicioAsesoria = txtHoraIAsesori.getText().toString();
+        final String horaFinAsesoria = txtHoraFAsesoria.getText().toString();
+        final int Docente=1;
+
+        if (!horaInicioClase.equals("")||!horaFinClase.equals("")){
+            String url;
+            url = ip + getContext().getString(R.string.ipCrearAgendaDocente);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("registra")) {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("Dia", dia);
+                    parametros.put("HoraInicioClase", horaInicioClase);
+                    parametros.put("HoraFinClase", horaFinClase);
+                    parametros.put("HoraInicioAsesoria", horaInicioAsesoria);
+                    parametros.put("HoraFinAsesoria", horaFinAsesoria);
+                    parametros.put("Docente_IdDocente", Docente+"");
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+
+        }else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void configurarDia() {

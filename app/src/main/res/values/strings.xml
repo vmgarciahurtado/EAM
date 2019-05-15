@@ -11,6 +11,8 @@
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
     <string name="ipRegistrarCurso">registrarCurso.php</string>
+    <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
