@@ -20,6 +20,10 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Consultar horario" />
+        <item
+            android:id="@+id/agregarAgenda"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Agregar agenda" />
     </group>
 
     <item android:title="Communicate">
