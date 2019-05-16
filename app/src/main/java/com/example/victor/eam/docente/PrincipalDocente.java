@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import com.example.victor.eam.R;
 import com.example.victor.eam.entidades.AllFragments;
 import com.example.victor.eam.entidades.PrincipalPantallas;
+import com.example.victor.eam.registro_control.MatriculaEstudiante;
+import com.example.victor.eam.registro_control.ModificarUsuarios;
 
 public class PrincipalDocente extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,AllFragments {
@@ -78,11 +80,39 @@ public class PrincipalDocente extends AppCompatActivity
             Fragment miFragment = new ConsultarHorario();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
 
-        }
-        else if(id==R.id.agregarAgenda){
+        } else if(id==R.id.agregarAgenda){
             Fragment miFragment = new CrearAgenda();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.reportes) {
+            Fragment miFragment = new ReportesDocentes();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.registrarInasistencia) {
+            Fragment miFragment = new RegistrarInasistencias();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.controlClase) {
+            Fragment miFragment = new ControlDeClase();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.crearCursos) {
+            Fragment miFragment = new ControlDeClase();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.matricularEstudiante) {
+            Fragment miFragment = new MatriculaEstudiante();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.modRegMateriasEstudiantes) {
+            Fragment miFragment = new ControlDeClase();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.usuarios) {
+            Fragment miFragment = new ModificarUsuarios();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
         }
+
         else if (id == R.id.nav_share) {
             //Cerrar sesion
         } else if (id == R.id.nav_send) {

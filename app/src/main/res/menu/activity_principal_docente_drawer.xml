@@ -24,6 +24,19 @@
             android:id="@+id/agregarAgenda"
             android:icon="@drawable/ic_menu_manage"
             android:title="Agregar agenda" />
+        <item
+            android:id="@+id/reportes"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Reportes" />
+        <item
+            android:id="@+id/registrarInasistencia"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Registrar inasistencia" />
+        <item
+            android:id="@+id/controlClase"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Control de clase" />
+
     </group>
 
     <item android:title="Communicate">

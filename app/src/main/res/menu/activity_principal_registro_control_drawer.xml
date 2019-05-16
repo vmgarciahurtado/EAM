@@ -16,11 +16,25 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Registro de materias" />
+        <item
+            android:id="@+id/crearCursos"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Crear cursos" />
 
         <item
-            android:id="@+id/registroDocentes"
+            android:id="@+id/matricularEstudiante"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Registro de docentes" />
+            android:title="Matricular estudiantes" />
+
+        <item
+            android:id="@+id/modRegMateriasEstudiantes"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Materias estudiantes" />
+
+        <item
+            android:id="@+id/usuarios"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Modificar usuarios" />
     </group>
 
     <item android:title="Communicate">
