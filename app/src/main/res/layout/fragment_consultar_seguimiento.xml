@@ -5,14 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".estudiante.ConsultarSeguimiento">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:textSize="44dp"
-        android:textColor="#000"
-        android:gravity="center"
-        android:text="Consultar seguimiento"  />
+        android:id="@+id/listaMateriasEstudiante"
+        android:layout_height="wrap_content">
+    </ListView>
 
 </FrameLayout>

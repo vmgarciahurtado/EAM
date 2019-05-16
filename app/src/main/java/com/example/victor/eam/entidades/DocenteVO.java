@@ -1,14 +1,14 @@
 package com.example.victor.eam.entidades;
 
-public class Docente {
+public class DocenteVO {
 
 String id,nombre,tipo;
 
-    public Docente() {
+    public DocenteVO() {
 
     }
 
-    public Docente(String id, String nombre, String tipo) {
+    public DocenteVO(String id, String nombre, String tipo) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;

@@ -22,14 +22,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
-import com.example.victor.eam.entidades.Docente;
+import com.example.victor.eam.entidades.DocenteVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,11 +55,11 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
     private StringRequest stringRequest;
     String ip, materia, docente;
     ArrayList arrayMaterias;
-    ArrayList<Docente>arrayDocentes;
+    ArrayList<DocenteVO>arrayDocentes;
     Spinner spnMateria, spnDocente;
     Button btnAsignar;
     //================================================
-    private Docente docenteVo;
+    private DocenteVO docenteVo;
     public AsignarMaterias() {
         // Required empty public constructor
     }
@@ -231,7 +230,7 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
         try {
             for (int i = 0; i < jsonDocente.length(); i++) {
                 jsonObjectDocente = jsonDocente.getJSONObject(i);
-                docenteVo = new Docente();
+                docenteVo = new DocenteVO();
                 docenteVo.setNombre(jsonObjectDocente.getString("docente"));
                 docenteVo.setId(jsonObjectDocente.getString("id"));
                 //listaNombres.add(jsonObjectDocente.getString("docente" ) + " - "+ jsonObjectDocente.getString("id"));
