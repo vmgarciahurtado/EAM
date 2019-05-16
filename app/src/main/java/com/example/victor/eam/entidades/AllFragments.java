@@ -3,6 +3,7 @@ package com.example.victor.eam.entidades;
 import com.example.victor.eam.director_programa.AsignarMaterias;
 import com.example.victor.eam.director_programa.CreacionCursos;
 import com.example.victor.eam.docente.ConsultarHorario;
+import com.example.victor.eam.docente.CrearAgenda;
 import com.example.victor.eam.docente.RegistroNotas;
 import com.example.victor.eam.docente.TomasLista;
 import com.example.victor.eam.estudiante.ConsultarSeguimiento;
@@ -25,7 +26,7 @@ public interface AllFragments extends
         RegistroAulas.OnFragmentInteractionListener,
         RegistroDocentes.OnFragmentInteractionListener,
         RegistroEstudiantes.OnFragmentInteractionListener,
-        PrincipalPantallas.OnFragmentInteractionListener
-
+        PrincipalPantallas.OnFragmentInteractionListener,
+        CrearAgenda.OnFragmentInteractionListener
 {
 }
