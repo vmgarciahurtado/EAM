@@ -1,5 +1,6 @@
 package com.example.victor.eam.director_programa;
 
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -41,6 +42,7 @@ public class PrincipalDirectorPrograma extends AppCompatActivity
 
         //Este es el fragmet que se carga de primero
         Fragment miFragment = new PrincipalPantallas();
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getSupportFragmentManager().beginTransaction().replace(R.id.containerDirectorPrograma, miFragment).commit();
     }
 

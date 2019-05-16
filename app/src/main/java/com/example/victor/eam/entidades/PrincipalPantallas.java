@@ -69,6 +69,13 @@ public class PrincipalPantallas extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_principal_pantallas, container, false);
 
         webView = vista.findViewById(R.id.webViewPrincipal);
+       webView.getSettings().setJavaScriptEnabled(true);
+       /*webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);*/
+        //webView.loadUrl("https://www.eam.edu.co/");
+
         webView.loadUrl("http://192.168.0.9/bd/PruebaGrafica.php");
         return vista;
     }

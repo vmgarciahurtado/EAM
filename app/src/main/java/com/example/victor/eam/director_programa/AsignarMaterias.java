@@ -243,7 +243,6 @@ public class AsignarMaterias extends Fragment implements Response.Listener<JSONO
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     //docente = String.valueOf(position + 1 );
-
                     String codigo = arrayDocentes.get(spnDocente.getPositionForView(view)).getId();
                     Toast.makeText(getContext(), "Codigo: " + codigo, Toast.LENGTH_SHORT).show();
                 }

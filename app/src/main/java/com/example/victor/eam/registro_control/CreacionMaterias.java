@@ -66,6 +66,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     private StringRequest stringRequest;
 
     ArrayList arrayEntornos;
+    ArrayList arrayMaterias;
 
     //VARIABLES
     String prerrequisitos;
@@ -170,8 +171,16 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         dialogoPrerequisitos = new Dialog(this.getContext());
         dialogActa = new Dialog(this.getContext());
 
+        cargarPrerrequisitos();
         cargarEntorno();
         return vista;
+    }
+
+    private void cargarPrerrequisitos() {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultaMaterias);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void cargarEntorno() {
@@ -215,14 +224,16 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
 
                 String nombre = campoNombre.getText().toString();
+                String costoMateria = campoCosto.getText().toString();
 
                 Map<String, String> parametros = new HashMap<>();
+                parametros.put("$nombre", nombre);
                 parametros.put("$intensidadhoraria", String.valueOf(contadorHoras));
                 parametros.put("$numerocreditos", String.valueOf(contadorCreditos));
-                parametros.put("$actadescriptiva", String.valueOf(contadorCreditos));
-                parametros.put("$costomateria", String.valueOf(contadorCreditos));
-                parametros.put("$entornomateria", String.valueOf(contadorCreditos));
-                parametros.put("$prerrequisito", String.valueOf(contadorCreditos));
+                parametros.put("$actadescriptiva", String.valueOf(actaDescriptiva));
+                parametros.put("$costomateria", costoMateria);
+                parametros.put("$entornomateria", String.valueOf(entorno));
+                parametros.put("$prerrequisito", String.valueOf(prerrequisitos));
                 parametros.put("$numerocreditos", String.valueOf(contadorCreditos));
 
                 Log.i("--------PARAMETROS ", parametros.toString());
@@ -284,6 +295,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         }
 
         campoActa = dialogActa.findViewById(R.id.campoActaDescrptiva);
+        actaDescriptiva = campoActa.getText().toString();
         aceptar = dialogActa.findViewById(R.id.btnAceptarActa);
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,7 +326,22 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             Log.i("Error ", e.toString());
         }
 
+
         spinnerMaterias = dialogoPrerequisitos.findViewById(R.id.spinnerPrerrequisitos);
+        ArrayAdapter<CharSequence> adapterMateria = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayMaterias);
+        spinnerMaterias.setAdapter(adapterMateria);
+        spinnerMaterias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                prerrequisitos = String.valueOf(position + 1 );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         aceptar = dialogoPrerequisitos.findViewById(R.id.btnAceptarPrerrequisitos);
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,6 +410,20 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
                 }
             });
+        } catch (Exception e) {
+
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        JSONArray jsonMateria = response.optJSONArray("materia");
+        JSONObject jsonObjectMateria;
+        arrayMaterias = new ArrayList();
+        try {
+            for (int i = 0; i < jsonEntorno.length(); i++) {
+                jsonObjectMateria = jsonMateria.getJSONObject(i);
+                arrayMaterias.add(jsonObjectMateria.getString("nombre"));
+            }
+
         } catch (Exception e) {
 
         }
