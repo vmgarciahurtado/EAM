@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.victor.eam.R;
+import com.example.victor.eam.docente.ControlDeClase;
 import com.example.victor.eam.entidades.AllFragments;
 import com.example.victor.eam.entidades.PrincipalPantallas;
 
@@ -79,9 +80,26 @@ public class PrincipalRegistroControl extends AppCompatActivity
 
         } else if (id == R.id.registroDocentes) {
             Fragment miFragment = new RegistroDocentes();
-            setTitle("Registro  de docentes");
+            setTitle("Registro  de docente");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
+
+        }else if(id==R.id.crearCursos) {
+            Fragment miFragment = new ControlDeClase();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.matricularEstudiante) {
+            Fragment miFragment = new MatriculaEstudiante();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.modRegMateriasEstudiantes) {
+            Fragment miFragment = new ControlDeClase();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
+        }else if(id==R.id.usuarios) {
+            Fragment miFragment = new ModificarUsuarios();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
         }
+
 
         else if (id == R.id.nav_share) {
             //Cerrar Sesion

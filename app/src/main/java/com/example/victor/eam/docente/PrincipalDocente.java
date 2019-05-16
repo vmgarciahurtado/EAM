@@ -96,24 +96,7 @@ public class PrincipalDocente extends AppCompatActivity
             Fragment miFragment = new ControlDeClase();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
 
-        }else if(id==R.id.crearCursos) {
-            Fragment miFragment = new ControlDeClase();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
-
-        }else if(id==R.id.matricularEstudiante) {
-            Fragment miFragment = new MatriculaEstudiante();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
-
-        }else if(id==R.id.modRegMateriasEstudiantes) {
-            Fragment miFragment = new ControlDeClase();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
-
-        }else if(id==R.id.usuarios) {
-            Fragment miFragment = new ModificarUsuarios();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
-        }
-
-        else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_share) {
             //Cerrar sesion
         } else if (id == R.id.nav_send) {
             //Salir de la aplicacion

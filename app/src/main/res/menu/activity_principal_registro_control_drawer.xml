@@ -35,6 +35,11 @@
             android:id="@+id/usuarios"
             android:icon="@drawable/ic_menu_manage"
             android:title="Modificar usuarios" />
+
+        <item
+            android:id="@+id/registroDocentes"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Registrar docentes" />
     </group>
 
     <item android:title="Communicate">
