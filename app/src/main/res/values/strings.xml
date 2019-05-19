@@ -11,6 +11,7 @@
     <string name="ipConsultaEntornos">consultarEntornos.php</string>
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
+    <string name="ipConsultaCursos">obtenerCursoDocente.php</string>
     <string name="ipConsultarSeguimiento">consultarSeguimiento.php</string>
 
     <!-- IP REGISTROS-->

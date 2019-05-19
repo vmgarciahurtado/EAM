@@ -2,24 +2,18 @@ package com.example.victor.eam.docente;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.victor.eam.R;
 import com.example.victor.eam.entidades.AllFragments;
 import com.example.victor.eam.entidades.PrincipalPantallas;
-import com.example.victor.eam.registro_control.MatriculaEstudiante;
-import com.example.victor.eam.registro_control.ModificarUsuarios;
 
 public class PrincipalDocente extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,AllFragments {
@@ -69,7 +63,7 @@ public class PrincipalDocente extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
 
         } else if (id == R.id.nav_gallery) {
-            Fragment miFragment = new RegistroNotas();
+            Fragment miFragment = new VerCursos();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
