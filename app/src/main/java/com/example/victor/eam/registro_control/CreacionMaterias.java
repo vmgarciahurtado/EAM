@@ -74,6 +74,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     String ip;
     String entorno;
 
+    Spinner spinnerMaterias;
     int contadorHoras = 0, contadorCreditos = 0;
 
     public CreacionMaterias() {
@@ -168,10 +169,10 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             }
         });
         spinnerEntorno = vista.findViewById(R.id.spinnerEntorno);
+
         dialogoPrerequisitos = new Dialog(this.getContext());
         dialogActa = new Dialog(this.getContext());
 
-        cargarPrerrequisitos();
         cargarEntorno();
         return vista;
     }
@@ -212,7 +213,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             @Override
             protected Map<String, String> getParams() {
 
-                
+
                 /*
     * $intensidadhoraria= $_POST["intensidadhoraria"];
 	$numerocreditos= $_POST["nucreditoacademico"];
@@ -316,7 +317,8 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
     private void showPopupPrerrequisitos() {
         Button aceptar, cancelar;
-        Spinner spinnerMaterias;
+
+        cargarPrerrequisitos();
 
         try {
             dialogoPrerequisitos.setContentView(R.layout.popup_prerrequisito);
@@ -328,8 +330,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
 
         spinnerMaterias = dialogoPrerequisitos.findViewById(R.id.spinnerPrerrequisitos);
-        ArrayAdapter<CharSequence> adapterMateria = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayMaterias);
-        spinnerMaterias.setAdapter(adapterMateria);
+
         spinnerMaterias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -419,11 +420,12 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         JSONObject jsonObjectMateria;
         arrayMaterias = new ArrayList();
         try {
-            for (int i = 0; i < jsonEntorno.length(); i++) {
+            for (int i = 0; i < jsonMateria.length(); i++) {
                 jsonObjectMateria = jsonMateria.getJSONObject(i);
                 arrayMaterias.add(jsonObjectMateria.getString("nombre"));
             }
-
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayMaterias);
+            spinnerMaterias.setAdapter(adapter);
         } catch (Exception e) {
 
         }

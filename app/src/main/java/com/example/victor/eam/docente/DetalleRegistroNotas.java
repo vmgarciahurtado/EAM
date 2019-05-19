@@ -1,4 +1,4 @@
-package com.example.victor.eam.estudiante;
+package com.example.victor.eam.docente;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,20 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ConsultarSeguimiento.OnFragmentInteractionListener} interface
+ * {@link DetalleRegistroNotas.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ConsultarSeguimiento#newInstance} factory method to
+ * Use the {@link DetalleRegistroNotas#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ConsultarSeguimiento extends Fragment {
+public class DetalleRegistroNotas extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,14 +30,7 @@ public class ConsultarSeguimiento extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    //DESDE AQUI EMPEZAMOS
-    RequestQueue request;
-    JsonObjectRequest jsonObjectRequest;
-
-    //VARIABLES
-    String ip;
-
-    public ConsultarSeguimiento() {
+    public DetalleRegistroNotas() {
         // Required empty public constructor
     }
 
@@ -50,11 +40,11 @@ public class ConsultarSeguimiento extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ConsultarSeguimiento.
+     * @return A new instance of fragment DetalleRegistroNotas.
      */
     // TODO: Rename and change types and number of parameters
-    public static ConsultarSeguimiento newInstance(String param1, String param2) {
-        ConsultarSeguimiento fragment = new ConsultarSeguimiento();
+    public static DetalleRegistroNotas newInstance(String param1, String param2) {
+        DetalleRegistroNotas fragment = new DetalleRegistroNotas();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,11 +62,10 @@ public class ConsultarSeguimiento extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_consultar_seguimiento, container, false);
-        ip = getContext().getString(R.string.ip);
-        request = Volley.newRequestQueue(getContext());
-        return vista;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_detalle_registro_notas, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

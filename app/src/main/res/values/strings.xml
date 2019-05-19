@@ -1,15 +1,22 @@
 <resources>
+
+    <!-- IP GROBAL -->
     <string name="app_name">EAM</string>
     <string name="ip">http://192.168.0.12/bd/</string>
-    <string name="ipRegistro">registroEstudiantes.php</string>
+
+    <!-- IP CONSULTAS-->
     <string name="ipFacultades">consultaFacultades.php</string>
     <string name="ipProgramas">consultaProgramas.php?id=</string>
-    <string name="ipRegistroDocentes">registroDocentes.php</string>
-    <string name="ipRegistroMaterias">registroMaterias.php</string>
     <string name="ipConsultaTipoDocente">consultaTipoDocente.php</string>
     <string name="ipConsultaEntornos">consultarEntornos.php</string>
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
+    <string name="ipConsultarSeguimiento">consultarSeguimiento.php</string>
+
+    <!-- IP REGISTROS-->
+    <string name="ipRegistroDocentes">registroDocentes.php</string>
+    <string name="ipRegistroMaterias">registroMaterias.php</string>
+    <string name="ipRegistro">registroEstudiantes.php</string>
     <string name="ipRegistrarCurso">registrarCurso.php</string>
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
 
