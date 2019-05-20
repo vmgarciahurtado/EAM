@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.victor.eam.R;
 import com.example.victor.eam.entidades.VolleySingleton;
 
@@ -27,6 +32,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +54,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RequestQueue request;
+    private StringRequest stringRequest;
     EditText txtCodigo, txtCedula, txtNombre, txtFechaNacimiento, txtEstado, txtDireccion, txtTelefono, txtCorreo;
     Spinner spnPrograma, spnSemestre;
     Button btnBuscar, btnModificar, btnInactivar;
@@ -160,10 +169,109 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     }
 
     private void inactivarEstudiante() {
+        final String codigo = txtCodigo.getText().toString();
+        final String estado = "0";
+
+        String url;
+        url = ip + getContext().getString(R.string.);
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equalsIgnoreCase("modifico")) {
+                    Log.i("********RESULTADO", "Respuesta server" + response);
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+
+
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("codigoEstudiante", codigo);
+                parametros.put("cedulaEstudiante", cedula);
+                parametros.put("nombreEstudiante", nombre);
+                parametros.put("fechaNacimiento", fecha);
+                parametros.put("estadoEstudiante", estado);
+                parametros.put("direccionEstudiante", direccion);
+                parametros.put("telefonoEstudiante", telefono);
+                parametros.put("correoElectronico", correo);
+                parametros.put("programaAcademico", programaAcademico);
+                parametros.put("semestre_numeroSemetre", semestre);
+                Log.i("--------PARAMETROS ", parametros.toString());
+                return parametros;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.add(stringRequest);
 
     }
 
     private void modificarEstudiante() {
+        final String codigo = txtCodigo.getText().toString();
+        final String cedula = txtCedula.getText().toString();
+        final String nombre = txtNombre.getText().toString();
+        final String fecha = txtFechaNacimiento.getText().toString();
+        final String estado = txtEstado.getText().toString();
+        final String direccion = txtDireccion.getText().toString();
+        final String telefono = txtTelefono.getText().toString();
+        final String correo = txtCorreo.getText().toString();
+
+        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")){
+            String url;
+            url = ip + getContext().getString(R.string.ipModificarEstudiante);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("modifico")) {
+                        Log.i("********RESULTADO", "Respuesta server" + response);
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+
+
+
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("codigoEstudiante", codigo);
+                    parametros.put("cedulaEstudiante", cedula);
+                    parametros.put("nombreEstudiante", nombre);
+                    parametros.put("fechaNacimiento", fecha);
+                    parametros.put("estadoEstudiante", estado);
+                    parametros.put("direccionEstudiante", direccion);
+                    parametros.put("telefonoEstudiante", telefono);
+                    parametros.put("correoElectronico", correo);
+                    parametros.put("programaAcademico", programaAcademico);
+                    parametros.put("semestre_numeroSemetre", semestre);
+                    Log.i("--------PARAMETROS ", parametros.toString());
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+        }else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
