@@ -97,7 +97,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragmen
         View vista = inflater.inflate(R.layout.fragment_crear_cursos, container, false);
         ip = getContext().getString(R.string.ip);
         txtNombreCurso = vista.findViewById(R.id.txtNombreCurso);
