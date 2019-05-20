@@ -348,6 +348,17 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
             }
             ArrayAdapter<CharSequence> adapterSemestre = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arraySemestres);
             spinnerSemestre.setAdapter(adapterSemestre);
+            spinnerSemestre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    semestre = String.valueOf(position+1);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
         } catch (Exception e) {
 
         }
