@@ -123,7 +123,7 @@ public class RegistroDocentes extends Fragment implements Response.ErrorListener
         final String nombre = campoNombre.getText().toString();
         final String cedula = campoCedula.getText().toString();
 
-       if (!nombre.equals("") && !cedula.equals("") && !tipoDocente.equals("")){
+       if (!nombre.equals("") || !cedula.equals("") || !tipoDocente.equals("")){
         String url;
         url = ip + getContext().getString(R.string.ipRegistroDocentes);
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

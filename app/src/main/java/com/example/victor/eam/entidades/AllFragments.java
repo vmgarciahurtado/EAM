@@ -21,6 +21,7 @@ import com.example.victor.eam.registro_control.RegistroAulas;
 import com.example.victor.eam.registro_control.RegistroDocentes;
 import com.example.victor.eam.registro_control.RegistroEstudiantes;
 import com.example.victor.eam.registro_control.RegistroMateriaEst;
+import com.example.victor.eam.registro_control.contratoDocentes;
 
 public interface AllFragments extends
         AsignarMaterias.OnFragmentInteractionListener,
@@ -45,6 +46,7 @@ public interface AllFragments extends
         ModificarUsuarios.OnFragmentInteractionListener,
         DetalleRegistroNotas.OnFragmentInteractionListener,
         ModificarDocente.OnFragmentInteractionListener,
-        ModificarEstudiante.OnFragmentInteractionListener
+        ModificarEstudiante.OnFragmentInteractionListener,
+        contratoDocentes.OnFragmentInteractionListener
 {
 }

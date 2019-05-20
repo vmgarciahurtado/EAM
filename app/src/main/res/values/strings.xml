@@ -23,6 +23,7 @@
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
     <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoEstudiante=</string>
     <string name="ipObtenerDocente">obtenerDocente.php?iddocente=</string>
+    <string name="ipContratoDocente">registroContratoDocente.php</string>
 
 
     <!--IP MODIFICAR-->

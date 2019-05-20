@@ -40,6 +40,12 @@
             android:id="@+id/registroDocentes"
             android:icon="@drawable/ic_menu_manage"
             android:title="Registrar docentes" />
+
+        <item
+            android:id="@+id/contratoDocentes"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Contrato docentes" />
+
     </group>
 
     <item android:title="Communicate">

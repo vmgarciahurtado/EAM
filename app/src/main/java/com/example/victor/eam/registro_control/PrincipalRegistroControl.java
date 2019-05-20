@@ -102,6 +102,11 @@ public class PrincipalRegistroControl extends AppCompatActivity
             Fragment miFragment = new ModificarUsuarios();
             setTitle("Gestionar usuarios");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
+
+        }else if(id==R.id.contratoDocentes) {
+            Fragment miFragment = new contratoDocentes();
+            setTitle("Contrato docentes");
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
         }
 
 

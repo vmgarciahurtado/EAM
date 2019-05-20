@@ -7,7 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 
 /**
@@ -29,6 +35,12 @@ public class RegistroMaterias extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RequestQueue request;
+    private StringRequest stringRequest;
+    String ip;
+    ListView lstMaterias;
+    Spinner spnMaterias;
+    Button btnagregarLista, btnregistrar;
 
     public RegistroMaterias() {
         // Required empty public constructor
@@ -65,7 +77,34 @@ public class RegistroMaterias extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registro_materias, container, false);
+        View vista = inflater.inflate(R.layout.fragment_registro_materias, container, false);
+        request = Volley.newRequestQueue(getContext());
+        ip = getContext().getString(R.string.ip);
+        lstMaterias = vista.findViewById(R.id.lstMaterias);
+        spnMaterias = vista.findViewById(R.id.spnMateriaEstudiante);
+        btnagregarLista = vista.findViewById(R.id.btnAgregarALista);
+        btnagregarLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                agregarLista();
+            }
+        });
+        btnregistrar = vista.findViewById(R.id.btnRegistrarMaterias);
+        btnregistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrarMateria();
+            }
+        });
+        return vista;
+    }
+
+    private void registrarMateria() {
+
+    }
+
+    private void agregarLista() {
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

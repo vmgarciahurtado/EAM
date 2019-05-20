@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.entidades.DocenteVO;
 import com.example.victor.eam.entidades.VolleySingleton;
@@ -62,8 +63,9 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     Button btnAgregar;
     ArrayList arrayMaterias;
     ArrayList arrayListDocentes;
-    ArrayList<DocenteVO>arrayDocentes;
+    ArrayList<DocenteVO> arrayDocentes;
     private DocenteVO docenteVo;
+
     public CrearCursos() {
         // Required empty public constructor
     }
@@ -101,6 +103,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
         // Inflate the layout for this fragmen
         View vista = inflater.inflate(R.layout.fragment_crear_cursos, container, false);
         ip = getContext().getString(R.string.ip);
+        request = Volley.newRequestQueue(getContext());
         txtNombreCurso = vista.findViewById(R.id.txtNombreCurso);
         txtAnoCurso = vista.findViewById(R.id.txtAñoCurso);
         spnMateria = vista.findViewById(R.id.spnMateriaCurso);
@@ -134,12 +137,12 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     }
 
     private void crearCurso() {
-        final String nombreCurso=txtNombreCurso.getText().toString();
-        final String añoEnCurso="2019";
+        final String nombreCurso = txtNombreCurso.getText().toString();
+        final String añoEnCurso = "2019";
         final String dia = spnDiaCurso.getSelectedItem().toString();
         final String horaInicio = txthoraInicio.getText().toString();
-        final String horaFin =txtHoraFin.getText().toString();
-        if (!nombreCurso.equals("")||!horaInicio.equals("")||!horaFin.equals("")){
+        final String horaFin = txtHoraFin.getText().toString();
+        if (!nombreCurso.equals("") || !horaInicio.equals("") || !horaFin.equals("")) {
             String url;
             url = ip + getContext().getString(R.string.ipRegistrarCurso);
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -175,11 +178,12 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             request.add(stringRequest);
 
-        }else {
+        } else {
             Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     private void cargarMaterias() {
         String url;
         url = ip + getContext().getString(R.string.ipConsultaMaterias);
@@ -196,7 +200,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
 
     public void configurarDia() {
         String[] dia = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item,dia);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, dia);
         spnDiaCurso.setAdapter(adapter);
     }
 
@@ -205,23 +209,24 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
         Calendar c = Calendar.getInstance();
         hora = c.get(Calendar.HOUR_OF_DAY);
         minutos = c.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                txthoraInicio.setText(hourOfDay+":"+minute);
+                txthoraInicio.setText(hourOfDay + ":" + minute);
             }
         }, hora, minutos, false);
         timePickerDialog.show();
     }
+
     public void configurarHoraFin() {
         int hora, minutos;
         Calendar c = Calendar.getInstance();
         hora = c.get(Calendar.HOUR_OF_DAY);
         minutos = c.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                txtHoraFin.setText(hourOfDay+":"+minute);
+                txtHoraFin.setText(hourOfDay + ":" + minute);
             }
         }, hora, minutos, false);
         timePickerDialog.show();
@@ -272,7 +277,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
             spnMateria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    materia = String.valueOf(position + 1 );
+                    materia = String.valueOf(position + 1);
                 }
 
                 @Override
@@ -301,7 +306,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
                 //arrayListDocentes.add(docenteVo.toString());
             }
 
-            ArrayAdapter<CharSequence> adapterDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item,arrayDocentes);
+            ArrayAdapter<CharSequence> adapterDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayDocentes);
             spnDocente.setAdapter(adapterDocente);
             spnDocente.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
