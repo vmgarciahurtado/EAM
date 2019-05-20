@@ -11,13 +11,12 @@
     <string name="ipConsultaEntornos">consultarEntornos.php</string>
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
-    <string name="ipConsultarSeguimiento">consultarSeguimiento.php</string>
 
     <!-- IP REGISTROS-->
     <string name="ipRegistroDocentes">registroDocentes.php</string>
     <string name="ipRegistroMaterias">registroMaterias.php</string>
     <string name="ipRegistro">registroEstudiantes.php</string>
-    <string name="ipRegistrarCurso">registrarCurso.php</string>
+    <string name="ipRegistrarCurso">creacionCurso.php</string>
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
 
 
