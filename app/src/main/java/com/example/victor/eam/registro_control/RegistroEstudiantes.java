@@ -340,7 +340,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
 
         JSONArray jsonSemestre = response.optJSONArray("semestre");
         JSONObject jsonObjectSemestre;
-        arrayFacultades = new ArrayList();
+        arraySemestres = new ArrayList();
         try {
             for (int i = 0; i < jsonSemestre.length(); i++) {
                 jsonObjectSemestre = jsonSemestre.getJSONObject(i);
