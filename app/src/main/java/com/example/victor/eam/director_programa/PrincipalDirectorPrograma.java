@@ -75,8 +75,8 @@ public class PrincipalDirectorPrograma extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
             //Este es el fragmet que se carga de primero
-            Fragment miFragment = new CreacionCursos();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDirectorPrograma, miFragment).commit();
+
+
         } else if (id == R.id.nav_share) {
             //Cerrar sesion
         } else if (id == R.id.nav_send) {

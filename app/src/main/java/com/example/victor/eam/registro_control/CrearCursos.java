@@ -61,6 +61,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     Spinner spnMateria, spnDocente, spnDiaCurso;
     Button btnAgregar;
     ArrayList arrayMaterias;
+    ArrayList arrayListDocentes;
     ArrayList<DocenteVO>arrayDocentes;
     private DocenteVO docenteVo;
     public CrearCursos() {
@@ -103,7 +104,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
         txtNombreCurso = vista.findViewById(R.id.txtNombreCurso);
         txtAnoCurso = vista.findViewById(R.id.txtAñoCurso);
         spnMateria = vista.findViewById(R.id.spnMateriaCurso);
-        spnDocente = vista.findViewById(R.id.spnDocente);
+        spnDocente = vista.findViewById(R.id.spnDocenteCurso);
         spnDiaCurso = vista.findViewById(R.id.spnDiaCurso);
         txtHoraFin = vista.findViewById(R.id.txtHoraFinCurso);
         txtHoraFin.setOnClickListener(new View.OnClickListener() {
@@ -263,7 +264,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
         try {
             for (int i = 0; i < jsonMateria.length(); i++) {
                 jsonObjectMateria = jsonMateria.getJSONObject(i);
-                arrayMaterias.add(jsonObjectMateria.getString("materia"));
+                arrayMaterias.add(jsonObjectMateria.getString("nombre"));
             }
 
             ArrayAdapter<CharSequence> adapterMateria = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayMaterias);
@@ -287,15 +288,17 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
         JSONArray jsonDocente = response.optJSONArray("docente");
         JSONObject jsonObjectDocente;
         arrayDocentes = new ArrayList();
+        arrayListDocentes = new ArrayList();
         //final ArrayList listaNombres = new ArrayList();
 
         try {
             for (int i = 0; i < jsonDocente.length(); i++) {
                 jsonObjectDocente = jsonDocente.getJSONObject(i);
                 docenteVo = new DocenteVO();
-                docenteVo.setNombre(jsonObjectDocente.getString("docente"));
+                docenteVo.setNombre(jsonObjectDocente.getString("nombre"));
                 docenteVo.setId(jsonObjectDocente.getString("id"));
                 arrayDocentes.add(docenteVo);
+                //arrayListDocentes.add(docenteVo.toString());
             }
 
             ArrayAdapter<CharSequence> adapterDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item,arrayDocentes);

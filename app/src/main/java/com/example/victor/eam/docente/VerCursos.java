@@ -157,16 +157,11 @@ public class VerCursos extends Fragment implements Response.ErrorListener, Respo
 
             adapterCursos = new AdapterCursos(getContext(),listaCursos);
             listViewCursos.setAdapter(adapterCursos);
-            listViewCursos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            listViewCursos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String codigo = listaCursos.get(listViewCursos.getPositionForView(view)).getNombre();
                     Toast.makeText(getContext(), "Nombre: " + codigo, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
                 }
             });
 

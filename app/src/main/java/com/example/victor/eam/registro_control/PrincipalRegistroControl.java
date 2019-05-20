@@ -84,24 +84,24 @@ public class PrincipalRegistroControl extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         }else if(id==R.id.crearCursos) {
-            Fragment miFragment = new ControlDeClase();
+            Fragment miFragment = new CrearCursos();
             setTitle("Crear cursos");
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         }else if(id==R.id.matricularEstudiante) {
             Fragment miFragment = new MatriculaEstudiante();
             setTitle("Matricular estudiante");
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         }else if(id==R.id.modRegMateriasEstudiantes) {
             Fragment miFragment = new ControlDeClase();
             setTitle("Modificar materias de estudiante");
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         }else if(id==R.id.usuarios) {
             Fragment miFragment = new ModificarUsuarios();
             setTitle("Gestionar usuarios");
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
         }
 
 
