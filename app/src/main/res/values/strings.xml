@@ -21,10 +21,16 @@
     <string name="ipRegistro">registroEstudiantes.php</string>
     <string name="ipRegistrarCurso">registrarCurso.php</string>
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
+    <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoEstudiante=</string>
+    <string name="ipObtenerDocente">obtenerDocente.php?iddocente=</string>
+
 
     <!--IP MODIFICAR-->
     <string name="ipModificarEstudiante">modificarEstudiante.php</string>
     <string name="ipModificarDocente">modificarDocente.php</string>
+    <string name="ipInactivarEstudiante">estadoEstudiante.php</string>
+    <string name="ipInactivarDocente">estadoDocente.php</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

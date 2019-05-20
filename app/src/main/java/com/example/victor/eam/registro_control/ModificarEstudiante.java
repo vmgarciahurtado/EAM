@@ -25,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.DocenteVO;
+import com.example.victor.eam.entidades.EstudianteVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
@@ -62,6 +64,9 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     String ip, programaAcademico, semestre;
     ArrayList arrayProgramas;
     ArrayList arraySemestres;
+    private EstudianteVO estudiante;
+    ArrayList arrayListEstudiante;
+    ArrayList<EstudianteVO> arrayEstudiante;
 
     public ModificarEstudiante() {
         // Required empty public constructor
@@ -173,7 +178,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         final String estado = "0";
 
         String url;
-        url = ip + getContext().getString(R.string.);
+        url = ip + getContext().getString(R.string.ipInactivarEstudiante);
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -194,18 +199,9 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
             protected Map<String, String> getParams() {
 
 
-
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("codigoEstudiante", codigo);
-                parametros.put("cedulaEstudiante", cedula);
-                parametros.put("nombreEstudiante", nombre);
-                parametros.put("fechaNacimiento", fecha);
                 parametros.put("estadoEstudiante", estado);
-                parametros.put("direccionEstudiante", direccion);
-                parametros.put("telefonoEstudiante", telefono);
-                parametros.put("correoElectronico", correo);
-                parametros.put("programaAcademico", programaAcademico);
-                parametros.put("semestre_numeroSemetre", semestre);
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
 
@@ -226,7 +222,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         final String telefono = txtTelefono.getText().toString();
         final String correo = txtCorreo.getText().toString();
 
-        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")){
+        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")) {
             String url;
             url = ip + getContext().getString(R.string.ipModificarEstudiante);
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -249,7 +245,6 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                 protected Map<String, String> getParams() {
 
 
-
                     Map<String, String> parametros = new HashMap<>();
                     parametros.put("codigoEstudiante", codigo);
                     parametros.put("cedulaEstudiante", cedula);
@@ -268,7 +263,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
             };
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             request.add(stringRequest);
-        }else {
+        } else {
             Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
         }
 
@@ -276,7 +271,10 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     }
 
     private void buscarEstudiante() {
-
+        String url;
+        url = ip + getContext().getString(R.string.ipObtenerEstudiante)+12345;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -310,6 +308,41 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
     @Override
     public void onResponse(JSONObject response) {
+        estudiante = null;
+        JSONArray jsonEstudiante = response.optJSONArray("estudiantes");
+        JSONObject jsonObjectEstudiante;
+        arrayEstudiante = new ArrayList();
+        arrayListEstudiante = new ArrayList();
+        //final ArrayList listaNombres = new ArrayList();
+
+        try {
+            for (int i = 0; i < jsonEstudiante.length(); i++) {
+                jsonObjectEstudiante = jsonEstudiante.getJSONObject(i);
+                estudiante = new EstudianteVO();
+                estudiante.setCedulaEstudiante(jsonObjectEstudiante.getInt("cedula"));
+                estudiante.setNombreEstudiante(jsonObjectEstudiante.getString("nombre"));
+                estudiante.setFechaNacimiento(jsonObjectEstudiante.getString("fecha"));
+                estudiante.setEstadoEstado(jsonObjectEstudiante.getString("estado"));
+                estudiante.setDireccion(jsonObjectEstudiante.getString("direccion"));
+                estudiante.setTelefono(jsonObjectEstudiante.getString("telefono"));
+                estudiante.setCorreo(jsonObjectEstudiante.getString("correo"));
+                estudiante.setPrograma(jsonObjectEstudiante.getInt("programa"));
+                estudiante.setSemestre(jsonObjectEstudiante.getInt("semestre"));
+                arrayEstudiante.add(estudiante);
+            }
+            txtCedula.setText(estudiante.getCedulaEstudiante());
+            txtNombre.setText(estudiante.getNombreEstudiante());
+            txtFechaNacimiento.setText(estudiante.getFechaNacimiento());
+            txtEstado.setText(estudiante.getEstadoEstado());
+            txtDireccion.setText(estudiante.getDireccion());
+            txtTelefono.setText(estudiante.getTelefono());
+            txtCorreo.setText(estudiante.getCorreo());
+            spnPrograma.setSelection(estudiante.getPrograma());
+            spnSemestre.setSelection(estudiante.getSemestre());
+        } catch (Exception e) {
+
+        }
+
         JSONArray jsonPrograma = response.optJSONArray("programa");
         JSONObject jsonObjectPrograma;
         arrayProgramas = new ArrayList();
@@ -348,7 +381,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
             spnSemestre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    semestre = String.valueOf(position+1);
+                    semestre = String.valueOf(position + 1);
                 }
 
                 @Override
