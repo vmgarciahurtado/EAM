@@ -74,12 +74,13 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
 
     int accion;
     EditText campoCodigo, campoCedula, campoNombre, campoEstado, campoDireccion, campoTelefono, campoCoreo;
-    Spinner spinnerFacultad, spinnerPrograma;
+    Spinner spinnerFacultad, spinnerPrograma, spinnerSemestre;
     TextView campoFecha;
     Button btnRegistrar;
-    String ip, programaAcademico;
+    String ip, programaAcademico, semestre;
     ArrayList arrayFacultades;
     ArrayList arrayProgramas;
+    ArrayList arraySemestres;
 
     public RegistroEstudiantes() {
         // Required empty public constructor
@@ -124,6 +125,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
         campoCoreo = vista.findViewById(R.id.campoCorreo);
         spinnerFacultad = vista.findViewById(R.id.spinnerFacultad);
         spinnerPrograma = vista.findViewById(R.id.spinnerPrograma);
+        spinnerSemestre = vista.findViewById(R.id.spinnerSemestre);
         campoFecha = vista.findViewById(R.id.campoFecha);
         campoFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +142,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
         });
         request = Volley.newRequestQueue(getContext());
         cargarFacultad();
+        cargarSemestre();
         asignarCodigo();
         return vista;
     }
@@ -168,6 +171,13 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
         accion = 2;
+    }
+
+    private void cargarSemestre(){
+        String url;
+        url = ip+getContext().getString(R.string.ipConsultarSemestre);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void registrar() {
@@ -205,15 +215,16 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
 
 
                     Map<String, String> parametros = new HashMap<>();
-                    parametros.put("codigo", codigo);
-                    parametros.put("cedula", cedula);
-                    parametros.put("nombre", nombre);
+                    parametros.put("codigoEstudiante", codigo);
+                    parametros.put("cedulaEstudiante", cedula);
+                    parametros.put("nombreEstudiante", nombre);
                     parametros.put("fechaNacimiento", fecha);
-                    parametros.put("estado", "1");
-                    parametros.put("direccion", direccion);
-                    parametros.put("telefono", telefono);
-                    parametros.put("correo", correo);
+                    parametros.put("estadoEstudiante", "1");
+                    parametros.put("direccionEstudiante", direccion);
+                    parametros.put("telefonoEstudiante", telefono);
+                    parametros.put("correoElectronico", correo);
                     parametros.put("programaAcademico", programaAcademico);
+                    parametros.put("semestre_numeroSemetre", semestre);
                     Log.i("--------PARAMETROS ", parametros.toString());
                     return parametros;
 
@@ -326,6 +337,22 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
                 }
                 break;
         }
+
+        JSONArray jsonSemestre = response.optJSONArray("semestre");
+        JSONObject jsonObjectSemestre;
+        arrayFacultades = new ArrayList();
+        try {
+            for (int i = 0; i < jsonSemestre.length(); i++) {
+                jsonObjectSemestre = jsonSemestre.getJSONObject(i);
+                arraySemestres.add(jsonObjectSemestre.getString("nombre"));
+            }
+            ArrayAdapter<CharSequence> adapterSemestre = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arraySemestres);
+            spinnerSemestre.setAdapter(adapterSemestre);
+        } catch (Exception e) {
+
+        }
+
+
 
     }
 
