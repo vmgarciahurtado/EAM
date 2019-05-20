@@ -93,21 +93,21 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnBuscar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="buscar" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnModificar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Modificar" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnInactivar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Inactivar" />
     </LinearLayout>
 </FrameLayout>

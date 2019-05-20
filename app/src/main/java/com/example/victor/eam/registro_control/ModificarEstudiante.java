@@ -106,21 +106,21 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         txtCorreo = vista.findViewById(R.id.txtCorreo);
         spnPrograma = vista.findViewById(R.id.spnPrograma);
         spnSemestre = vista.findViewById(R.id.spnSemestre);
-        btnBuscar = vista.findViewById(R.id);
+        btnBuscar = vista.findViewById(R.id.btnBuscar);
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buscarEstudiante();
             }
         });
-        btnModificar = vista.findViewById(R.id.);
+        btnModificar = vista.findViewById(R.id.btnModificar);
         btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modificarEstudiante();
             }
         });
-        btnInactivar = vista.findViewById(R.id.);
+        btnInactivar = vista.findViewById(R.id.btnInactivar);
         btnInactivar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
