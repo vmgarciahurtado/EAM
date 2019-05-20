@@ -150,6 +150,7 @@ public class VerCursos extends Fragment implements Response.ErrorListener, Respo
                 jsonObject = json.getJSONObject(i);
                 cursoVO = new CursoVO();
                 cursoVO.setNombre(jsonObject.getString("nombreCurso"));
+                cursoVO.setCodigo(jsonObject.getString("idcurso"));
                 listaCursos.add(cursoVO);
             }
             //setRetroMala(preguntas.getRetromala());
@@ -160,8 +161,8 @@ public class VerCursos extends Fragment implements Response.ErrorListener, Respo
             listViewCursos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String codigo = listaCursos.get(listViewCursos.getPositionForView(view)).getNombre();
-                    Toast.makeText(getContext(), "Nombre: " + codigo, Toast.LENGTH_SHORT).show();
+                    String codigo = listaCursos.get(listViewCursos.getPositionForView(view)).getCodigo();
+                    Toast.makeText(getContext(), "Codigo curso: " + codigo, Toast.LENGTH_SHORT).show();
                 }
             });
 

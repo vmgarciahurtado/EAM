@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.victor.eam.R;
+import com.example.victor.eam.docente.ControlDeClase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,10 +87,13 @@ public class ModificarUsuarios extends Fragment {
 
     private void irVentanaEstudiante() {
 
+        Fragment miFragment = new ModificarEstudiante();
+        getFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
     }
 
     private void irVentanaDocente() {
-
+        Fragment miFragment = new ModificarDocente();
+        getFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

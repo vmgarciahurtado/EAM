@@ -1,15 +1,21 @@
 package com.example.victor.eam.entidades;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
 import android.webkit.WebView;
 
 import com.example.victor.eam.R;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,14 +76,37 @@ public class PrincipalPantallas extends Fragment {
 
         webView = vista.findViewById(R.id.webViewPrincipal);
        webView.getSettings().setJavaScriptEnabled(true);
-       /*webView.getSettings().setAllowFileAccessFromFileURLs(true);
+    /*  webView.getSettings().setSaveFormData(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(true);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);*/
         //webView.loadUrl("https://www.eam.edu.co/");
 
-        webView.loadUrl("http://192.168.0.9/bd/PruebaGrafica.php");
+        webView.loadUrl("http://192.168.0.9/bd/prueba.php");
+
+
+        cargarurl();
         return vista;
+    }
+
+    private void cargarurl() {
+        String url = "http://192.168.0.9/bd/prueba.php";
+       webView.setDownloadListener(new DownloadListener() {
+           public void onDownloadStart(String url, String userAgent,
+                                       String contentDisposition, String mimetype,
+                                       long contentLength) {
+               DownloadManager.Request request = new DownloadManager.Request(
+                       Uri.parse(url));
+               request.allowScanningByMediaScanner();
+               request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+               request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "download");
+               DownloadManager dm = (DownloadManager) getActivity().getSystemService(DOWNLOAD_SERVICE);
+               dm.enqueue(request);
+
+           }
+       });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -307,8 +307,8 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     //docente = String.valueOf(position + 1 );
-                    docente = arrayDocentes.get(spnDocente.getPositionForView(view)).getId();
-                    Toast.makeText(getContext(), "Codigo docente: " + docente, Toast.LENGTH_SHORT).show();
+                    //docente = arrayDocentes.get(spnDocente.getPositionForView(view)).getId();
+                    //Toast.makeText(getContext(), "Codigo docente: " + docente, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
