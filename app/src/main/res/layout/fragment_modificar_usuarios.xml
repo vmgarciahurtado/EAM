@@ -5,10 +5,28 @@
     android:layout_height="match_parent"
     tools:context=".registro_control.ModificarUsuarios">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="USUARIOS" />
+
+        <Button
+            android:id="@+id/btnEstudiantes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estudiantes" />
+
+        <Button
+            android:id="@+id/btnDocente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="docentes" />
+    </LinearLayout>
 </FrameLayout>
