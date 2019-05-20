@@ -20,12 +20,13 @@
             android:text="" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/txtCedulaEstudiante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Cedula estudiante"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="" />
 
         <EditText
             android:id="@+id/editText3"
