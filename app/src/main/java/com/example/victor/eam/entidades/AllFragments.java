@@ -22,7 +22,6 @@ import com.example.victor.eam.registro_control.RegistroMateriaEst;
 
 public interface AllFragments extends
         AsignarMaterias.OnFragmentInteractionListener,
-        CreacionCursos.OnFragmentInteractionListener,
         ConsultarHorario.OnFragmentInteractionListener,
         VerCursos.OnFragmentInteractionListener,
         TomasLista.OnFragmentInteractionListener,

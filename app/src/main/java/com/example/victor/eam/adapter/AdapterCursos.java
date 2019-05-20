@@ -16,6 +16,7 @@ public class AdapterCursos extends BaseAdapter implements View.OnClickListener{
 
     private Context context;
     private ArrayList<CursoVO>listaCursos;
+    private View.OnClickListener listener;
 
     public AdapterCursos(Context context, ArrayList<CursoVO> listaCursos) {
         this.context = context;
@@ -37,19 +38,24 @@ public class AdapterCursos extends BaseAdapter implements View.OnClickListener{
         return 0;
     }
 
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null) {
+            listener.onClick(view);
+        }
+    }
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CursoVO item = (CursoVO) getItem(position);
         convertView = LayoutInflater.from(context).inflate(R.layout.modelo_adapter_cursos,null);
         TextView campoNombreCurso;
-
         campoNombreCurso = convertView.findViewById(R.id.campoCursoModelo);
         campoNombreCurso.setText(item.getNombre());
         return convertView;
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }

@@ -22,7 +22,8 @@ String id,nombre,tipo;
         this.id = id;
     }
 
-    public String getNombre() {
+    @Override
+    public String toString() {
         return nombre;
     }
 
