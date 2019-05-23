@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".estudiante.GestionMaterias">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/lstMateriasGestion"
+            android:layout_width="match_parent"
+            android:layout_height="480dp" />
+
+        <Button
+            android:id="@+id/btnConsultaMateria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consulta!" />
+    </LinearLayout>
+</FrameLayout>
