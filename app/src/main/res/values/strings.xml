@@ -13,6 +13,7 @@
     <string name="ipConsultaMaterias">consultaMateria.php</string>
     <string name="ipConsultaCursos">obtenerCursoDocente.php</string>
     <string name="ipConsultarMateriaEstudiante">consultaMateriaEstudiante.php?idestudiante=</string>
+    <string name="ipConsultarDatosMateria">consultaDatosMateria.php?=</string>
     <string name="ipConsultarSemestre">consultarSemestre.php</string>
 
     <!-- IP REGISTROS-->

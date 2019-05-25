@@ -1,17 +1,25 @@
 package com.example.victor.eam.estudiante;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,6 +39,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,7 +65,9 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private RequestQueue request;
     private StringRequest stringRequest;
     ListView lstMaterias;
-    String ip;
+    String ip,codigo;
+
+    Dialog dialogDatos;
 
     AdapterConsultaMaterias adapterConsultaMaterias;
     ArrayList<MateriaVO> listaMaterias;
@@ -97,6 +110,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
         request = Volley.newRequestQueue(getContext());
         ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMateriasGestion);
+        dialogDatos = new Dialog(getContext());
         cargarMaterias();
         return vista;
     }
@@ -155,8 +169,10 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             lstMaterias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String codigo = listaMaterias.get(lstMaterias.getPositionForView(view)).getCodigo();
+                    codigo = listaMaterias.get(lstMaterias.getPositionForView(view)).getCodigo();
                     Toast.makeText(getContext(), "Codigo curso: " + codigo, Toast.LENGTH_SHORT).show();
+                    cargarDatosMateria(codigo);
+                    showPopup();
                 }
             });
 
@@ -165,6 +181,79 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
 
             Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void showPopup() {
+        Spinner spinnerHorario;
+        TextView txtFallas,txtNota;
+        final CheckBox checkBoxCancelarMateria;
+        Button aceptar;
+
+        try {
+            dialogDatos.setContentView(R.layout.popup_materias);
+            Objects.requireNonNull(dialogDatos.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogDatos.show();
+        } catch (Exception e) {
+            Log.i("Error ", e.toString());
+        }
+
+        checkBoxCancelarMateria = dialogDatos.findViewById(R.id.checkboxPopup);
+        spinnerHorario = dialogDatos.findViewById(R.id.spinnerHorarioPopup);
+        txtFallas = dialogDatos.findViewById(R.id.txtFallasPopup);
+        txtNota = dialogDatos.findViewById(R.id.txtNotasPopup);
+
+        //txtFallas.setText("Fallas: " + lista.get(position).getFallas());
+        //txtNota.setText("Nota: " + lista.get(position).getNota());
+
+        aceptar = dialogDatos.findViewById(R.id.btnAceptarPopup);
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if (checkBoxCancelarMateria.isChecked()){
+                   cancelarMateria();
+               }else {
+                   dialogDatos.hide();
+               }
+            }
+        });
+    }
+
+    private void cancelarMateria() {
+        String url = ip + getContext().getString(R.string.ipRegistroDocentes);
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("idmateria", codigo);
+                return parametros;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.add(stringRequest);
+
+    }
+
+    private void cargarDatosMateria(String codigo) {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultarDatosMateria);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     @Override
