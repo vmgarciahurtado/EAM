@@ -7,8 +7,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.DocenteVO;
+import com.example.victor.eam.entidades.EstudianteVO;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +36,7 @@ import com.example.victor.eam.R;
  * Use the {@link ModificarDocente#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModificarDocente extends Fragment {
+public class ModificarDocente extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +48,18 @@ public class ModificarDocente extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    RequestQueue request;
+    JsonObjectRequest jsonObjectRequest;
+
+    TextView campoNombre,campoTipo,campoEstado,campoCodigo;
+    Spinner spinnerTipoDocente;
+    LinearLayout linearLayout;
+
+    private DocenteVO docenteVO;
+    ArrayList<DocenteVO>arrayDocentes;
+
+    //VARIABLES
+    String ip ;
     public ModificarDocente() {
         // Required empty public constructor
     }
@@ -62,10 +92,26 @@ public class ModificarDocente extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modificar_docente, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View vista = inflater.inflate(R.layout.fragment_modificar_docente, container, false);
+        request = Volley.newRequestQueue(getContext());
+        ip = getContext().getString(R.string.ip);
+        campoCodigo = vista.findViewById(R.id.campoCodigo);
+        campoEstado = vista.findViewById(R.id.campoEstado);
+        campoNombre = vista.findViewById(R.id.campoNombre);
+        campoTipo = vista.findViewById(R.id.campoTipoDocente);
+        linearLayout = vista.findViewById(R.id.layoutModDocente);
+
+        cargarDatos();
+        return vista;
+    }
+
+    private void cargarDatos() {
+        String url;
+        int codigo = 1024;
+        url = ip + getContext().getString(R.string.ipObtenerDocente)+codigo;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,6 +136,43 @@ public class ModificarDocente extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        docenteVO = null;
+        JSONArray jsonDocente = response.optJSONArray("docentes");
+        JSONObject jsonObjectDocente;
+        arrayDocentes = new ArrayList();
+
+        try {
+            for (int i = 0; i < jsonDocente.length(); i++) {
+                jsonObjectDocente = jsonDocente.getJSONObject(i);
+                docenteVO = new DocenteVO();
+                docenteVO.setId(jsonObjectDocente.getString("iddocente"));
+                docenteVO.setNombre(jsonObjectDocente.getString("nombre"));
+                docenteVO.setTipo(jsonObjectDocente.getString("tipo"));
+                docenteVO.setEstado(jsonObjectDocente.getString("estado"));
+                arrayDocentes.add(docenteVO);
+                llenarCampos(docenteVO);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    private void llenarCampos(DocenteVO docenteVO) {
+        Toast.makeText(getContext(), "DocenteVo" + docenteVO, Toast.LENGTH_SHORT).show();
+        campoTipo.setText(docenteVO.getTipo());
+        campoNombre.setText(docenteVO.getNombre());
+        campoEstado.setText(docenteVO.getEstado());
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
     }
 
     /**

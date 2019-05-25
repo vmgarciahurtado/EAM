@@ -13,12 +13,6 @@
         <ListView
             android:id="@+id/lstMateriasGestion"
             android:layout_width="match_parent"
-            android:layout_height="480dp" />
-
-        <Button
-            android:id="@+id/btnConsultaMateria"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Consulta!" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </FrameLayout>

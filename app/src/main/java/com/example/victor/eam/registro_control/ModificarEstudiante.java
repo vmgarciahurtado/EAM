@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.entidades.DocenteVO;
 import com.example.victor.eam.entidades.EstudianteVO;
@@ -58,6 +59,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
+
     EditText txtCodigo, txtCedula, txtNombre, txtFechaNacimiento, txtEstado, txtDireccion, txtTelefono, txtCorreo;
     Spinner spnPrograma, spnSemestre;
     Button btnBuscar, btnModificar, btnInactivar;
@@ -100,9 +102,9 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        request = Volley.newRequestQueue(getContext());
+        ip = getContext().getString(R.string.ip);
         View vista = inflater.inflate(R.layout.fragment_modificar_estudiante, container, false);
         txtCedula = vista.findViewById(R.id.txtCedulaEstudiante);
         txtCodigo = vista.findViewById(R.id.txtCodigoEstudiante);
@@ -141,7 +143,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                 inactivarEstudiante();
             }
         });
-        cargarPrograma();
+       // cargarPrograma();
         cargarSemestre();
         return vista;
     }
@@ -184,15 +186,15 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
             public void onResponse(String response) {
                 if (response.trim().equalsIgnoreCase("modifico")) {
                     Log.i("********RESULTADO", "Respuesta server" + response);
-                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -200,8 +202,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("codigoEstudiante", codigo);
-                parametros.put("estadoEstudiante", estado);
+                parametros.put("codigoestudiante","12345");
+                parametros.put("estadoestudiante","0");
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
 

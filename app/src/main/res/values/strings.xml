@@ -12,7 +12,7 @@
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
     <string name="ipConsultaCursos">obtenerCursoDocente.php</string>
-    <string name="ipConsultarSeguimiento">consultarSeguimiento.php</string>
+    <string name="ipConsultarMateriaEstudiante">consultaMateriaEstudiante.php?idestudiante=</string>
     <string name="ipConsultarSemestre">consultarSemestre.php</string>
 
     <!-- IP REGISTROS-->
@@ -23,7 +23,6 @@
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
     <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoEstudiante=</string>
     <string name="ipObtenerDocente">obtenerDocente.php?iddocente=</string>
-    <string name="ipContratoDocente">registroContratoDocente.php</string>
 
 
     <!--IP MODIFICAR-->

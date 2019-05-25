@@ -79,7 +79,7 @@ public class RegistroMaterias extends Fragment {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_registro_materias, container, false);
         request = Volley.newRequestQueue(getContext());
-        ip = getContext().getString(R.string.ip);
+    /*    ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMaterias);
         spnMaterias = vista.findViewById(R.id.spnMateriaEstudiante);
         btnagregarLista = vista.findViewById(R.id.btnAgregarALista);
@@ -95,7 +95,7 @@ public class RegistroMaterias extends Fragment {
             public void onClick(View v) {
                 registrarMateria();
             }
-        });
+        });*/
         return vista;
     }
 

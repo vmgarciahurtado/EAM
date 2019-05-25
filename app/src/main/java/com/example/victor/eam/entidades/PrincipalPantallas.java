@@ -3,6 +3,7 @@ package com.example.victor.eam.entidades;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,7 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import com.example.victor.eam.R;
 
@@ -37,6 +41,8 @@ public class PrincipalPantallas extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     WebView webView;
+    String url;
+    Button btnDescargar;
 
     public PrincipalPantallas() {
         // Required empty public constructor
@@ -73,41 +79,38 @@ public class PrincipalPantallas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View vista = inflater.inflate(R.layout.fragment_principal_pantallas, container, false);
-
+        btnDescargar = vista.findViewById(R.id.btnDescargarPdf);
+        btnDescargar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descargarPdf();
+            }
+        });
+        url = "http://192.168.0.8/eam/prueba.php";
         webView = vista.findViewById(R.id.webViewPrincipal);
-       webView.getSettings().setJavaScriptEnabled(true);
-    /*  webView.getSettings().setSaveFormData(true);
-        webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setAllowContentAccess(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);*/
-        //webView.loadUrl("https://www.eam.edu.co/");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://192.168.0.8/eam/prueba.php");
 
-        webView.loadUrl("http://192.168.0.9/bd/prueba.php");
-
-
-        cargarurl();
         return vista;
     }
 
-    private void cargarurl() {
-        String url = "http://192.168.0.9/bd/prueba.php";
-       webView.setDownloadListener(new DownloadListener() {
-           public void onDownloadStart(String url, String userAgent,
-                                       String contentDisposition, String mimetype,
-                                       long contentLength) {
-               DownloadManager.Request request = new DownloadManager.Request(
-                       Uri.parse(url));
-               request.allowScanningByMediaScanner();
-               request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-               request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "download");
-               DownloadManager dm = (DownloadManager) getActivity().getSystemService(DOWNLOAD_SERVICE);
-               dm.enqueue(request);
+    private void descargarPdf() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://192.168.0.8/eam/create_pdf.php");
 
-           }
-       });
+        Uri uri = Uri.parse("http://192.168.0.8/eam/prueba.php");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+        }
+        );
+
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

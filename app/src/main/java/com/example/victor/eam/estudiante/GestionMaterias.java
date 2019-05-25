@@ -7,13 +7,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.adapter.AdapterConsultaMaterias;
+import com.example.victor.eam.adapter.AdapterCursos;
+import com.example.victor.eam.entidades.CursoVO;
+import com.example.victor.eam.entidades.MateriaVO;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +40,7 @@ import com.example.victor.eam.R;
  * Use the {@link GestionMaterias#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GestionMaterias extends Fragment {
+public class GestionMaterias extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,9 +53,12 @@ public class GestionMaterias extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
-    String ip;
     ListView lstMaterias;
-Button btnConsultarMaterias;
+    String ip;
+
+    AdapterConsultaMaterias adapterConsultaMaterias;
+    ArrayList<MateriaVO> listaMaterias;
+    MateriaVO materiaVO;
     public GestionMaterias() {
         // Required empty public constructor
     }
@@ -77,14 +97,15 @@ Button btnConsultarMaterias;
         request = Volley.newRequestQueue(getContext());
         ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMateriasGestion);
-        btnConsultarMaterias = vista.findViewById(R.id.btnConsultaMateria);
-        btnConsultarMaterias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        cargarMaterias();
         return vista;
+    }
+
+    private void cargarMaterias() {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultarMateriaEstudiante);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -109,6 +130,46 @@ Button btnConsultarMaterias;
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        materiaVO = null;
+        JSONArray json = response.optJSONArray("materia");
+        JSONObject jsonObject = null;
+        listaMaterias = new ArrayList<>();
+
+        try {
+
+            for (int i = 0; i < json.length(); i++) {
+                jsonObject = json.getJSONObject(i);
+                materiaVO = new MateriaVO();
+                materiaVO.setNombre(jsonObject.getString("nombre"));
+                materiaVO.setCodigo(jsonObject.getString("id"));
+                listaMaterias.add(materiaVO);
+            }
+
+            adapterConsultaMaterias = new AdapterConsultaMaterias(getContext(),listaMaterias);
+            lstMaterias.setAdapter(adapterConsultaMaterias);
+            lstMaterias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String codigo = listaMaterias.get(lstMaterias.getPositionForView(view)).getCodigo();
+                    Toast.makeText(getContext(), "Codigo curso: " + codigo, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
     }
 
     /**

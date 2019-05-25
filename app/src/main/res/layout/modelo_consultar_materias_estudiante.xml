@@ -25,27 +25,6 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/campoNotaModelo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_marginBottom="5dp"
-            android:text="Nota"
-            android:textColor="#000"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/campoFallasModelo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_marginBottom="5dp"
-            android:text="Fallas"
-            android:textColor="#000"
-            android:textSize="20dp"
-            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

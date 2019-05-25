@@ -5,10 +5,77 @@
     android:layout_height="match_parent"
     tools:context=".registro_control.ModificarDocente">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/campoCodigo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese su numero de identificacion"
+                android:inputType="number" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/campoNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:id="@+id/spinnerTipoDocente"
+                android:visibility="invisible"
+                android:layout_height="wrap_content">
+            </Spinner>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/layoutModDocente"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/campoTipoDocente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/imagenEditar"
+                    android:layout_width="22dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/editar" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/campoEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ESTADO:" />
+
+        <Button
+            android:id="@+id/btnInactivarDocente"
+            android:layout_width="match_parent"
+            android:layout_marginTop="22dp"
+            android:layout_height="wrap_content"
+            android:text="Inactivar" />
+
+    </LinearLayout>
 </FrameLayout>
