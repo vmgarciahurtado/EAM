@@ -330,7 +330,6 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
 
         spinnerMaterias = dialogoPrerequisitos.findViewById(R.id.spinnerPrerrequisitos);
-
         spinnerMaterias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

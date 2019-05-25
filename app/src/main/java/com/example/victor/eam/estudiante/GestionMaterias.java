@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -31,6 +32,7 @@ import com.example.victor.eam.R;
 import com.example.victor.eam.adapter.AdapterConsultaMaterias;
 import com.example.victor.eam.adapter.AdapterCursos;
 import com.example.victor.eam.entidades.CursoVO;
+import com.example.victor.eam.entidades.DetalleMateriaVo;
 import com.example.victor.eam.entidades.MateriaVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
@@ -64,14 +66,25 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
+
+    Spinner spinnerHorario;
+
     ListView lstMaterias;
-    String ip,codigo;
+    String ip, codigo;
+
+    String nota,nombre,horario,fallas;
 
     Dialog dialogDatos;
 
     AdapterConsultaMaterias adapterConsultaMaterias;
+
     ArrayList<MateriaVO> listaMaterias;
+    ArrayList<DetalleMateriaVo> listaDetalle;
+    ArrayList arrayHorario;
+
     MateriaVO materiaVO;
+    DetalleMateriaVo detalleMateriaVo;
+
     public GestionMaterias() {
         // Required empty public constructor
     }
@@ -148,7 +161,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
 
     @Override
     public void onResponse(JSONObject response) {
-
+//=====================================================================================================================
         materiaVO = null;
         JSONArray json = response.optJSONArray("materia");
         JSONObject jsonObject = null;
@@ -164,7 +177,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                 listaMaterias.add(materiaVO);
             }
 
-            adapterConsultaMaterias = new AdapterConsultaMaterias(getContext(),listaMaterias);
+            adapterConsultaMaterias = new AdapterConsultaMaterias(getContext(), listaMaterias);
             lstMaterias.setAdapter(adapterConsultaMaterias);
             lstMaterias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -181,10 +194,45 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
 
             Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
         }
+
+//=====================================================================================================================
+        detalleMateriaVo = null;
+        JSONArray jsonDetalle = response.optJSONArray("detalle");
+        JSONObject jsonObjectDetalle = null;
+        listaDetalle = new ArrayList<>();
+        arrayHorario = new ArrayList();
+
+        try {
+
+            for (int i = 0; i < jsonDetalle.length(); i++) {
+                jsonObjectDetalle = jsonDetalle.getJSONObject(i);
+                detalleMateriaVo = new DetalleMateriaVo();
+                detalleMateriaVo.setNombre(jsonObjectDetalle.getString("nombre"));
+                detalleMateriaVo.setNota(jsonObjectDetalle.getString("nota"));
+                arrayHorario.add(jsonObjectDetalle.getString("horaio"));
+                //detalleMateriaVo.setHorario(jsonObjectDetalle.getString("horaio"));
+                detalleMateriaVo.setFallas(jsonObjectDetalle.getString("fallas"));
+                listaDetalle.add(detalleMateriaVo);
+            }
+
+            nombre = detalleMateriaVo.getNombre();
+            nota = detalleMateriaVo.getNota();
+            horario = detalleMateriaVo.getHorario();
+            fallas = detalleMateriaVo.getFallas();
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayHorario);
+            spinnerHorario.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+        }
+//=========================================================================================================================
     }
 
+
     private void showPopup() {
-        Spinner spinnerHorario;
         TextView txtFallas,txtNota;
         final CheckBox checkBoxCancelarMateria;
         Button aceptar;
@@ -202,8 +250,8 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
         txtFallas = dialogDatos.findViewById(R.id.txtFallasPopup);
         txtNota = dialogDatos.findViewById(R.id.txtNotasPopup);
 
-        //txtFallas.setText("Fallas: " + lista.get(position).getFallas());
-        //txtNota.setText("Nota: " + lista.get(position).getNota());
+        txtFallas.setText(fallas);
+        txtNota.setText(nota);
 
         aceptar = dialogDatos.findViewById(R.id.btnAceptarPopup);
         aceptar.setOnClickListener(new View.OnClickListener() {
