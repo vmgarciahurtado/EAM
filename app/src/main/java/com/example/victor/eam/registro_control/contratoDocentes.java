@@ -113,7 +113,7 @@ public class contratoDocentes extends Fragment implements Response.ErrorListener
         final String docente = txtDocente.getText().toString();
         if (!duracion.equals("") || !docente.equals("")){
             String url;
-            url = ip + getContext().getString(R.string.ipContratoDocente);
+            url = ip + getContext().getString(R.string.ipCrearAgendaDocente);
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

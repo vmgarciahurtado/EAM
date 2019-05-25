@@ -1,7 +1,7 @@
 package com.example.victor.eam.entidades;
 
 public class MateriaVO {
-    String nombre,codigo;
+    String nombreMateria,codigo,nombreDocente;
     int nota;
     int fallas;
 
@@ -9,11 +9,20 @@ public class MateriaVO {
     public MateriaVO() {
     }
 
-    public MateriaVO(String nombre, String codigo, int nota, int fallas) {
-        this.nombre = nombre;
+    public MateriaVO(String nombreMateria, String codigo, String nombreDocente, int nota, int fallas) {
+        this.nombreMateria = nombreMateria;
         this.codigo = codigo;
+        this.nombreDocente = nombreDocente;
         this.nota = nota;
         this.fallas = fallas;
+    }
+
+    public String getNombreDocente() {
+        return nombreDocente;
+    }
+
+    public void setNombreDocente(String nombreDocente) {
+        this.nombreDocente = nombreDocente;
     }
 
     public String getCodigo() {
@@ -26,15 +35,15 @@ public class MateriaVO {
 
     @Override
     public String toString() {
-        return nombre;
+        return nombreMateria;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreMateria() {
+        return nombreMateria;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreMateria(String nombreMateria) {
+        this.nombreMateria = nombreMateria;
     }
 
     public int getNota() {

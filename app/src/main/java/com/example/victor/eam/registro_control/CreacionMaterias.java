@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.MateriaVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
@@ -65,8 +66,13 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     private RequestQueue request;
     private StringRequest stringRequest;
 
+    //POPUP
+    EditText campoActa;
+
     ArrayList arrayEntornos;
     ArrayList arrayMaterias;
+    ArrayList<MateriaVO> listaMateriasVo;
+    MateriaVO materiaVO;
 
     //VARIABLES
     String prerrequisitos;
@@ -228,14 +234,13 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 String costoMateria = campoCosto.getText().toString();
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("$nombre", nombre);
-                parametros.put("$intensidadhoraria", String.valueOf(contadorHoras));
-                parametros.put("$numerocreditos", String.valueOf(contadorCreditos));
-                parametros.put("$actadescriptiva", String.valueOf(actaDescriptiva));
-                parametros.put("$costomateria", costoMateria);
-                parametros.put("$entornomateria", String.valueOf(entorno));
-                parametros.put("$prerrequisito", String.valueOf(prerrequisitos));
-                parametros.put("$numerocreditos", String.valueOf(contadorCreditos));
+                parametros.put("nombre", nombre);
+                parametros.put("intensidadhoraria", String.valueOf(contadorHoras));
+                parametros.put("numerocreditos", String.valueOf(contadorCreditos));
+                parametros.put("actadescriptiva", String.valueOf(actaDescriptiva));
+                parametros.put("costomateria", costoMateria);
+                parametros.put("entornomateria", String.valueOf(entorno));
+                parametros.put("prerrequisito", String.valueOf(prerrequisitos));
 
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
@@ -285,7 +290,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
     private void showPopupActa() {
         Button aceptar, cancelar;
-        EditText campoActa;
+
 
         try {
             dialogActa.setContentView(R.layout.popup_redactaracta);
@@ -296,12 +301,13 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         }
 
         campoActa = dialogActa.findViewById(R.id.campoActaDescrptiva);
-        actaDescriptiva = campoActa.getText().toString();
+        campoActa.setText(actaDescriptiva);
         aceptar = dialogActa.findViewById(R.id.btnAceptarActa);
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Captura el dato del campo acta
+                actaDescriptiva = campoActa.getText().toString();
+                dialogActa.hide();
             }
         });
 
@@ -309,7 +315,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogActa.hide();
+
                 Toast.makeText(getContext(), "No se ha guardado el acta", Toast.LENGTH_SHORT).show();
             }
         });
@@ -347,6 +353,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             @Override
             public void onClick(View v) {
                 //Guardar la materia que escoja en el spinner
+                dialogoPrerequisitos.hide();
             }
         });
 
@@ -415,15 +422,21 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
+        materiaVO = null;
         JSONArray jsonMateria = response.optJSONArray("materia");
-        JSONObject jsonObjectMateria;
+        JSONObject jsonObjectMateria = null;
+        listaMateriasVo = new ArrayList();
         arrayMaterias = new ArrayList();
         try {
             for (int i = 0; i < jsonMateria.length(); i++) {
+                materiaVO = new MateriaVO();
                 jsonObjectMateria = jsonMateria.getJSONObject(i);
+                materiaVO.setNombreMateria(jsonObjectMateria.getString("nombre"));
+                materiaVO.setCodigo(jsonObjectMateria.getString("id"));
+                listaMateriasVo.add(materiaVO);
                 arrayMaterias.add(jsonObjectMateria.getString("nombre"));
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayMaterias);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item,arrayMaterias);
             spinnerMaterias.setAdapter(adapter);
         } catch (Exception e) {
 

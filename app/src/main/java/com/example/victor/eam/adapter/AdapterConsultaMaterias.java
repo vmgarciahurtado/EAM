@@ -43,7 +43,7 @@ public class AdapterConsultaMaterias extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.modelo_consultar_materias_estudiante,null);
         TextView campoMateria;
         campoMateria = convertView.findViewById(R.id.campoMateriaModelo);
-        campoMateria.setText("Materia: " + item.getNombre());
+        campoMateria.setText("Materia: " + item.getNombreMateria());
 
         return convertView;
     }

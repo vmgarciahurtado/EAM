@@ -30,8 +30,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.adapter.AdapterConsultaMaterias;
-import com.example.victor.eam.adapter.AdapterCursos;
-import com.example.victor.eam.entidades.CursoVO;
 import com.example.victor.eam.entidades.DetalleMateriaVo;
 import com.example.victor.eam.entidades.MateriaVO;
 import com.example.victor.eam.entidades.VolleySingleton;
@@ -172,8 +170,9 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             for (int i = 0; i < json.length(); i++) {
                 jsonObject = json.getJSONObject(i);
                 materiaVO = new MateriaVO();
-                materiaVO.setNombre(jsonObject.getString("nombre"));
+                materiaVO.setNombreMateria(jsonObject.getString("nombre"));
                 materiaVO.setCodigo(jsonObject.getString("id"));
+                materiaVO.setNombreDocente(jsonObject.getString("docente"));
                 listaMaterias.add(materiaVO);
             }
 
@@ -217,7 +216,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
 
             nombre = detalleMateriaVo.getNombre();
             nota = detalleMateriaVo.getNota();
-            horario = detalleMateriaVo.getHorario();
+            //horario = detalleMateriaVo.getHorario();
             fallas = detalleMateriaVo.getFallas();
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayHorario);
@@ -267,7 +266,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     }
 
     private void cancelarMateria() {
-        String url = ip + getContext().getString(R.string.ipRegistroDocentes);
+        String url = ip + getContext().getString(R.string.ipCancelarMateria);
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -288,6 +287,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
 
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("idmateria", codigo);
+                parametros.put("codigo", "12345");
                 return parametros;
 
             }

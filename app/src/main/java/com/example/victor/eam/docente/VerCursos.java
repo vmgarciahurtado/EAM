@@ -155,9 +155,9 @@ public class VerCursos extends Fragment implements Response.ErrorListener, Respo
             }
             //setRetroMala(preguntas.getRetromala());
 
-
             adapterCursos = new AdapterCursos(getContext(),listaCursos);
             listViewCursos.setAdapter(adapterCursos);
+
             listViewCursos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

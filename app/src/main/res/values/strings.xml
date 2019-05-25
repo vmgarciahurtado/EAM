@@ -12,7 +12,7 @@
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
     <string name="ipConsultaCursos">obtenerCursoDocente.php</string>
-    <string name="ipConsultarMateriaEstudiante">consultaMateriaEstudiante.php?idestudiante=</string>
+    <string name="ipConsultarMateriaEstudiante">listarMateriaEstudiante.php?idestudiante=</string>
     <string name="ipConsultarDatosMateria">consultaDatosMateria.php?=</string>
     <string name="ipConsultarSemestre">consultarSemestre.php</string>
 
@@ -31,6 +31,7 @@
     <string name="ipModificarDocente">modificarDocente.php</string>
     <string name="ipInactivarEstudiante">estadoEstudiante.php</string>
     <string name="ipInactivarDocente">estadoDocente.php</string>
+    <string name="ipCancelarMateria">cancelarMateria.php</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
