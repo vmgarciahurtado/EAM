@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -65,12 +66,11 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private StringRequest stringRequest;
 
     //POPUP
-    TextView txtFallas,txtNota,txtNombreMateria,txtNombreDocente;
+    TextView txtFallas,txtNombreMateria,txtNombreDocente;
     CheckBox checkBoxCancelarMateria;
     Button aceptar;
-
-
     Spinner spinnerHorario;
+    Spinner spinnerNotas;
 
     ListView lstMaterias;
     String ip, codigo,corte;
@@ -86,6 +86,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     ArrayList<MateriaVO> listaMaterias;
     ArrayList<DetalleMateriaVo> listaDetalle;
     ArrayList arrayHorario;
+    ArrayList arrayNotas;
 
     MateriaVO materiaVO;
     DetalleMateriaVo detalleMateriaVo;
@@ -214,6 +215,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                 JSONObject jsonObjectDetalle = null;
                 listaDetalle = new ArrayList<>();
                 arrayHorario = new ArrayList();
+                arrayNotas = new ArrayList();
 
                 try {
 
@@ -222,9 +224,8 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                         detalleMateriaVo = new DetalleMateriaVo();
                         detalleMateriaVo.setNombre(jsonObjectDetalle.getString("materia"));
                         detalleMateriaVo.setNombreDocente(jsonObjectDetalle.getString("docente"));
-                        detalleMateriaVo.setNota(jsonObjectDetalle.getString("nota"));
-                        detalleMateriaVo.setCorte(jsonObjectDetalle.getString("corte"));
-                        //arrayHorario.add(jsonObjectDetalle.getString("horaio"));
+                        arrayHorario.add(jsonObjectDetalle.getString("horario"));
+                        arrayNotas.add(jsonObjectDetalle.getString("notas"));
 
                         //detalleMateriaVo.setHorario(jsonObjectDetalle.getString("horaio"));
                         detalleMateriaVo.setFallas(jsonObjectDetalle.getString("fallas"));
@@ -238,9 +239,14 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                     //horario = detalleMateriaVo.getHorario();
                     fallas = detalleMateriaVo.getFallas();
 
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayHorario);
+                    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayNotas);
+                    arrayHorario.add(0,"Horario materia");
+                    arrayNotas.add(0,"Notas materia");
                     showPopup();
-                    //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayHorario);
-                    //spinnerHorario.setAdapter(adapter);
+                    spinnerNotas.setAdapter(adapter2);
+                    spinnerHorario.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -250,9 +256,6 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                 break;
         }
 
-//=====================================================================================================================
-
-//=========================================================================================================================
     }
 
 
@@ -271,11 +274,11 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
         txtNombreDocente = dialogDatos.findViewById(R.id.txtNombreDocentePopup);
         checkBoxCancelarMateria = dialogDatos.findViewById(R.id.checkboxPopup);
         spinnerHorario = dialogDatos.findViewById(R.id.spinnerHorarioPopup);
+        spinnerNotas = dialogDatos.findViewById(R.id.spinnerNotasPopup);
         txtFallas = dialogDatos.findViewById(R.id.txtFallasPopup);
-        txtNota = dialogDatos.findViewById(R.id.txtNotasPopup);
+
 
         txtFallas.setText("Inasistencias: " + fallas);
-        txtNota.setText("Definitiva corte: " + nota);
         txtNombreDocente.setText("Docente: " + nombreDocente);
         txtNombreMateria.setText(nombreMateria);
 

@@ -27,16 +27,14 @@
             android:textStyle="italic" />
 
 
-        <TextView
-            android:id="@+id/txtNotasPopup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+
+        <Spinner
+            android:id="@+id/spinnerNotasPopup"
+            android:layout_width="match_parent"
             android:layout_marginLeft="33dp"
-            android:text="Notas"
-            android:textColor="#000"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content"></Spinner>
 
 
         <TextView
@@ -62,6 +60,8 @@
         <Spinner
             android:id="@+id/spinnerHorarioPopup"
             android:layout_width="match_parent"
+            android:layout_marginLeft="33dp"
+            android:layout_marginRight="15dp"
             android:layout_height="wrap_content"></Spinner>
 
         <LinearLayout
