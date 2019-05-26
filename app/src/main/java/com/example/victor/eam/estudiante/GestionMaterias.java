@@ -328,8 +328,8 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             protected Map<String, String> getParams() {
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("idmateria", codigo);
-                parametros.put("codigo", "12345");
+                parametros.put("idmateria", "1");
+                parametros.put("codigo", "19766");
                 return parametros;
 
             }
