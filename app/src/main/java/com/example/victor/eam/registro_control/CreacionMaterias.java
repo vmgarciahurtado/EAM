@@ -79,7 +79,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     String prerrequisitos = "";
     String actaDescriptiva;
     String ip;
-    String entorno, programa;
+    String entorno, academico;
 
     Spinner spinnerMaterias, spinnerProgramas;
     int contadorHoras = 0, contadorCreditos = 0;
@@ -249,8 +249,8 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 parametros.put("actadescriptiva", String.valueOf(actaDescriptiva));
                 parametros.put("costomateria", costoMateria);
                 parametros.put("entornomateria", String.valueOf(entorno));
+                parametros.put("programa", String.valueOf(academico));
                 parametros.put("prerrequisito", String.valueOf(prerrequisitos));
-                parametros.put("programa", String.valueOf(programa));
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
 
@@ -443,10 +443,15 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
             ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayProgramas);
             spinnerProgramas.setAdapter(adapterPrograma);
-            spinnerProgramas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            spinnerProgramas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    programa = String.valueOf(position+1);
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    academico = String.valueOf(position+1);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
                 }
             });
         } catch (Exception e) {
