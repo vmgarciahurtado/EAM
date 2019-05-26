@@ -139,7 +139,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     lista = new ArrayList();
 
     ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, agregarLista);
-    spnMaterias.setAdapter(adapterMateria);
+    lstMaterias.setAdapter(adapterMateria);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
