@@ -53,12 +53,13 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
-    String ip, materia;
+    String ip, materia, nombreMateria;
     ListView lstMaterias;
     Spinner spnMaterias;
     Button btnagregarLista, btnregistrar;
     MateriaVO materiaVO;
     ArrayList<MateriaVO> arrayMateria;
+    ArrayList lista, agregarLista;
     AdapterConsultaMaterias adapterConsultaMaterias;
 
     public RegistroMaterias() {
@@ -106,6 +107,8 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
             @Override
             public void onClick(View v) {
                 agregarLista();
+                lista.add(materia);
+                agregarLista.add(nombreMateria);
             }
         });
         btnregistrar = vista.findViewById(R.id.btnRegistrarMaterias);
@@ -131,10 +134,11 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     }
 
     private void agregarLista() {
-        String url;
-        url = ip + getContext().getString(R.string.ipConsultaMaterias);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+    agregarLista = new ArrayList();
+    lista = new ArrayList();
+
+    ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, agregarLista);
+    spnMaterias.setAdapter(adapterMateria);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -189,6 +193,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     materia = arrayMateria.get(spnMaterias.getPositionForView(view)).getCodigo();
+                    nombreMateria = arrayMateria.get(spnMaterias.getPositionForView(view)).getNombreMateria();
                 }
 
                 @Override
