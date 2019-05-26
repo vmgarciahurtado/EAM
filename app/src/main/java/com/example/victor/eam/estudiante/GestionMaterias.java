@@ -271,7 +271,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
 
 
     private void showPopup() {
-        Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
+
 
         try {
             dialogDatos.setContentView(R.layout.popup_materias);
