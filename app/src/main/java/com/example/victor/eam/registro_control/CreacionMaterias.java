@@ -70,7 +70,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     EditText campoActa;
     int posicionSpinner = 0;
     ArrayList arrayEntornos;
-    ArrayList arrayprograma;
+    ArrayList arrayProgramas;
     ArrayList arrayMaterias;
     ArrayList<MateriaVO> listaMateriasVo;
     MateriaVO materiaVO;
@@ -432,28 +432,17 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
-        JSONArray jsonProgama = response.optJSONArray("programa");
+        JSONArray jsonPrograma = response.optJSONArray("programa");
         JSONObject jsonObjectPrograma;
-        arrayEntornos = new ArrayList();
+        arrayProgramas = new ArrayList();
         try {
-            for (int i = 0; i < jsonProgama.length(); i++) {
-                jsonObjectPrograma = jsonProgama.getJSONObject(i);
-                arrayprograma.add(jsonObjectPrograma.getString("programa"));
+            for (int i = 0; i < jsonPrograma.length(); i++) {
+                jsonObjectPrograma = jsonPrograma.getJSONObject(i);
+                arrayProgramas.add(jsonObjectPrograma.getString("programa"));
             }
 
-            ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayEntornos);
+            ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayProgramas);
             spinnerProgramas.setAdapter(adapterPrograma);
-            spinnerProgramas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    programa = String.valueOf(position + 1);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
         } catch (Exception e) {
 
         }
