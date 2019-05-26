@@ -4,19 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.entidades.DocenteVO;
@@ -27,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,12 +53,13 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
-    RequestQueue request;
+    private RequestQueue request;
+    private StringRequest stringRequest;
     JsonObjectRequest jsonObjectRequest;
 
-    TextView campoNombre,campoTipo,campoEstado,campoCodigo;
+    TextView campoNombre,campoTipo,campoCodigo;
     Spinner spinnerTipoDocente;
+    Button btnInactivarDocente;
     LinearLayout linearLayout;
 
     private DocenteVO docenteVO;
@@ -97,13 +104,58 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
         request = Volley.newRequestQueue(getContext());
         ip = getContext().getString(R.string.ip);
         campoCodigo = vista.findViewById(R.id.campoCodigo);
-        campoEstado = vista.findViewById(R.id.campoEstado);
         campoNombre = vista.findViewById(R.id.campoNombre);
         campoTipo = vista.findViewById(R.id.campoTipoDocente);
         linearLayout = vista.findViewById(R.id.layoutModDocente);
+        btnInactivarDocente = vista.findViewById(R.id.btnInactivarDocente);
+        btnInactivarDocente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inactivarDocente();
+            }
+        });
 
         cargarDatos();
         return vista;
+    }
+
+    private void inactivarDocente() {
+        final String codigo = campoCodigo.getText().toString();
+        final String estado = "0";
+
+        String url;
+        url = ip + getContext().getString(R.string.ipInactivarDocente);
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equalsIgnoreCase("modifico")) {
+                    Log.i("********RESULTADO", "Respuesta server" + response);
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("iddocente", codigo);
+                parametros.put("estadodocente",estado);
+                Log.i("--------PARAMETROS ", parametros.toString());
+                return parametros;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.add(stringRequest);
+
     }
 
     private void cargarDatos() {
@@ -167,7 +219,6 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
         Toast.makeText(getContext(), "DocenteVo" + docenteVO, Toast.LENGTH_SHORT).show();
         campoTipo.setText(docenteVO.getTipo());
         campoNombre.setText(docenteVO.getNombre());
-        campoEstado.setText(docenteVO.getEstado());
     }
 
     @Override

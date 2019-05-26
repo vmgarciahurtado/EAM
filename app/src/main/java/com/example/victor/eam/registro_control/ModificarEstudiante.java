@@ -202,8 +202,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("codigoestudiante","12345");
-                parametros.put("estadoestudiante","0");
+                parametros.put("codigoestudiante",codigo);
+                parametros.put("estadoestudiante",estado);
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
 
