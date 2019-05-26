@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,8 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
-    String ip, materia, docente;
-    EditText txtNombreCurso, txtAnoCurso, txthoraInicio, txtHoraFin;
+    String ip, materia, docente, dia;
+    EditText txtNombreCurso, txthoraInicio, txtHoraFin;
     Spinner spnMateria, spnDocente, spnDiaCurso;
     Button btnAgregar;
     ArrayList arrayMaterias;
@@ -100,12 +101,10 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragmen
         View vista = inflater.inflate(R.layout.fragment_crear_cursos, container, false);
         ip = getContext().getString(R.string.ip);
         request = Volley.newRequestQueue(getContext());
         txtNombreCurso = vista.findViewById(R.id.txtNombreCurso);
-        txtAnoCurso = vista.findViewById(R.id.txtAñoCurso);
         spnMateria = vista.findViewById(R.id.spnMateriaCurso);
         spnDocente = vista.findViewById(R.id.spnDocenteCurso);
         spnDiaCurso = vista.findViewById(R.id.spnDiaCurso);
@@ -171,8 +170,8 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
                     parametros.put("diacurso", dia);
                     parametros.put("horainiciocurso", horaInicio);
                     parametros.put("horafincurso", horaFin);
+                    Log.i("===============DATOS ", parametros.toString());
                     return parametros;
-
                 }
             };
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -311,7 +310,7 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
             spnDocente.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    //docente = String.valueOf(position + 1 );
+                    docente = String.valueOf(position + 1 );
                     //docente = arrayDocentes.get(spnDocente.getPositionForView(view)).getId();
                     //Toast.makeText(getContext(), "Codigo docente: " + docente, Toast.LENGTH_SHORT).show();
                 }

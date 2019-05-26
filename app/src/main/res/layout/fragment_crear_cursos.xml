@@ -19,15 +19,6 @@
             android:inputType="textPersonName"
             android:text="" />
 
-        <EditText
-            android:id="@+id/txtAñoCurso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Año curso"
-            android:inputType="textPersonName"
-            android:text="" />
-
         <Spinner
             android:id="@+id/spnMateriaCurso"
             android:layout_width="match_parent"

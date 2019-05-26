@@ -11,7 +11,12 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
-
+    <EditText
+        android:layout_width="match_parent"
+        android:hint="Cedula docente"
+        android:id="@+id/campoCedula"
+        android:inputType="number"
+        android:layout_height="wrap_content" />
 
     <EditText
         android:layout_width="match_parent"
@@ -19,18 +24,10 @@
         android:id="@+id/campoNombre"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="Nombre y apellidos"
-        android:id="@+id/campoCedula"
-        android:inputType="number"
-        android:layout_height="wrap_content" />
-
     <Spinner
         android:layout_width="match_parent"
         android:id="@+id/spinnerTipoDocente"
         android:layout_height="wrap_content"></Spinner>
-
 
     <Button
         android:layout_width="match_parent"
