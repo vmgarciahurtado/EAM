@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,6 +32,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +44,7 @@ import java.util.ArrayList;
  * Use the {@link RegistroMaterias#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistroMaterias extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener{
+public class RegistroMaterias extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -100,7 +104,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_registro_materias, container, false);
         request = Volley.newRequestQueue(getContext());
-         ip = getContext().getString(R.string.ip);
+        ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMaterias);
         spnMaterias = vista.findViewById(R.id.spnMateriaEstudiante);
         btnagregarLista = vista.findViewById(R.id.btnAgregarALista);
@@ -108,8 +112,12 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
             @Override
             public void onClick(View v) {
                 agregarLista();
-                lista.add(materia);
-                agregarLista.add(nombreMateria);
+                if (agregarLista.contains(nombreMateria)) {
+                    Toast.makeText(getContext(), "Esta materia ya se encuentra agregada", Toast.LENGTH_SHORT).show();
+                } else {
+                    lista.add(materia);
+                    agregarLista.add(nombreMateria);
+                }
             }
 
         });
@@ -126,18 +134,55 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
 
     private void cargarMaterias() {
         String url;
-        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante)+"19766";
+        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + "19766";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void registrarMateria() {
+        final String codigoEstudiante = "19766";
+        if (lista.size() > 0) {
+            String url;
+            url = ip + getContext().getString(R.string.ipRegistroMateriasEstudiante);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("Registra")) {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> parametros = new HashMap<>();
+                    for (int i = 0; i < lista.size(); i++) {
+                        String materia = lista.get(i) + "";
+                        parametros.put("Materia_IdMateria", materia);
+                        parametros.put("Estudiante_CodigoEstudiante", codigoEstudiante);
+
+                    }
+                    return parametros;
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+
+        } else {
+            Toast.makeText(getContext(), "No hay materias agregadas", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     private void agregarLista() {
-    ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, agregarLista);
-    lstMaterias.setAdapter(adapterMateria);
+        ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, agregarLista);
+        lstMaterias.setAdapter(adapterMateria);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
