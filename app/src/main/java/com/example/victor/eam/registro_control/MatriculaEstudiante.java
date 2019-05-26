@@ -7,7 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 
 /**
@@ -29,6 +36,17 @@ public class MatriculaEstudiante extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    String ip;
+
+    JsonObjectRequest jsonObjectRequest;
+    RequestQueue request;
+
+
+    Button btnAceptar;
+    TextView txtValorPagar;
+    EditText campoCodigo,campoCuotas;
+    RadioButton radioCredito,radioContado;
 
     public MatriculaEstudiante() {
         // Required empty public constructor
@@ -62,10 +80,28 @@ public class MatriculaEstudiante extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_matricula_estudiante, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View vista =  inflater.inflate(R.layout.fragment_matricula_estudiante, container, false);
+        request = Volley.newRequestQueue(getContext());
+        ip = getContext().getString(R.string.ip);
+
+        campoCodigo = vista.findViewById(R.id.campoCodigoMatricula);
+        campoCuotas = vista.findViewById(R.id.campoCantidadCuotas);
+        btnAceptar = vista.findViewById(R.id.btnAcepterMatricula);
+
+        radioContado = vista.findViewById(R.id.radioContado);
+        radioCredito = vista.findViewById(R.id.radioCredito);
+
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                matricular();
+            }
+        });
+        return vista;
+    }
+
+    private void matricular() {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
