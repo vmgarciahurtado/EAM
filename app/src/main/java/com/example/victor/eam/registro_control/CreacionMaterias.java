@@ -59,7 +59,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
     private OnFragmentInteractionListener mListener;
     Button btnRegistrar, btnSumarHoras, btnRestarHoras, btnSumarCreditos, btnRestarCreditos, btnActa, btnPrerrequisitos;
-    TextView campoHoras, campoCreditos,campoNombre,campoCosto;
+    TextView campoHoras, campoCreditos, campoNombre, campoCosto;
     Spinner spinnerEntorno;
     private Dialog dialogoPrerequisitos;
     private Dialog dialogActa;
@@ -70,6 +70,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     EditText campoActa;
     int posicionSpinner = 0;
     ArrayList arrayEntornos;
+    ArrayList arrayprograma;
     ArrayList arrayMaterias;
     ArrayList<MateriaVO> listaMateriasVo;
     MateriaVO materiaVO;
@@ -78,9 +79,9 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     String prerrequisitos = "";
     String actaDescriptiva;
     String ip;
-    String entorno;
+    String entorno, programa;
 
-    Spinner spinnerMaterias;
+    Spinner spinnerMaterias, spinnerProgramas;
     int contadorHoras = 0, contadorCreditos = 0;
 
     public CreacionMaterias() {
@@ -175,12 +176,20 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             }
         });
         spinnerEntorno = vista.findViewById(R.id.spinnerEntorno);
-
+        spinnerProgramas = vista.findViewById(R.id.spinnerPacademico);
         dialogoPrerequisitos = new Dialog(this.getContext());
         dialogActa = new Dialog(this.getContext());
 
         cargarEntorno();
+        cargarPrograma();
         return vista;
+    }
+
+    private void cargarPrograma() {
+        String url;
+        url = ip + getContext().getString(R.string.ipProgramas);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void cargarPrerrequisitos() {
@@ -206,7 +215,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 if (response.trim().equalsIgnoreCase("registra")) {
                     //Log.i("********RESULTADO", "Respuesta server" + response);
                     Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -241,6 +250,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 parametros.put("costomateria", costoMateria);
                 parametros.put("entornomateria", String.valueOf(entorno));
                 parametros.put("prerrequisito", String.valueOf(prerrequisitos));
+                parametros.put("programa", String.valueOf(programa));
 
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
@@ -256,13 +266,13 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         switch (i) {
             case 1:
                 //+
-                contadorCreditos ++;
-                campoCreditos.setText(""+contadorCreditos);
+                contadorCreditos++;
+                campoCreditos.setText("" + contadorCreditos);
                 break;
 
             case 2:
-                contadorHoras ++;
-                campoHoras.setText(""+contadorHoras);
+                contadorHoras++;
+                campoHoras.setText("" + contadorHoras);
                 break;
         }
 
@@ -271,19 +281,19 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     private void restar(int i) {
         switch (i) {
             case 1:
-                contadorCreditos --;
-                if (contadorCreditos <=0){
+                contadorCreditos--;
+                if (contadorCreditos <= 0) {
                     contadorCreditos = 0;
                 }
-                campoCreditos.setText(""+contadorCreditos);
+                campoCreditos.setText("" + contadorCreditos);
                 break;
 
             case 2:
-                contadorHoras --;
-                if (contadorHoras <=0){
+                contadorHoras--;
+                if (contadorHoras <= 0) {
                     contadorHoras = 0;
                 }
-                campoHoras.setText(""+contadorHoras);
+                campoHoras.setText("" + contadorHoras);
                 break;
         }
     }
@@ -376,7 +386,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         }
     }
 
-//=================================================================================================================================
+    //=================================================================================================================================
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -411,7 +421,33 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             spinnerEntorno.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    entorno = String.valueOf(position + 1 );
+                    entorno = String.valueOf(position + 1);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        JSONArray jsonProgama = response.optJSONArray("programa");
+        JSONObject jsonObjectPrograma;
+        arrayEntornos = new ArrayList();
+        try {
+            for (int i = 0; i < jsonProgama.length(); i++) {
+                jsonObjectPrograma = jsonProgama.getJSONObject(i);
+                arrayprograma.add(jsonObjectPrograma.getString("programa"));
+            }
+
+            ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayEntornos);
+            spinnerProgramas.setAdapter(adapterPrograma);
+            spinnerProgramas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    programa = String.valueOf(position + 1);
                 }
 
                 @Override
@@ -438,7 +474,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 listaMateriasVo.add(materiaVO);
                 arrayMaterias.add(jsonObjectMateria.getString("nombre"));
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item,arrayMaterias);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, arrayMaterias);
             spinnerMaterias.setAdapter(adapter);
         } catch (Exception e) {
 
