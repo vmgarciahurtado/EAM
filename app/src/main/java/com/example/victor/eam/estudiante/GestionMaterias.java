@@ -215,38 +215,38 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                 JSONArray jsonDetalle = response.optJSONArray("materia");
                 JSONObject jsonObjectDetalle = null;
                 //----------------------------------------------------------
-                JSONArray jsonDetalle1 = response.optJSONArray("promedio");
-                JSONObject jsonObjectDetalle1 = null;
+               /* JSONArray jsonDetalle1 = response.optJSONArray("promedio");
+                JSONObject jsonObjectDetalle1 = null;*/
                 //----------------------------------------------------------
                 listaDetalle = new ArrayList<>();
                 arrayHorario = new ArrayList();
                 arrayNotas = new ArrayList();
-
+                detalleMateriaVo = new DetalleMateriaVo();
                 try {
 
-                    for (int i = 0; i < jsonDetalle1.length(); i++) {
-                        jsonObjectDetalle1 = jsonDetalle1.getJSONObject(i);
-                        detalleMateriaVo = new DetalleMateriaVo();
-                        detalleMateriaVo.setDefinitiva(jsonObjectDetalle1.getString("definitiva"));
+               /*     for (int i = 0; i < jsonDetalle.length(); i++) {
+                        jsonObjectDetalle = jsonDetalle.getJSONObject(i);
+
+                        detalleMateriaVo.setDefinitiva(jsonObjectDetalle.getString("definitiva"));
                     }
-                    definitiva = detalleMateriaVo.getDefinitiva();
+                    definitiva = detalleMateriaVo.getDefinitiva();*/
+
+                    //
 
                     for (int i = 0; i < jsonDetalle.length(); i++) {
                         jsonObjectDetalle = jsonDetalle.getJSONObject(i);
-                        detalleMateriaVo = new DetalleMateriaVo();
+
                         detalleMateriaVo.setNombre(jsonObjectDetalle.getString("materia"));
                         detalleMateriaVo.setNombreDocente(jsonObjectDetalle.getString("docente"));
                         arrayHorario.add(jsonObjectDetalle.getString("horario"));
                         arrayNotas.add(jsonObjectDetalle.getString("notas"));
-
-                        //detalleMateriaVo.setHorario(jsonObjectDetalle.getString("horaio"));
+                        definitiva = jsonObjectDetalle.getJSONObject("json").getString("definitiva");
                         detalleMateriaVo.setFallas(jsonObjectDetalle.getString("fallas"));
                         listaDetalle.add(detalleMateriaVo);
                     }
 
                     nombreMateria = detalleMateriaVo.getNombre();
                     nota = detalleMateriaVo.getNota();
-                    corte = detalleMateriaVo.getCorte();
                     nombreDocente = detalleMateriaVo.getNombreDocente();
                     fallas = detalleMateriaVo.getFallas();
 
@@ -328,8 +328,8 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             protected Map<String, String> getParams() {
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("idmateria", codigo);
-                parametros.put("codigo", "12345");
+                parametros.put("idmateria", "1");
+                parametros.put("codigo", "19766");
                 return parametros;
 
             }
