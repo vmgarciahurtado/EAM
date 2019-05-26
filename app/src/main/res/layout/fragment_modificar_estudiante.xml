@@ -67,6 +67,20 @@
                     android:ems="10"
                     android:hint="Correo electronica" />
 
+                <EditText
+                    android:id="@+id/txtPrograma"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Programa" />
+
+                <EditText
+                    android:id="@+id/txtSemestre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Semestre" />
+
                 <Spinner
                     android:id="@+id/spnFacultad"
                     android:layout_width="match_parent"
