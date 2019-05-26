@@ -452,7 +452,6 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         } catch (Exception e) {
 
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////
         materiaVO = null;
         JSONArray jsonMateria = response.optJSONArray("materia");

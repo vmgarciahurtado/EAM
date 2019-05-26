@@ -12,6 +12,7 @@
     <string name="ipConsultaEntornos">consultarEntornos.php</string>
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
+    <string name="ipCargarMateriasEstudiante">cargarMateriasEstudiante.php?estudiante=</string>
     <string name="ipConsultaCursos">obtenerCursoDocente.php</string>
     <string name="ipConsultarMateriaEstudiante">listarMateriaEstudiante.php?codigo=</string>
     <string name="ipConsultarDatosMateria">consultarMateriaEstudiante.php?idmateria=</string>

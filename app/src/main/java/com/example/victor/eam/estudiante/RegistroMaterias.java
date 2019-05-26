@@ -11,10 +11,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +31,7 @@ import com.example.victor.eam.R;
  * Use the {@link RegistroMaterias#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistroMaterias extends Fragment {
+public class RegistroMaterias extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,9 +86,10 @@ public class RegistroMaterias extends Fragment {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_registro_materias, container, false);
         request = Volley.newRequestQueue(getContext());
-    /*    ip = getContext().getString(R.string.ip);
+         ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMaterias);
         spnMaterias = vista.findViewById(R.id.spnMateriaEstudiante);
+
         btnagregarLista = vista.findViewById(R.id.btnAgregarALista);
         btnagregarLista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +103,7 @@ public class RegistroMaterias extends Fragment {
             public void onClick(View v) {
                 registrarMateria();
             }
-        });*/
+        });
         return vista;
     }
 
@@ -104,7 +112,10 @@ public class RegistroMaterias extends Fragment {
     }
 
     private void agregarLista() {
-
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultaMaterias);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -129,6 +140,16 @@ public class RegistroMaterias extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
     }
 
     /**
