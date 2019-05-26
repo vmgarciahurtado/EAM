@@ -6,9 +6,71 @@
     tools:context=".registro_control.MatriculaEstudiante">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:textColor="#000"
+            android:id="@+id/campoCodigoMatricula"
+            android:hint="Codigo estudiante"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Metodo de pago"
+                android:textColor="#000"
+                android:layout_height="wrap_content" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Credito"
+                    android:id="@+id/radioCredito"/>
+
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:text="Contado"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioContado"/>
+            </RadioGroup>
+        </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/campoCantidadCuotas"
+                    android:visibility="invisible"
+                    android:hint="Cantidad de cuotas"
+                    android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="valor a pagar"
+            android:id="@+id/txtValorPagar"
+            android:layout_height="wrap_content"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_marginTop="33dp"
+            android:id="@+id/btnAcepterMatricula"
+            android:text="Aceptar"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </FrameLayout>

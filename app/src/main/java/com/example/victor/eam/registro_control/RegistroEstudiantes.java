@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.api.RegisterAPI;
+import com.example.victor.eam.entidades.ProgramaVo;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
@@ -81,6 +82,9 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
     ArrayList arrayFacultades;
     ArrayList arrayProgramas;
     ArrayList arraySemestres;
+
+    ProgramaVo programaVo;
+    ArrayList<ProgramaVo>arrayListProgramas;
 
     public RegistroEstudiantes() {
         // Required empty public constructor
@@ -311,21 +315,27 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
                 break;
 
             case 2:
+                programaVo = null;
                 JSONArray jsonPrograma = response.optJSONArray("programa");
                 JSONObject jsonObjectPrograma;
                 arrayProgramas = new ArrayList();
+                arrayListProgramas =  new ArrayList<>();
                 try {
                     for (int i = 0; i < jsonPrograma.length(); i++) {
+                        programaVo = new ProgramaVo();
                         jsonObjectPrograma = jsonPrograma.getJSONObject(i);
-                        arrayProgramas.add(jsonObjectPrograma.getString("programa"));
+                        programaVo.setNombre(jsonObjectPrograma.getString("programa"));
+                        programaVo.setId(jsonObjectPrograma.getString("id"));
+                        arrayListProgramas.add(programaVo);
                     }
 
-                    ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayProgramas);
+                    ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayListProgramas);
                     spinnerPrograma.setAdapter(adapterPrograma);
                     spinnerPrograma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            programaAcademico = String.valueOf(position + 1 );
+                            String programa = arrayListProgramas.get(spinnerPrograma.getPositionForView(view)).getId();
+                            programaAcademico = programa;
                         }
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
