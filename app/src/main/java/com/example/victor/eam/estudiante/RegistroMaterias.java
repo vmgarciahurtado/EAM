@@ -189,7 +189,6 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     materia = arrayMateria.get(spnMaterias.getPositionForView(view)).getCodigo();
-                    Toast.makeText(getContext(), "Este es el codigo: "+materia, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

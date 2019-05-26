@@ -25,14 +25,6 @@ public class MateriaVO {
         this.nombreDocente = nombreDocente;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     @Override
     public String toString() {
         return nombreMateria;
@@ -41,6 +33,14 @@ public class MateriaVO {
     public String getNombreMateria() {
         return nombreMateria;
     }
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
 
     public void setNombreMateria(String nombreMateria) {
         this.nombreMateria = nombreMateria;
