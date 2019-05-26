@@ -107,8 +107,8 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
         campoCodigo = vista.findViewById(R.id.campoCodigo);
         campoNombre = vista.findViewById(R.id.campoNombre);
         spinnerTipoDocente = vista.findViewById(R.id.spinnerTipoDocente);
-       /* campoTipo = vista.findViewById(R.id.campoTipoDocente);
-        linearLayout = vista.findViewById(R.id.layoutModDocente);*/
+        campoTipo = vista.findViewById(R.id.campoTipoDocente);
+        linearLayout = vista.findViewById(R.id.layoutModDocente);
         btnInactivarDocente = vista.findViewById(R.id.btnInactivarDocente);
         btnInactivarDocente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +134,44 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
     }
 
     private void modificarDocente() {
+        final String codigo = campoCodigo.getText().toString();
+        final String nombre = campoNombre.getText().toString();
+        if (!codigo.equals("") && !nombre.equals("")) {
+            String url;
+            url = ip + getContext().getString(R.string.ipModificarDocente);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("modifico")) {
+                        Log.i("********RESULTADO", "Respuesta server" + response);
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
 
+
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("iddocente", codigo);
+                    parametros.put("nombredocente", nombre);
+                    Log.i("--------PARAMETROS ", parametros.toString());
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+        } else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void buscarDocente() {
