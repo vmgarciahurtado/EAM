@@ -23,73 +23,49 @@
                     android:id="@+id/txtCodigoEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Codigo estudiante"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Codigo estudiante" />
 
                 <EditText
                     android:id="@+id/txtCedulaEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Cedula estudiante"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Cedula estudiante" />
 
                 <EditText
                     android:id="@+id/txtNombreEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Nombre estudiante"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Nombre estudiante" />
 
                 <EditText
                     android:id="@+id/txtFechaEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Fecha nacimiento"
-                    android:inputType="textPersonName"
-                    android:text="" />
-
-                <EditText
-                    android:id="@+id/txtEstadoEstudiante"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Estado estudiante"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Fecha nacimiento" />
 
                 <EditText
                     android:id="@+id/txtDireccion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Direccion estudiante"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Direccion estudiante" />
 
                 <EditText
                     android:id="@+id/txtTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Telefono estudiante"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Telefono estudiante" />
 
                 <EditText
                     android:id="@+id/txtCorreo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Correo electronica"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    android:hint="Correo electronica" />
 
                 <Spinner
                     android:id="@+id/spnFacultad"

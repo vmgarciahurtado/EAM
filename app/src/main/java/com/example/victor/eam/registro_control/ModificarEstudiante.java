@@ -70,6 +70,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     ArrayList arrayListEstudiante;
     ArrayList<EstudianteVO> arrayEstudiante;
 
+    int accion;
+
     public ModificarEstudiante() {
         // Required empty public constructor
     }
@@ -116,7 +118,6 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                 capturarFecha();
             }
         });
-        txtEstado = vista.findViewById(R.id.txtEstadoEstudiante);
         txtDireccion = vista.findViewById(R.id.txtDireccion);
         txtTelefono = vista.findViewById(R.id.txtTelefono);
         txtCorreo = vista.findViewById(R.id.txtCorreo);
@@ -143,7 +144,6 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                 inactivarEstudiante();
             }
         });
-       // cargarPrograma();
         cargarSemestre();
         return vista;
     }
@@ -161,7 +161,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         mDatePicker.show();
     }
 
-    private void cargarPrograma() {
+    private void cargarPrograma(String codigo) {
         String url;
         url = ip + getContext().getString(R.string.ipProgramas);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
@@ -219,12 +219,12 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         final String cedula = txtCedula.getText().toString();
         final String nombre = txtNombre.getText().toString();
         final String fecha = txtFechaNacimiento.getText().toString();
-        final String estado = txtEstado.getText().toString();
+        final String estado = "0";
         final String direccion = txtDireccion.getText().toString();
         final String telefono = txtTelefono.getText().toString();
         final String correo = txtCorreo.getText().toString();
 
-        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("") && !programaAcademico.equals("")) {
+        if (!codigo.equals("") && !cedula.equals("") && !nombre.equals("") && !fecha.equals("") && !direccion.equals("") && !telefono.equals("") && !correo.equals("")) {
             String url;
             url = ip + getContext().getString(R.string.ipModificarEstudiante);
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -256,7 +256,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                     parametros.put("direccionEstudiante", direccion);
                     parametros.put("telefonoEstudiante", telefono);
                     parametros.put("correoElectronico", correo);
-                    parametros.put("programaAcademico", programaAcademico);
+                    parametros.put("programaAcademico", "1");
                     parametros.put("semestre_numeroSemetre", semestre);
                     Log.i("--------PARAMETROS ", parametros.toString());
                     return parametros;
@@ -310,9 +310,11 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
     @Override
     public void onResponse(JSONObject response) {
+
+
         estudiante = null;
         JSONArray jsonEstudiante = response.optJSONArray("estudiantes");
-        JSONObject jsonObjectEstudiante;
+        JSONObject jsonObjectEstudiante = null;
         arrayEstudiante = new ArrayList();
         arrayListEstudiante = new ArrayList();
         //final ArrayList listaNombres = new ArrayList();
@@ -322,20 +324,22 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                 jsonObjectEstudiante = jsonEstudiante.getJSONObject(i);
                 estudiante = new EstudianteVO();
                 estudiante.setCedulaEstudiante(jsonObjectEstudiante.getInt("cedula"));
+                estudiante.setCodigoEstudiante(jsonObjectEstudiante.getInt("codigo"));
                 estudiante.setNombreEstudiante(jsonObjectEstudiante.getString("nombre"));
                 estudiante.setFechaNacimiento(jsonObjectEstudiante.getString("fecha"));
-                estudiante.setEstadoEstado(jsonObjectEstudiante.getString("estado"));
+                //estudiante.setEstadoEstado(jsonObjectEstudiante.getString("estado"));
                 estudiante.setDireccion(jsonObjectEstudiante.getString("direccion"));
                 estudiante.setTelefono(jsonObjectEstudiante.getString("telefono"));
                 estudiante.setCorreo(jsonObjectEstudiante.getString("correo"));
-                estudiante.setPrograma(jsonObjectEstudiante.getInt("programa"));
-                estudiante.setSemestre(jsonObjectEstudiante.getInt("semestre"));
+                //estudiante.setPrograma(jsonObjectEstudiante.getInt("programa"));
+                //estudiante.setSemestre(jsonObjectEstudiante.getInt("semestre"));
                 arrayEstudiante.add(estudiante);
             }
-            txtCedula.setText(estudiante.getCedulaEstudiante());
+
+            txtCodigo.setText(""+estudiante.getCodigoEstudiante());
+            txtCedula.setText(""+estudiante.getCedulaEstudiante());
             txtNombre.setText(estudiante.getNombreEstudiante());
             txtFechaNacimiento.setText(estudiante.getFechaNacimiento());
-            txtEstado.setText(estudiante.getEstadoEstado());
             txtDireccion.setText(estudiante.getDireccion());
             txtTelefono.setText(estudiante.getTelefono());
             txtCorreo.setText(estudiante.getCorreo());

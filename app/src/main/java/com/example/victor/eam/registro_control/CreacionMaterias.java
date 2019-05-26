@@ -325,7 +325,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialogActa.hide();
                 Toast.makeText(getContext(), "No se ha guardado el acta", Toast.LENGTH_SHORT).show();
             }
         });
