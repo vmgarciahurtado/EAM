@@ -110,6 +110,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
                 lista.add(materia);
                 agregarLista.add(nombreMateria);
             }
+
         });
         btnregistrar = vista.findViewById(R.id.btnRegistrarMaterias);
         btnregistrar.setOnClickListener(new View.OnClickListener() {
