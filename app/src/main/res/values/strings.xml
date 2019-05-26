@@ -24,6 +24,7 @@
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
     <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoestudiante=</string>
     <string name="ipObtenerDocente">obtenerDocente.php?iddocente=</string>
+    <string name="ipContratoDocente">registroContradoDocente.php</string>
 
 
     <!--IP MODIFICAR-->
