@@ -7,9 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,9 +22,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.adapter.AdapterConsultaMaterias;
+import com.example.victor.eam.entidades.MateriaVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,10 +53,13 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
-    String ip;
+    String ip, materia;
     ListView lstMaterias;
     Spinner spnMaterias;
     Button btnagregarLista, btnregistrar;
+    MateriaVO materiaVO;
+    ArrayList<MateriaVO> arrayMateria;
+    AdapterConsultaMaterias adapterConsultaMaterias;
 
     public RegistroMaterias() {
         // Required empty public constructor
@@ -89,7 +101,6 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
          ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMaterias);
         spnMaterias = vista.findViewById(R.id.spnMateriaEstudiante);
-
         btnagregarLista = vista.findViewById(R.id.btnAgregarALista);
         btnagregarLista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +115,15 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
                 registrarMateria();
             }
         });
+        cargarMaterias();
         return vista;
+    }
+
+    private void cargarMaterias() {
+        String url;
+        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void registrarMateria() {
@@ -149,7 +168,40 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
 
     @Override
     public void onResponse(JSONObject response) {
+        materiaVO = null;
+        JSONArray json = response.optJSONArray("materias");
+        JSONObject jsonObject = null;
+        arrayMateria = new ArrayList<>();
 
+        try {
+
+            for (int i = 0; i < json.length(); i++) {
+                jsonObject = json.getJSONObject(i);
+                materiaVO = new MateriaVO();
+                materiaVO.setNombreMateria(jsonObject.getString("nombremateria"));
+                materiaVO.setCodigo(jsonObject.getString("idmateria"));
+                arrayMateria.add(materiaVO);
+            }
+
+            ArrayAdapter<CharSequence> adapterMateria = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayMateria);
+            spnMaterias.setAdapter(adapterMateria);
+            spnMaterias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    materia = arrayMateria.get(spnMaterias.getPositionForView(view)).getCodigo();
+                    Toast.makeText(getContext(), "Este es el codigo: "+materia, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
