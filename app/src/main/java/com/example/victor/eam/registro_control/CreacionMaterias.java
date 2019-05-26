@@ -187,7 +187,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
     private void cargarPrograma() {
         String url;
-        url = ip + getContext().getString(R.string.ipProgramas);
+        url = ip + getContext().getString(R.string.ipProgramas2);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
