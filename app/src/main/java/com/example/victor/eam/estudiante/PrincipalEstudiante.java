@@ -68,12 +68,13 @@ public class PrincipalEstudiante extends AppCompatActivity
             Fragment miFragment = new RegistroMaterias();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
 
-        } else if (id == R.id.nav_slideshow) {
+  /*      } else if (id == R.id.nav_slideshow) {
             Fragment miFragment = new ConsultarSeguimiento();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
 
-        } else if (id == R.id.nav_manage) {
-            Fragment miFragment = new com.example.victor.eam.estudiante.ConsultarHorario();
+        }*/
+        }else if (id == R.id.nav_manage) {
+            Fragment miFragment = new com.example.victor.eam.estudiante.GestionMaterias();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerEstudiante, miFragment).commit();
 
         } else if (id == R.id.nav_share) {

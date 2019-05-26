@@ -215,16 +215,16 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
 
 
                     Map<String, String> parametros = new HashMap<>();
-                    parametros.put("codigoEstudiante", codigo);
-                    parametros.put("cedulaEstudiante", cedula);
-                    parametros.put("nombreEstudiante", nombre);
+                    parametros.put("codigoestudiante", codigo);
+                    parametros.put("cedulaestudiante", cedula);
+                    parametros.put("nombreestudiante", nombre);
                     parametros.put("fechaNacimiento", fecha);
-                    parametros.put("estadoEstudiante", "1");
-                    parametros.put("direccionEstudiante", direccion);
-                    parametros.put("telefonoEstudiante", telefono);
-                    parametros.put("correoElectronico", correo);
-                    parametros.put("programaAcademico", programaAcademico);
-                    parametros.put("semestre_numeroSemetre", semestre);
+                    parametros.put("estadoestudiante", "1");
+                    parametros.put("direccionestudiante", direccion);
+                    parametros.put("telefonoestudiante", telefono);
+                    parametros.put("correoelectronico", correo);
+                    parametros.put("pacademico_idpacademico", programaAcademico);
+                    parametros.put("semestre_numerosemestre", semestre);
                     Log.i("--------PARAMETROS ", parametros.toString());
                     return parametros;
 

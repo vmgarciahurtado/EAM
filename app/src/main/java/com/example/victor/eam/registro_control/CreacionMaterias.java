@@ -68,14 +68,14 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
     //POPUP
     EditText campoActa;
-
+    int posicionSpinner = 0;
     ArrayList arrayEntornos;
     ArrayList arrayMaterias;
     ArrayList<MateriaVO> listaMateriasVo;
     MateriaVO materiaVO;
 
     //VARIABLES
-    String prerrequisitos;
+    String prerrequisitos = "";
     String actaDescriptiva;
     String ip;
     String entorno;
@@ -339,7 +339,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         spinnerMaterias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                prerrequisitos = String.valueOf(position + 1 );
+                posicionSpinner = position + 1;
             }
 
             @Override
@@ -353,6 +353,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             @Override
             public void onClick(View v) {
                 //Guardar la materia que escoja en el spinner
+                prerrequisitos = String.valueOf(posicionSpinner);
                 dialogoPrerequisitos.hide();
             }
         });
@@ -361,6 +362,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                prerrequisitos = "";
                 dialogoPrerequisitos.hide();
                 Toast.makeText(getContext(), "No ha elegido nungiun prerrequisito ", Toast.LENGTH_SHORT).show();
             }

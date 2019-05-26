@@ -274,7 +274,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
     private void buscarEstudiante() {
         String url;
-        url = ip + getContext().getString(R.string.ipObtenerEstudiante)+txtCodigo.getText().toString();
+        url = ip + getContext().getString(R.string.ipObtenerEstudiante)+"19766";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }

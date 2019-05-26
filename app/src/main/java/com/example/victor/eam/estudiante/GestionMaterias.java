@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -65,14 +64,22 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private RequestQueue request;
     private StringRequest stringRequest;
 
+    //POPUP
+    TextView txtFallas,txtNota,txtNombreMateria,txtNombreDocente;
+    CheckBox checkBoxCancelarMateria;
+    Button aceptar;
+
+
     Spinner spinnerHorario;
 
     ListView lstMaterias;
-    String ip, codigo;
+    String ip, codigo,corte;
 
-    String nota,nombre,horario,fallas;
+    String nota, nombreMateria,horario,fallas,nombreDocente;
 
     Dialog dialogDatos;
+
+    int accion;
 
     AdapterConsultaMaterias adapterConsultaMaterias;
 
@@ -127,10 +134,12 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     }
 
     private void cargarMaterias() {
+        accion = 1;
         String url;
-        url = ip + getContext().getString(R.string.ipConsultarMateriaEstudiante);
+        url = ip + getContext().getString(R.string.ipConsultarMateriaEstudiante)+"19766";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -160,81 +169,95 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     @Override
     public void onResponse(JSONObject response) {
 //=====================================================================================================================
-        materiaVO = null;
-        JSONArray json = response.optJSONArray("materia");
-        JSONObject jsonObject = null;
-        listaMaterias = new ArrayList<>();
+        switch (accion){
+            case 1:
 
-        try {
+                materiaVO = null;
+                JSONArray json = response.optJSONArray("materias");
+                JSONObject jsonObject = null;
+                listaMaterias = new ArrayList<>();
 
-            for (int i = 0; i < json.length(); i++) {
-                jsonObject = json.getJSONObject(i);
-                materiaVO = new MateriaVO();
-                materiaVO.setNombreMateria(jsonObject.getString("nombre"));
-                materiaVO.setCodigo(jsonObject.getString("id"));
-                materiaVO.setNombreDocente(jsonObject.getString("docente"));
-                listaMaterias.add(materiaVO);
-            }
+                try {
 
-            adapterConsultaMaterias = new AdapterConsultaMaterias(getContext(), listaMaterias);
-            lstMaterias.setAdapter(adapterConsultaMaterias);
-            lstMaterias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    codigo = listaMaterias.get(lstMaterias.getPositionForView(view)).getCodigo();
-                    Toast.makeText(getContext(), "Codigo curso: " + codigo, Toast.LENGTH_SHORT).show();
-                    cargarDatosMateria(codigo);
-                    showPopup();
+                    for (int i = 0; i < json.length(); i++) {
+                        jsonObject = json.getJSONObject(i);
+                        materiaVO = new MateriaVO();
+                        materiaVO.setNombreMateria(jsonObject.getString("nombre"));
+                        materiaVO.setCodigo(jsonObject.getString("codigo"));
+                        listaMaterias.add(materiaVO);
+                    }
+
+                    adapterConsultaMaterias = new AdapterConsultaMaterias(getContext(), listaMaterias);
+                    lstMaterias.setAdapter(adapterConsultaMaterias);
+                    lstMaterias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            codigo = listaMaterias.get(lstMaterias.getPositionForView(view)).getCodigo();
+                           // Toast.makeText(getContext(), "Codigo curso: " + codigo, Toast.LENGTH_SHORT).show();
+                            cargarDatosMateria(codigo);
+
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
                 }
-            });
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+                break;
 
-            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+            case 2:
+
+                detalleMateriaVo = null;
+                JSONArray jsonDetalle = response.optJSONArray("materia");
+                JSONObject jsonObjectDetalle = null;
+                listaDetalle = new ArrayList<>();
+                arrayHorario = new ArrayList();
+
+                try {
+
+                    for (int i = 0; i < jsonDetalle.length(); i++) {
+                        jsonObjectDetalle = jsonDetalle.getJSONObject(i);
+                        detalleMateriaVo = new DetalleMateriaVo();
+                        detalleMateriaVo.setNombre(jsonObjectDetalle.getString("materia"));
+                        detalleMateriaVo.setNombreDocente(jsonObjectDetalle.getString("docente"));
+                        detalleMateriaVo.setNota(jsonObjectDetalle.getString("nota"));
+                        detalleMateriaVo.setCorte(jsonObjectDetalle.getString("corte"));
+                        //arrayHorario.add(jsonObjectDetalle.getString("horaio"));
+
+                        //detalleMateriaVo.setHorario(jsonObjectDetalle.getString("horaio"));
+                        detalleMateriaVo.setFallas(jsonObjectDetalle.getString("fallas"));
+                        listaDetalle.add(detalleMateriaVo);
+                    }
+
+                    nombreMateria = detalleMateriaVo.getNombre();
+                    nota = detalleMateriaVo.getNota();
+                    corte = detalleMateriaVo.getCorte();
+                    nombreDocente = detalleMateriaVo.getNombreDocente();
+                    //horario = detalleMateriaVo.getHorario();
+                    fallas = detalleMateriaVo.getFallas();
+
+                    showPopup();
+                    //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayHorario);
+                    //spinnerHorario.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+                }
+                break;
         }
 
 //=====================================================================================================================
-        detalleMateriaVo = null;
-        JSONArray jsonDetalle = response.optJSONArray("detalle");
-        JSONObject jsonObjectDetalle = null;
-        listaDetalle = new ArrayList<>();
-        arrayHorario = new ArrayList();
 
-        try {
-
-            for (int i = 0; i < jsonDetalle.length(); i++) {
-                jsonObjectDetalle = jsonDetalle.getJSONObject(i);
-                detalleMateriaVo = new DetalleMateriaVo();
-                detalleMateriaVo.setNombre(jsonObjectDetalle.getString("nombre"));
-                detalleMateriaVo.setNota(jsonObjectDetalle.getString("nota"));
-                arrayHorario.add(jsonObjectDetalle.getString("horaio"));
-                //detalleMateriaVo.setHorario(jsonObjectDetalle.getString("horaio"));
-                detalleMateriaVo.setFallas(jsonObjectDetalle.getString("fallas"));
-                listaDetalle.add(detalleMateriaVo);
-            }
-
-            nombre = detalleMateriaVo.getNombre();
-            nota = detalleMateriaVo.getNota();
-            //horario = detalleMateriaVo.getHorario();
-            fallas = detalleMateriaVo.getFallas();
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, arrayHorario);
-            spinnerHorario.setAdapter(adapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
-        }
 //=========================================================================================================================
     }
 
 
     private void showPopup() {
-        TextView txtFallas,txtNota;
-        final CheckBox checkBoxCancelarMateria;
-        Button aceptar;
+
 
         try {
             dialogDatos.setContentView(R.layout.popup_materias);
@@ -244,13 +267,17 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             Log.i("Error ", e.toString());
         }
 
+        txtNombreMateria = dialogDatos.findViewById(R.id.txtNombreMateriaPopup);
+        txtNombreDocente = dialogDatos.findViewById(R.id.txtNombreDocentePopup);
         checkBoxCancelarMateria = dialogDatos.findViewById(R.id.checkboxPopup);
         spinnerHorario = dialogDatos.findViewById(R.id.spinnerHorarioPopup);
         txtFallas = dialogDatos.findViewById(R.id.txtFallasPopup);
         txtNota = dialogDatos.findViewById(R.id.txtNotasPopup);
 
-        txtFallas.setText(fallas);
-        txtNota.setText(nota);
+        txtFallas.setText("Inasistencias: " + fallas);
+        txtNota.setText("Definitiva corte: " + nota);
+        txtNombreDocente.setText("Docente: " + nombreDocente);
+        txtNombreMateria.setText(nombreMateria);
 
         aceptar = dialogDatos.findViewById(R.id.btnAceptarPopup);
         aceptar.setOnClickListener(new View.OnClickListener() {
@@ -298,10 +325,12 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     }
 
     private void cargarDatosMateria(String codigo) {
+        accion = 2;
         String url;
-        url = ip + getContext().getString(R.string.ipConsultarDatosMateria);
+        url = ip + getContext().getString(R.string.ipConsultarDatosMateria)+1+"&codigo=19766";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+
     }
 
     @Override

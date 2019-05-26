@@ -10,6 +10,7 @@ import com.example.victor.eam.docente.VerCursos;
 import com.example.victor.eam.docente.ReportesDocentes;
 import com.example.victor.eam.docente.TomasLista;
 import com.example.victor.eam.estudiante.ConsultarSeguimiento;
+import com.example.victor.eam.estudiante.GestionMaterias;
 import com.example.victor.eam.estudiante.RegistroMaterias;
 import com.example.victor.eam.registro_control.CreacionMaterias;
 import com.example.victor.eam.registro_control.CrearCursos;
@@ -47,6 +48,7 @@ public interface AllFragments extends
         DetalleRegistroNotas.OnFragmentInteractionListener,
         ModificarDocente.OnFragmentInteractionListener,
         ModificarEstudiante.OnFragmentInteractionListener,
-        contratoDocentes.OnFragmentInteractionListener
+        contratoDocentes.OnFragmentInteractionListener,
+        GestionMaterias.OnFragmentInteractionListener
 {
 }

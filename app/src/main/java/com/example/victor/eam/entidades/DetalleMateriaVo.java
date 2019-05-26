@@ -1,17 +1,35 @@
 package com.example.victor.eam.entidades;
 
 public class DetalleMateriaVo {
-    String nota,nombre,horario,fallas;
+    String nota;
+    String nombre;
+    String horario;
+    String fallas;
+    String nombreDocente;
+
+    public String getCorte() {
+        return corte;
+    }
+
+    public void setCorte(String corte) {
+        this.corte = corte;
+    }
+
+    String corte;
+
+
+
+    public String getNombreDocente() {
+        return nombreDocente;
+    }
+
+    public void setNombreDocente(String nombreDocente) {
+        this.nombreDocente = nombreDocente;
+    }
 
     public DetalleMateriaVo() {
     }
 
-    public DetalleMateriaVo(String nota, String nombre, String horario, String fallas) {
-        this.nota = nota;
-        this.nombre = nombre;
-        this.horario = horario;
-        this.fallas = fallas;
-    }
 
     public String getNota() {
         return nota;
