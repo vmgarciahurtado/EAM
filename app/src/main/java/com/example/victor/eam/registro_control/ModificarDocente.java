@@ -57,16 +57,17 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
     private StringRequest stringRequest;
     JsonObjectRequest jsonObjectRequest;
 
-    TextView campoNombre,campoTipo,campoCodigo;
+    TextView campoNombre, campoTipo, campoCodigo;
     Spinner spinnerTipoDocente;
-    Button btnInactivarDocente;
+    Button btnInactivarDocente, btnBuscar, btnModificar;
     LinearLayout linearLayout;
 
     private DocenteVO docenteVO;
-    ArrayList<DocenteVO>arrayDocentes;
+    ArrayList<DocenteVO> arrayDocentes;
 
     //VARIABLES
-    String ip ;
+    String ip;
+
     public ModificarDocente() {
         // Required empty public constructor
     }
@@ -105,8 +106,9 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
         ip = getContext().getString(R.string.ip);
         campoCodigo = vista.findViewById(R.id.campoCodigo);
         campoNombre = vista.findViewById(R.id.campoNombre);
-        campoTipo = vista.findViewById(R.id.campoTipoDocente);
-        linearLayout = vista.findViewById(R.id.layoutModDocente);
+        spinnerTipoDocente = vista.findViewById(R.id.spinnerTipoDocente);
+       /* campoTipo = vista.findViewById(R.id.campoTipoDocente);
+        linearLayout = vista.findViewById(R.id.layoutModDocente);*/
         btnInactivarDocente = vista.findViewById(R.id.btnInactivarDocente);
         btnInactivarDocente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,9 +116,32 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
                 inactivarDocente();
             }
         });
-
-        cargarDatos();
+        btnBuscar = vista.findViewById(R.id.btnBuscarDocente);
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buscarDocente();
+            }
+        });
+        btnModificar = vista.findViewById(R.id.btnModificarDocente);
+        btnModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modificarDocente();
+            }
+        });
         return vista;
+    }
+
+    private void modificarDocente() {
+
+    }
+
+    private void buscarDocente() {
+        String url;
+        url = ip + getContext().getString(R.string.ipObtenerDocente)+campoCodigo.getText().toString();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void inactivarDocente() {
@@ -147,7 +172,7 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
 
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("iddocente", codigo);
-                parametros.put("estadodocente",estado);
+                parametros.put("estadodocente", estado);
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
 
@@ -158,13 +183,6 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
 
     }
 
-    private void cargarDatos() {
-        String url;
-        int codigo = 1024;
-        url = ip + getContext().getString(R.string.ipObtenerDocente)+codigo;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, this, this);
-        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -204,26 +222,21 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
                 docenteVO.setId(jsonObjectDocente.getString("iddocente"));
                 docenteVO.setNombre(jsonObjectDocente.getString("nombre"));
                 docenteVO.setTipo(jsonObjectDocente.getString("tipo"));
-                docenteVO.setEstado(jsonObjectDocente.getString("estado"));
                 arrayDocentes.add(docenteVO);
-                llenarCampos(docenteVO);
             }
-
+            campoNombre.setText(docenteVO.getNombre());
+            spinnerTipoDocente.setSelection(Integer.parseInt(docenteVO.getTipo()));
+            Toast.makeText(getContext(), "Codigo: "+campoCodigo.getText().toString()+" nombre: "+campoNombre.getText().toString()+" TIPO: "+docenteVO.getTipo(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+            Toast.makeText(getContext(), "ERROR"+e, Toast.LENGTH_SHORT).show();
 
         }
 
     }
 
-    private void llenarCampos(DocenteVO docenteVO) {
-        Toast.makeText(getContext(), "DocenteVo" + docenteVO, Toast.LENGTH_SHORT).show();
-        campoTipo.setText(docenteVO.getTipo());
-        campoNombre.setText(docenteVO.getNombre());
-    }
-
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        Toast.makeText(getContext(), "ERROR"+error, Toast.LENGTH_SHORT).show();
     }
 
     /**

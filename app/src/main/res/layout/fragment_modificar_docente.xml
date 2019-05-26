@@ -64,6 +64,20 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btnBuscarDocente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="buscar" />
+
+        <Button
+            android:id="@+id/btnModificarDocente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Modificar" />
+
+        <Button
             android:id="@+id/btnInactivarDocente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

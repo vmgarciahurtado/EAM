@@ -2,7 +2,7 @@
 
     <!-- IP GROBAL -->
     <string name="app_name">EAM</string>
-    <string name="ip">http://192.168.0.12/bd/</string>
+    <string name="ip">http://192.168.0.4/bd/</string>
 
     <!-- IP CONSULTAS-->
     <string name="ipFacultades">consultaFacultades.php</string>
@@ -23,7 +23,7 @@
     <string name="ipRegistrarCurso">creacionCurso.php</string>
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
     <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoestudiante=</string>
-    <string name="ipObtenerDocente">obtenerDocente.php?iddocente=</string>
+    <string name="ipObtenerDocente">obtenerDocentes.php?iddocente=</string>
     <string name="ipContratoDocente">registroContradoDocente.php</string>
 
 
