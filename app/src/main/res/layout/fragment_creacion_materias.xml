@@ -145,6 +145,12 @@
                     android:layout_height="wrap_content">
                 </Spinner>
 
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:id="@+id/spinnerPacademico"
+                    android:layout_height="wrap_content">
+                </Spinner>
                 <Button
                     android:layout_width="match_parent"
                     android:id="@+id/btnActaDescriptiva"

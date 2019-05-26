@@ -251,7 +251,6 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
                 parametros.put("entornomateria", String.valueOf(entorno));
                 parametros.put("prerrequisito", String.valueOf(prerrequisitos));
                 parametros.put("programa", String.valueOf(programa));
-
                 Log.i("--------PARAMETROS ", parametros.toString());
                 return parametros;
 
