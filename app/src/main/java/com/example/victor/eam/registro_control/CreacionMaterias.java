@@ -443,6 +443,12 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
 
             ArrayAdapter<CharSequence> adapterPrograma = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayProgramas);
             spinnerProgramas.setAdapter(adapterPrograma);
+            spinnerProgramas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    programa = String.valueOf(position+1);
+                }
+            });
         } catch (Exception e) {
 
         }
