@@ -7,6 +7,16 @@ public class DetalleMateriaVo {
     String fallas;
     String nombreDocente;
 
+    public String getDefinitiva() {
+        return definitiva;
+    }
+
+    public void setDefinitiva(String definitiva) {
+        this.definitiva = definitiva;
+    }
+
+    String definitiva;
+
     public String getCorte() {
         return corte;
     }

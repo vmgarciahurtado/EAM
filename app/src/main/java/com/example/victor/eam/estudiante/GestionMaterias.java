@@ -66,11 +66,12 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private StringRequest stringRequest;
 
     //POPUP
-    TextView txtFallas,txtNombreMateria,txtNombreDocente;
+    TextView txtFallas,txtNombreMateria,txtNombreDocente,txtDefinitiva;
     CheckBox checkBoxCancelarMateria;
     Button aceptar;
     Spinner spinnerHorario;
     Spinner spinnerNotas;
+    String definitiva;
 
     ListView lstMaterias;
     String ip, codigo,corte;
@@ -213,11 +214,22 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                 detalleMateriaVo = null;
                 JSONArray jsonDetalle = response.optJSONArray("materia");
                 JSONObject jsonObjectDetalle = null;
+                //----------------------------------------------------------
+                JSONArray jsonDetalle1 = response.optJSONArray("promedio");
+                JSONObject jsonObjectDetalle1 = null;
+                //----------------------------------------------------------
                 listaDetalle = new ArrayList<>();
                 arrayHorario = new ArrayList();
                 arrayNotas = new ArrayList();
 
                 try {
+
+                    for (int i = 0; i < jsonDetalle1.length(); i++) {
+                        jsonObjectDetalle1 = jsonDetalle1.getJSONObject(i);
+                        detalleMateriaVo = new DetalleMateriaVo();
+                        detalleMateriaVo.setDefinitiva(jsonObjectDetalle1.getString("definitiva"));
+                    }
+                    definitiva = detalleMateriaVo.getDefinitiva();
 
                     for (int i = 0; i < jsonDetalle.length(); i++) {
                         jsonObjectDetalle = jsonDetalle.getJSONObject(i);
@@ -236,7 +248,6 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
                     nota = detalleMateriaVo.getNota();
                     corte = detalleMateriaVo.getCorte();
                     nombreDocente = detalleMateriaVo.getNombreDocente();
-                    //horario = detalleMateriaVo.getHorario();
                     fallas = detalleMateriaVo.getFallas();
 
 
@@ -270,6 +281,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             Log.i("Error ", e.toString());
         }
 
+        txtDefinitiva = dialogDatos.findViewById(R.id.txtDefinitivaPopup);
         txtNombreMateria = dialogDatos.findViewById(R.id.txtNombreMateriaPopup);
         txtNombreDocente = dialogDatos.findViewById(R.id.txtNombreDocentePopup);
         checkBoxCancelarMateria = dialogDatos.findViewById(R.id.checkboxPopup);
@@ -277,7 +289,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
         spinnerNotas = dialogDatos.findViewById(R.id.spinnerNotasPopup);
         txtFallas = dialogDatos.findViewById(R.id.txtFallasPopup);
 
-
+        txtDefinitiva.setText("Definitiva: " + definitiva);
         txtFallas.setText("Inasistencias: " + fallas);
         txtNombreDocente.setText("Docente: " + nombreDocente);
         txtNombreMateria.setText(nombreMateria);

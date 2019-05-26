@@ -38,6 +38,16 @@
 
 
         <TextView
+            android:id="@+id/txtDefinitivaPopup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Definitiva"
+            android:textColor="#000"
+            android:layout_marginLeft="33dp"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/txtFallasPopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
