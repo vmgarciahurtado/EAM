@@ -59,7 +59,8 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     Button btnagregarLista, btnregistrar;
     MateriaVO materiaVO;
     ArrayList<MateriaVO> arrayMateria;
-    ArrayList lista, agregarLista;
+    ArrayList lista = new ArrayList();
+    ArrayList agregarLista = new ArrayList();
     AdapterConsultaMaterias adapterConsultaMaterias;
 
     public RegistroMaterias() {
@@ -135,9 +136,6 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     }
 
     private void agregarLista() {
-    agregarLista = new ArrayList();
-    lista = new ArrayList();
-
     ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, agregarLista);
     lstMaterias.setAdapter(adapterMateria);
     }
