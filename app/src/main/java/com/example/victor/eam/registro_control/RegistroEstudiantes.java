@@ -28,7 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
-import com.example.victor.eam.api.RegisterAPI;
+
 import com.example.victor.eam.entidades.ProgramaVo;
 import com.example.victor.eam.entidades.VolleySingleton;
 
@@ -169,12 +169,12 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
     }
 
     private void cargarPrograma(int position) {
-
+        accion = 2;
         String url;
-        url = ip + getContext().getString(R.string.ipProgramas) + (position + 1);
+        url = ip + getContext().getString(R.string.ipProgramas)+position ;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
-        accion = 2;
+
     }
 
     private void cargarSemestre(){
@@ -301,7 +301,7 @@ public class RegistroEstudiantes extends Fragment implements Response.Listener<J
                     spinnerFacultad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            cargarPrograma(position);
+                            cargarPrograma(position +1);
                         }
 
                         @Override

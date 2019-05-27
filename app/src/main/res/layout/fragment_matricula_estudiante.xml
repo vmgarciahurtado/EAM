@@ -29,23 +29,13 @@
                 android:textColor="#000"
                 android:layout_height="wrap_content" />
 
-            <RadioGroup
+            <Spinner
                 android:layout_width="match_parent"
+                android:id="@+id/spinnerTipo"
                 android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Credito"
-                    android:id="@+id/radioCredito"/>
+            </Spinner>
 
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:text="Contado"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioContado"/>
-            </RadioGroup>
         </LinearLayout>
 
                 <EditText

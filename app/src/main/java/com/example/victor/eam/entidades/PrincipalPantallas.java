@@ -96,8 +96,6 @@ public class PrincipalPantallas extends Fragment {
 
     private void descargarPdf() {
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://192.168.0.8/eam/create_pdf.php");
-
         Uri uri = Uri.parse("http://192.168.0.8/eam/prueba.php");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
