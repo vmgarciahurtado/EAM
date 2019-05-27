@@ -8,17 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.adapter.AdapterConsultaMaterias;
@@ -31,6 +36,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,12 +63,14 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
 
     JsonObjectRequest jsonObjectRequest;
     RequestQueue request;
+    Spinner spinnerTipo;
 
+    ArrayList arrayTipo;
 
     Button btnAceptar,btnBuscar;
     TextView txtValorPagar,txtPrograma;
     EditText campoCodigo,campoCuotas;
-    RadioButton radioCredito,radioContado;
+    CheckBox radioCredito,radioContado;
 
     String costo,programa;
 
@@ -106,34 +115,54 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
         campoCuotas = vista.findViewById(R.id.campoCantidadCuotas);
 
         btnAceptar = vista.findViewById(R.id.btnAcepterMatricula);
-        btnBuscar  = vista.findViewById(R.id.btnBuscarMatricula);
-
-        txtValorPagar = vista.findViewById(R.id.txtValorPagar);
-        txtPrograma = vista.findViewById(R.id.txtPrograma);
-
-        radioContado = vista.findViewById(R.id.radioContado);
-        radioCredito = vista.findViewById(R.id.radioCredito);
-
-        if (radioCredito.isChecked()){
-            campoCuotas.setVisibility(View.VISIBLE);
-        }
-
-
-        btnBuscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-                buscarEstudiante();
-            }
-        });
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 matricular();
             }
         });
+        btnBuscar  = vista.findViewById(R.id.btnBuscarMatricula);
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarEstudiante();
+            }
+        });
+
+        txtValorPagar = vista.findViewById(R.id.txtValorPagar);
+        txtPrograma = vista.findViewById(R.id.txtPrograma);
+        arrayTipo = new ArrayList();
+        arrayTipo.add("Contado");
+        arrayTipo.add("Credido");
+
+        spinnerTipo = vista.findViewById(R.id.spinnerTipo);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arrayTipo);
+        spinnerTipo.setAdapter(adapter);
+        spinnerTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    switch (position){
+                        case 0:
+                            campoCuotas.setVisibility(View.INVISIBLE);
+                            break;
+                        case 1:
+                            campoCuotas.setVisibility(View.VISIBLE);
+                            break;
+                    }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return vista;
     }
+
+
+
 
     private void buscarEstudiante() {
         String url;
@@ -143,6 +172,45 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
     }
 
     private void matricular() {
+/*        final String nombre = campoNombre.getText().toString();
+        final String cedula = campoCedula.getText().toString();
+
+
+        if (!nombre.equals("") || !cedula.equals("") || !tipoDocente.equals("")){
+            String url;
+            url = ip + getContext().getString(R.string.ipRegistroDocentes);
+            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.trim().equalsIgnoreCase("registra")) {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("iddocente", cedula);
+                    parametros.put("nombredocente", nombre);
+                    parametros.put("tipodocente", tipoDocente);
+                    return parametros;
+
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.add(stringRequest);
+
+        }else {
+            Toast.makeText(getContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event
