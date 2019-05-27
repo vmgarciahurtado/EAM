@@ -69,14 +69,32 @@
             android:hint="Fallas del corte"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnRegistrarNotasFallasPopup"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_marginTop="80dp"
-            android:background="#51BD00"
-            android:text="Registrar"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRegistrarNotasFallasPopup"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginRight="10dp"
+                android:background="#51BD00"
+                android:text="Registrar"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/btnCancelarNotasFallasPopup"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="10dp"
+                android:background="#51BD00"
+                android:text="Cancelar"
+                android:textColor="#fff" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -228,17 +228,6 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             @Override
             protected Map<String, String> getParams() {
 
-
-                /*
-    * $intensidadhoraria= $_POST["intensidadhoraria"];
-	$numerocreditos= $_POST["nucreditoacademico"];
-	$actadescriptiva= $_POST["actadescriptiva"];
-	$costomateria= $_POST["costomateria"];
-	$entornomateria= $_POST["entorno_identorno"];
-	$prerrequisito= $_POST["prer_idprerequisito"];u
-    $materia= $_POST["materia_idmateria"];*/
-
-
                 String nombre = campoNombre.getText().toString();
                 String costoMateria = campoCosto.getText().toString();
 
@@ -373,7 +362,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
             public void onClick(View v) {
                 prerrequisitos = "";
                 dialogoPrerequisitos.hide();
-                Toast.makeText(getContext(), "No ha elegido nungiun prerrequisito ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No ha elegido ningun prerrequisito ", Toast.LENGTH_SHORT).show();
             }
         });
     }

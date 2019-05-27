@@ -14,7 +14,7 @@
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
     <string name="ipCargarMateriasEstudiante">cargarMateriasEstudiante.php?estudiante=</string>
-    <string name="ipConsultaCursos">obtenerCursoDocente.php</string>
+    <string name="ipConsultaCursos">obtenerCursoDocente.php?docente=</string>
     <string name="ipConsultarMateriaEstudiante">listarMateriaEstudiante.php?codigo=</string>
     <string name="ipConsultarDatosMateria">consultarMateriaEstudiante.php?idmateria=</string>
     <string name="ipConsultarSemestre">consultarSemestre.php</string>
@@ -30,6 +30,7 @@
     <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoestudiante=</string>
     <string name="ipObtenerDocente">obtenerDocentes.php?iddocente=</string>
     <string name="ipContratoDocente">registroContradoDocente.php</string>
+    <string name="ipRegistrarNotasFallas">IngresarNotasFallas.php</string>
     <string name="ipRegistroMateriasEstudiante">registroAsignaturaEstudiante.php</string>
 
 

@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/campoActaDescrptiva"
             android:layout_marginTop="50dp"
-            android:hint="Escrie aqui"
+            android:hint="Escribe aqui"
             android:inputType="textMultiLine" />
 
 

@@ -2,17 +2,24 @@ package com.example.victor.eam.docente;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,12 +28,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.adapter.AdapterCursos;
+import com.example.victor.eam.entidades.CursoVO;
+import com.example.victor.eam.entidades.EstudianteVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,14 +63,18 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
-    Spinner spinnerCurso;
+    Spinner spinnerCurso, spinnerCorte;
     ListView listaEstudiantes;
     private Dialog dialogoFallasNotas;
 
+
     //Variables
-    String ip;
-    ArrayList curso;
+    String ip, corte, cursoid, estudiante, docente;
+    ArrayList <EstudianteVO> estudiantes;
+    ArrayList <CursoVO> cursoDocente;
     String nombreCurso, nombreEstudiante;
+    CursoVO cursoVO;
+    EstudianteVO estudianteVO;
 
     public RegistrarNotasFallas() {
         // Required empty public constructor
@@ -96,7 +114,10 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
         View vista = inflater.inflate(R.layout.fragment_registrar_notas_fallas, container, false);
         ip = getContext().getString(R.string.ip);
         request = Volley.newRequestQueue(getContext());
+        dialogoFallasNotas = new Dialog(this.getContext());
         spinnerCurso = vista.findViewById(R.id.spinnerCurso);
+        docente = "123";
+        cargarSpinnerCurso(docente);
         spinnerCurso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -104,15 +125,104 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
             }
         });
         listaEstudiantes = vista.findViewById(R.id.lstEstudianteFN);
-
         return vista;
+    }
+
+    private void cargarSpinnerCurso(String docente) {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultaCursos) + docente;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void cargarLstEstudiante(String idDocente) {
         String url;
-        url = ip + getContext().getString(R.string.ipCargarCursoEstudiantes)+idDocente;
+        url = ip + getContext().getString(R.string.ipCargarCursoEstudiantes) + idDocente;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void showPopupNotasFallas() {
+        Button registrar, cancelar;
+        final EditText txtNotas, txtFallas;
+
+        try {
+            dialogoFallasNotas.setContentView(R.layout.popup_notas_fallas);
+            Objects.requireNonNull(dialogoFallasNotas.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogoFallasNotas.show();
+        } catch (Exception e) {
+            Log.i("Error ", e.toString());
+        }
+        txtNotas = dialogoFallasNotas.findViewById(R.id.txtNotasCursoPopup);
+        txtFallas = dialogoFallasNotas.findViewById(R.id.txtFallasCursoPopup);
+        spinnerCorte = dialogoFallasNotas.findViewById(R.id.spinnerCortePopup);
+        spinnerCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                corte = String.valueOf(position + 1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final String notas = txtNotas.getText().toString();
+        final String fallas = txtFallas.getText().toString();
+        registrar = dialogoFallasNotas.findViewById(R.id.btnRegistrarNotasFallasPopup);
+        registrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrarNotasFallas(estudiante, cursoid, fallas, corte, notas);
+                dialogoFallasNotas.hide();
+            }
+        });
+
+        cancelar = dialogoFallasNotas.findViewById(R.id.btnCancelarNotasFallasPopup);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogoFallasNotas.hide();
+                Toast.makeText(getContext(), " Accion cancelada ", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void registrarNotasFallas(final String estudiante, final String curso, final String fallas, final String corte, final String notas) {
+        String url;
+        url = ip + getContext().getString(R.string.ipRegistrarNotasFallas);
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equalsIgnoreCase("registra")) {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("definitivacorte", String.valueOf(notas));
+                parametros.put("corte", String.valueOf(corte));
+                parametros.put("fallas", String.valueOf(fallas));
+                parametros.put("codigoestudiante", String.valueOf(estudiante));
+                parametros.put("idcurso", curso);
+                Log.i("--------PARAMETROS ", parametros.toString());
+                return parametros;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.add(stringRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -146,24 +256,63 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
 
     @Override
     public void onResponse(JSONObject response) {
+        estudianteVO=null;
         JSONArray jsonCurso = response.optJSONArray("estudiantecurso");
         JSONObject jsonObjectCurso;
-        curso = new ArrayList();
+        estudiantes = new ArrayList();
         try {
             for (int i = 0; i < jsonCurso.length(); i++) {
                 jsonObjectCurso = jsonCurso.getJSONObject(i);
-                curso.add(jsonObjectCurso.getString("estudiante"));
+                estudianteVO = new EstudianteVO();
+                estudianteVO.setCodigoEstudiante(jsonCurso.getInt(Integer.parseInt("codigoestudiante")));
+                estudianteVO.setNombreEstudiante(jsonCurso.getString(Integer.parseInt("estudiante")));
+                estudiantes.add(estudianteVO);
             }
-            ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, curso);
-            listaEstudiantes.setAdapter(adapterMateria);
+            //ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, estudiantes);
+            /*listaEstudiantes.setAdapter(adapterMateria);
             listaEstudiantes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                 }
-            });
+            });*/
         } catch (Exception e) {
 
+        }
+        ///////////////////////////
+
+        cursoVO = null;
+        JSONArray json = response.optJSONArray("cursos");
+        JSONObject jsonObject = null;
+        cursoDocente = new ArrayList<>();
+
+        try {
+
+            for (int i = 0; i < json.length(); i++) {
+                jsonObject = json.getJSONObject(i);
+                cursoVO = new CursoVO();
+                cursoVO.setNombre(jsonObject.getString("nombreCurso"));
+                cursoVO.setCodigo(jsonObject.getString("idcurso"));
+                cursoDocente.add(cursoVO);
+            }
+            ArrayAdapter<CharSequence> adapterCuDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, cursoDocente);
+            spinnerCurso.setAdapter(adapterCuDocente);
+            spinnerCurso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    cursoid = cursoDocente.get(spinnerCurso.getPositionForView(view)).getCodigo();
+                    Toast.makeText(getContext(), "Codigo curso: " + cursoid, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
         }
     }
 
