@@ -130,7 +130,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         cargarMaterias();
         return vista;
 
-        //CARE NALGA
+        //CARE NALGA  njnjn
     }
 
     private void cargarMaterias() {
