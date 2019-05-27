@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent1 = new Intent(getApplicationContext(),PrincipalDirectorPrograma.class);
                             startActivity(intent1);
                             finish();
-                            break;
+                            break;//campos
 
                         case "estudiante":
                             Intent intent3 = new Intent(getApplicationContext(),PrincipalEstudiante.class);
