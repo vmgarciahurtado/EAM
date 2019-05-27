@@ -1,40 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".actividades.LoginActivity">
-
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="#000"
+        tools:context=".actividades.LoginActivity">
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:onClick="estudiante"
-            android:text="Ventana estudiante"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <Button
-            android:layout_width="match_parent"
-            android:onClick="registroControl"
-            android:text="Ventana registro y control"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="EAM"
+                android:textColor="#fff"
+                android:textSize="28dp"
+                android:textStyle="bold" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:onClick="directorPrograma"
-            android:text="Ventana director programa"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="123dp"
+                android:text="¡Bienvenido!"
+                android:textColor="#fff"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:onClick="docente"
-            android:text="Ventana docente"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/campoCodigoLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="44dp"
+                android:layout_marginRight="44dp"
+                android:backgroundTint="#fff"
+                android:ems="10"
+                android:hint="Codigo"
+                android:inputType="number"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textColorHint="#fff" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/campoCedulaLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="44dp"
+                android:layout_marginRight="44dp"
+                android:backgroundTint="#fff"
+                android:ems="10"
+                android:hint="Cedula"
+                android:inputType="textPassword"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textColorHint="#fff" />
 
-</android.support.constraint.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnIngreso"
+                android:layout_width="142dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:background="@drawable/background_boton"
+                android:onClick="ingresar"
+                android:text="Continuar"
+                android:textColor="#fff" />
+
+
+            <!--<Button
+                android:id="@+id/btnRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="registro"
+                android:text="Registro" />-->
+
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
