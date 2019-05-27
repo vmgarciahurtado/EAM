@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="375dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="63dp"
+    android:background="@drawable/borde_cuadrado_blanco"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtNombreCursoPopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="#51BD00"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/txtNombreEstudiantePopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="italic" />
+
+        <Spinner
+            android:id="@+id/spinnerCortePopup"
+            android:layout_width="match_parent"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="33dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content"></Spinner>
+
+        <EditText
+            android:id="@+id/txtNotasCursoPopup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#000"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="33dp"
+            android:textSize="18dp"
+            android:hint="Nota del corte"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtFallasCursoPopup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#000"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="12dp"
+            android:textSize="18dp"
+            android:hint="Fallas del corte"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnRegistrarNotasFallasPopup"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginTop="80dp"
+            android:background="#51BD00"
+            android:text="Registrar"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+</RelativeLayout>
