@@ -1,4 +1,4 @@
-package com.example.victor.eam.estudiante;
+package com.example.victor.eam.registro_control;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,7 +24,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
-import com.example.victor.eam.adapter.AdapterConsultaMaterias;
 import com.example.victor.eam.entidades.MateriaVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
@@ -38,12 +38,12 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RegistroMaterias.OnFragmentInteractionListener} interface
+ * {@link RegistroMateriasEst.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RegistroMaterias#newInstance} factory method to
+ * Use the {@link RegistroMateriasEst#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistroMaterias extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class RegistroMateriasEst extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -56,6 +56,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     private OnFragmentInteractionListener mListener;
     private RequestQueue request;
     private StringRequest stringRequest;
+    EditText txtCodigoEstudiante;
     String ip, materia, nombreMateria;
     ListView lstMaterias;
     Spinner spnMaterias;
@@ -65,7 +66,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     ArrayList lista = new ArrayList();
     ArrayList agregarLista = new ArrayList();
 
-    public RegistroMaterias() {
+    public RegistroMateriasEst() {
         // Required empty public constructor
     }
 
@@ -75,11 +76,11 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CreacionMaterias.
+     * @return A new instance of fragment RegistroMateriasEst.
      */
     // TODO: Rename and change types and number of parameters
-    public static RegistroMaterias newInstance(String param1, String param2) {
-        RegistroMaterias fragment = new RegistroMaterias();
+    public static RegistroMateriasEst newInstance(String param1, String param2) {
+        RegistroMateriasEst fragment = new RegistroMateriasEst();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -99,13 +100,13 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View vista = inflater.inflate(R.layout.fragment_registro_materias, container, false);
+        View vista = inflater.inflate(R.layout.fragment_registro_materias_est, container, false);
         request = Volley.newRequestQueue(getContext());
         ip = getContext().getString(R.string.ip);
-        lstMaterias = vista.findViewById(R.id.lstMaterias);
-        spnMaterias = vista.findViewById(R.id.spnMateriaEstudiante);
-        btnagregarLista = vista.findViewById(R.id.btnAgregarALista);
+        txtCodigoEstudiante = vista.findViewById(R.id.txtCodigoEstMateria);
+        lstMaterias = vista.findViewById(R.id.lstMateriasEst);
+        spnMaterias = vista.findViewById(R.id.spnMateriaEstudianteEst);
+        btnagregarLista = vista.findViewById(R.id.btnAgregarAListaEst);
         btnagregarLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +120,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
             }
 
         });
-        btnregistrar = vista.findViewById(R.id.btnRegistrarMaterias);
+        btnregistrar = vista.findViewById(R.id.btnRegistrarMateriasEst);
         btnregistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,10 +129,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         });
         cargarMaterias();
         return vista;
-
-        //CARE NALGA  njnjn   sdfdf
     }
-
     private void cargarMaterias() {
         String url;
         url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + "19766";
@@ -140,7 +138,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     }
 
     private void registrarMateria() {
-        final String codigoEstudiante = "19766";
+        final String codigoEstudiante = txtCodigoEstudiante.getText().toString();
         if (lista.size() > 0) {
             String url;
             url = ip + getContext().getString(R.string.ipRegistroMateriasEstudiante);
