@@ -2,9 +2,10 @@
 
     <!-- IP GROBAL -->
     <string name="app_name">EAM</string>
-    <string name="ip">http://192.168.0.7/bd/</string>
+    <string name="ip">http://192.168.0.4/bd/</string>
 
     <!-- IP CONSULTAS-->
+    <string name="ipLogin">login.php</string>
     <string name="ipFacultades">consultaFacultades.php</string>
     <string name="ipProgramas">consultaProgramas.php?id=</string>
     <string name="ipProgramas2">consultaProgramas2.php</string>
