@@ -130,6 +130,7 @@ public class RegistroMateriasEst extends Fragment implements Response.Listener<J
         cargarMaterias();
         return vista;
     }
+
     private void cargarMaterias() {
         String url;
         url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + "19766";

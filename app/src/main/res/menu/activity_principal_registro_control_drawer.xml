@@ -12,6 +12,7 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Registro de estudiantes" />
+
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
@@ -27,7 +28,7 @@
             android:title="Matricular estudiantes" />
 
         <item
-            android:id="@+id/modRegMateriasEstudiantes"
+            android:id="@+id/RegMateriasEstudiantes"
             android:icon="@drawable/ic_menu_manage"
             android:title="Materias estudiantes" />
 

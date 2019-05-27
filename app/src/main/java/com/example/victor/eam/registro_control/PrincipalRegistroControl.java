@@ -93,9 +93,9 @@ public class PrincipalRegistroControl extends AppCompatActivity
             setTitle("Matricular estudiante");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
-        }else if(id==R.id.modRegMateriasEstudiantes) {
-            Fragment miFragment = new ControlDeClase();
-            setTitle("Modificar materias de estudiante");
+        }else if(id==R.id.RegMateriasEstudiantes) {
+            Fragment miFragment = new RegistroMateriasEst();
+            setTitle("Registrar materias a estudiante");
             getSupportFragmentManager().beginTransaction().replace(R.id.containerRegistroControl, miFragment).commit();
 
         }else if(id==R.id.usuarios) {
