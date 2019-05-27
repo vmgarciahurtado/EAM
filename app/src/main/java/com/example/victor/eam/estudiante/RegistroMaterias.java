@@ -128,8 +128,6 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         });
         cargarMaterias();
         return vista;
-
-        //CARE NALGA  njnjn   sdfdf
     }
 
     private void cargarMaterias() {

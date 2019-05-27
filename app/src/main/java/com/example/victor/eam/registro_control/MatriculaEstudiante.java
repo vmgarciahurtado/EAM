@@ -104,7 +104,9 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
 
         campoCodigo = vista.findViewById(R.id.campoCodigoMatricula);
         campoCuotas = vista.findViewById(R.id.campoCantidadCuotas);
+
         btnAceptar = vista.findViewById(R.id.btnAcepterMatricula);
+        btnBuscar  = vista.findViewById(R.id.btnBuscarMatricula);
 
         txtValorPagar = vista.findViewById(R.id.txtValorPagar);
         txtPrograma = vista.findViewById(R.id.txtPrograma);
@@ -112,9 +114,15 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
         radioContado = vista.findViewById(R.id.radioContado);
         radioCredito = vista.findViewById(R.id.radioCredito);
 
+        if (radioCredito.isChecked()){
+            campoCuotas.setVisibility(View.VISIBLE);
+        }
+
+
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 buscarEstudiante();
             }
         });
@@ -163,14 +171,13 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
 
     @Override
     public void onResponse(JSONObject response) {
-
-        JSONArray json = response.optJSONArray("materias");
+        JSONArray json = response.optJSONArray("matricula");
         JSONObject jsonObject = null;
         try {
 
             for (int i = 0; i < json.length(); i++) {
                 jsonObject = json.getJSONObject(i);
-                costo = jsonObject.getString("nombre");
+                costo = jsonObject.getString("costo");
                 programa = jsonObject.getString("nombre");
             }
 
