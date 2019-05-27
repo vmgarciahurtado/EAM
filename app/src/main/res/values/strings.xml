@@ -10,6 +10,7 @@
     <string name="ipProgramas2">consultaProgramas2.php</string>
     <string name="ipConsultaTipoDocente">consultaTipoDocente.php</string>
     <string name="ipConsultaEntornos">consultarEntornos.php</string>
+    <string name="ipConsultaEstudiantePrograma">consultarEstudiantePrograma.php?codigo=</string>
     <string name="ipConsultaDocentes">consultaDocentes.php</string>
     <string name="ipConsultaMaterias">consultaMateria.php</string>
     <string name="ipCargarMateriasEstudiante">cargarMateriasEstudiante.php?estudiante=</string>

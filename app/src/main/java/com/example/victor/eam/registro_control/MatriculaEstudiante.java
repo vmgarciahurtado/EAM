@@ -7,15 +7,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.adapter.AdapterConsultaMaterias;
+import com.example.victor.eam.entidades.MateriaVO;
+import com.example.victor.eam.entidades.MatriculaVo;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +40,7 @@ import com.example.victor.eam.R;
  * Use the {@link MatriculaEstudiante#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MatriculaEstudiante extends Fragment {
+public class MatriculaEstudiante extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,10 +58,12 @@ public class MatriculaEstudiante extends Fragment {
     RequestQueue request;
 
 
-    Button btnAceptar;
-    TextView txtValorPagar;
+    Button btnAceptar,btnBuscar;
+    TextView txtValorPagar,txtPrograma;
     EditText campoCodigo,campoCuotas;
     RadioButton radioCredito,radioContado;
+
+    String costo,programa;
 
     public MatriculaEstudiante() {
         // Required empty public constructor
@@ -89,9 +106,18 @@ public class MatriculaEstudiante extends Fragment {
         campoCuotas = vista.findViewById(R.id.campoCantidadCuotas);
         btnAceptar = vista.findViewById(R.id.btnAcepterMatricula);
 
+        txtValorPagar = vista.findViewById(R.id.txtValorPagar);
+        txtPrograma = vista.findViewById(R.id.txtPrograma);
+
         radioContado = vista.findViewById(R.id.radioContado);
         radioCredito = vista.findViewById(R.id.radioCredito);
 
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarEstudiante();
+            }
+        });
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +125,13 @@ public class MatriculaEstudiante extends Fragment {
             }
         });
         return vista;
+    }
+
+    private void buscarEstudiante() {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultaEstudiantePrograma)+"192584";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void matricular() {
@@ -126,6 +159,35 @@ public class MatriculaEstudiante extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        JSONArray json = response.optJSONArray("materias");
+        JSONObject jsonObject = null;
+        try {
+
+            for (int i = 0; i < json.length(); i++) {
+                jsonObject = json.getJSONObject(i);
+                costo = jsonObject.getString("nombre");
+                programa = jsonObject.getString("nombre");
+            }
+
+            txtValorPagar.setText(costo);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
     }
 
     /**

@@ -32,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,7 +143,10 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         if (lista.size() > 0) {
             String url;
             url = ip + getContext().getString(R.string.ipRegistroMateriasEstudiante);
-            stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+            for (int i = 0; i < lista.size(); i++) {
+                final int finalJ = i;
+                stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     if (response.trim().equalsIgnoreCase("Registra")) {
@@ -162,18 +164,19 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> parametros = new HashMap<>();
-                    for (int i = 0; i < lista.size(); i++) {
-                        String materia = lista.get(i) + "";
-                        parametros.put("Materia_IdMateria", materia);
-                        parametros.put("Estudiante_CodigoEstudiante", codigoEstudiante);
 
-                    }
+                        String materia = lista.get(finalJ) + "";
+                        parametros.put("materia", materia);
+                        parametros.put("estudiante", codigoEstudiante);
+
+
                     return parametros;
                 }
             };
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             request.add(stringRequest);
 
+            }
         } else {
             Toast.makeText(getContext(), "No hay materias agregadas", Toast.LENGTH_SHORT).show();
         }
