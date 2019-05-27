@@ -174,8 +174,8 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
                 programa = jsonObject.getString("nombre");
             }
 
-            txtValorPagar.setText(costo);
-
+            txtValorPagar.setText("Valor a pagar: " + costo);
+            txtPrograma.setText("Programa: " + programa);
 
         } catch (JSONException e) {
             e.printStackTrace();

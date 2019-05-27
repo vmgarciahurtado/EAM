@@ -129,6 +129,8 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         });
         cargarMaterias();
         return vista;
+
+        //CARE NALGA
     }
 
     private void cargarMaterias() {
@@ -225,7 +227,6 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         arrayMateria = new ArrayList<>();
 
         try {
-
             for (int i = 0; i < json.length(); i++) {
                 jsonObject = json.getJSONObject(i);
                 materiaVO = new MateriaVO();
