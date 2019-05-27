@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
 import com.example.victor.eam.adapter.AdapterCursos;
+import com.example.victor.eam.adapter.AdapterEstudiantes;
 import com.example.victor.eam.entidades.CursoVO;
 import com.example.victor.eam.entidades.EstudianteVO;
 import com.example.victor.eam.entidades.VolleySingleton;
@@ -66,7 +67,7 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
     Spinner spinnerCurso, spinnerCorte;
     ListView listaEstudiantes;
     private Dialog dialogoFallasNotas;
-
+    AdapterEstudiantes adapterEstudiantes;
 
     //Variables
     String ip, corte, cursoid, estudiante, docente;
@@ -268,14 +269,14 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
                 estudianteVO.setNombreEstudiante(jsonCurso.getString(Integer.parseInt("estudiante")));
                 estudiantes.add(estudianteVO);
             }
-            //ArrayAdapter<String> adapterMateria = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, estudiantes);
-            /*listaEstudiantes.setAdapter(adapterMateria);
+            adapterEstudiantes=new AdapterEstudiantes(getContext(), estudiantes);
+            listaEstudiantes.setAdapter(adapterEstudiantes);
             listaEstudiantes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                 }
-            });*/
+            });
         } catch (Exception e) {
 
         }
