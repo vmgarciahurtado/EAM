@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:padding="22dp"
         android:layout_height="wrap_content">
 
 
@@ -26,7 +27,7 @@
             android:background="@drawable/background_boton"
             android:textColor="#fff"
             android:layout_marginTop="12dp"
-            android:text="Reporte Inacistencias"
+            android:text="Reporte Inasistencias"
             android:id="@+id/btnInacistencias"
             android:layout_height="wrap_content"/>
 

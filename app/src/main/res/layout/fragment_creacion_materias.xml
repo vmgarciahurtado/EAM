@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="12dp"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo3"
     tools:context=".registro_control.CreacionMaterias">
 
 
@@ -21,12 +23,18 @@
 
                 <EditText
                     android:id="@+id/campoNombreMateria"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff"
+                    android:backgroundTint="#fff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nombre materia" />
 
                 <EditText
                     android:id="@+id/campoCosto"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff"
+                    android:backgroundTint="#fff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
@@ -43,7 +51,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Intensidad horaria"
-                        android:textColor="#000"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff"
+                        android:backgroundTint="#fff"
                         android:layout_marginBottom="12dp"
                         android:textSize="18dp"
                         android:textStyle="italic" />
@@ -58,8 +68,10 @@
                         <Button
                             android:id="@+id/btnRestarHoras"
                             android:layout_width="wrap_content"
+                            android:textColor="#fff"
                             android:layout_height="wrap_content"
                             android:text="-"
+                            android:background="@drawable/background_boton"
                             android:textSize="33dp"
                             android:textStyle="bold" />
 
@@ -70,7 +82,7 @@
                             android:id="@+id/campoHoras"
                             android:layout_marginRight="33dp"
                             android:text="00"
-                            android:textColor="#000"
+                            android:textColor="#fff"
                             android:textSize="45dp"
                             android:textStyle="italic" />
 
@@ -79,6 +91,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+"
+                            android:textColor="#fff"
+                            android:background="@drawable/background_boton"
                             android:textSize="33dp"
                             android:textStyle="bold" />
 
@@ -96,8 +110,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Numero de creditos"
-                        android:textColor="#000"
-                        android:layout_marginBottom="12dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff"
+                        android:backgroundTint="#fff"                        android:layout_marginBottom="12dp"
                         android:textSize="18dp"
                         android:textStyle="italic" />
 
@@ -114,6 +129,8 @@
                             android:layout_height="wrap_content"
                             android:text="-"
                             android:textSize="33dp"
+                            android:textColor="#fff"
+                            android:background="@drawable/background_boton"
                             android:textStyle="bold" />
 
                         <TextView
@@ -123,7 +140,7 @@
                             android:layout_marginRight="33dp"
                             android:id="@+id/campoCreditos"
                             android:text="00"
-                            android:textColor="#000"
+                            android:textColor="#fff"
                             android:textSize="45dp"
                             android:textStyle="italic" />
 
@@ -133,6 +150,8 @@
                             android:layout_height="wrap_content"
                             android:text="+"
                             android:textSize="33dp"
+                            android:textColor="#fff"
+                            android:background="@drawable/background_boton"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -140,7 +159,7 @@
 
                 <Spinner
                     android:layout_width="match_parent"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="22dp"
                     android:id="@+id/spinnerEntorno"
                     android:layout_height="wrap_content">
                 </Spinner>
@@ -154,19 +173,28 @@
                 <Button
                     android:layout_width="match_parent"
                     android:id="@+id/btnActaDescriptiva"
+                    android:textColor="#fff"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/background_boton"
                     android:text="Redactar acta descriptiva"
                     android:layout_height="wrap_content" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:id="@+id/btnPrerrequisitos"
+                    android:layout_marginTop="12dp"
                     android:text="Añadir prerequisitos"
+                    android:textColor="#fff"
+                    android:background="@drawable/background_boton"
                     android:layout_height="wrap_content" />
 
                 <Button
                     android:layout_width="match_parent"
+                    android:layout_marginTop="12dp"
                     android:id="@+id/btnRegistrar"
                     android:text="Registrar"
+                    android:textColor="#fff"
+                    android:background="@drawable/background_boton"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
