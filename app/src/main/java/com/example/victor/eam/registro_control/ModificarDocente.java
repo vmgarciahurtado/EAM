@@ -144,15 +144,15 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
                 public void onResponse(String response) {
                     if (response.trim().equalsIgnoreCase("modifico")) {
                         Log.i("********RESULTADO", "Respuesta server" + response);
-                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
@@ -192,15 +192,15 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
             public void onResponse(String response) {
                 if (response.trim().equalsIgnoreCase("modifico")) {
                     Log.i("********RESULTADO", "Respuesta server" + response);
-                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
+                //    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_LONG).show();
+            //    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -263,9 +263,9 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
             }
             campoNombre.setText(docenteVO.getNombre());
             spinnerTipoDocente.setSelection(Integer.parseInt(docenteVO.getTipo()));
-            Toast.makeText(getContext(), "Codigo: "+campoCodigo.getText().toString()+" nombre: "+campoNombre.getText().toString()+" TIPO: "+docenteVO.getTipo(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Codigo: "+campoCodigo.getText().toString()+" nombre: "+campoNombre.getText().toString()+" TIPO: "+docenteVO.getTipo(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(getContext(), "ERROR"+e, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getContext(), "ERROR"+e, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -273,7 +273,7 @@ public class ModificarDocente extends Fragment implements Response.Listener<JSON
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "ERROR"+error, Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(getContext(), "ERROR"+error, Toast.LENGTH_SHORT).show();
     }
 
     /**

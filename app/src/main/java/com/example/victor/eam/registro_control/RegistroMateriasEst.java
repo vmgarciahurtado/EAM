@@ -150,15 +150,15 @@ public class RegistroMateriasEst extends Fragment implements Response.Listener<J
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equalsIgnoreCase("Registra")) {
-                            Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
                     }
                 }) {
                     @Override

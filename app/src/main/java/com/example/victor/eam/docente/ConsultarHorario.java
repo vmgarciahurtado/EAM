@@ -112,7 +112,7 @@ public class ConsultarHorario extends Fragment implements Response.Listener<JSON
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String diahpta= spnDiaFiltrar.getSelectedItem().toString();
                 cargarLista(diahpta);
-                Toast.makeText(getContext(), "Este es el dia: "+diahpta, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Este es el dia: "+diahpta, Toast.LENGTH_SHORT).show();
             }
 
             @Override

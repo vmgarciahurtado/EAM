@@ -150,15 +150,15 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
                 @Override
                 public void onResponse(String response) {
                     if (response.trim().equalsIgnoreCase("registra")) {
-                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
+               //     Toast.makeText(getContext(), "Error response: " + error, Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
