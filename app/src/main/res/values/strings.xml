@@ -11,7 +11,7 @@
     <string name="ipReporteGanadores">http://192.168.0.4/bd/reportePorcentajeMortalidad.php</string>
 
     <string name="ipReporteMortalidad">http://192.168.0.4/bd/reportePorcentajeMortalidad.php</string>
-    <string name="ipReporteInacistencias">http://192.168.0.4/bd/</string>
+    <string name="ipReporteInacistencias">http://192.168.0.4/bd/reporteFinalMateriaDocente.php</string>
 
     <!-- IP CONSULTAS-->
     <string name="ipLogin">login.php</string>
