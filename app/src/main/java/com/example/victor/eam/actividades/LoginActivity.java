@@ -61,28 +61,28 @@ public class LoginActivity extends AppCompatActivity {
                     switch (response){
                         case "director":
                             Intent intent1 = new Intent(getApplicationContext(),PrincipalDirectorPrograma.class);
-                            guardaCredenciales(true,cedula);
+                            guardaCredenciales(true,codigo);
                             startActivity(intent1);
                             finish();
                             break;//campos
 
                         case "estudiante":
                             Intent intent3 = new Intent(getApplicationContext(),PrincipalEstudiante.class);
-                            guardaCredenciales(true,cedula);
+                            guardaCredenciales(true,codigo);
                             startActivity(intent3);
                             finish();
                             break;
 
                         case "registroycontrol":
                             Intent intent2 = new Intent(getApplicationContext(),PrincipalRegistroControl.class);
-                            guardaCredenciales(true,cedula);
+                            guardaCredenciales(true,codigo);
                             startActivity(intent2);
                             finish();
                             break;
 
                         case "docente":
                             Intent intent4 = new Intent(getApplicationContext(),PrincipalDocente.class);
-                            guardaCredenciales(true,cedula);
+                            guardaCredenciales(true,codigo);
                             startActivity(intent4);
                             finish();
                             break;
@@ -115,10 +115,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void guardaCredenciales(boolean b, String cedula) {
+    private void guardaCredenciales(boolean b, String codigo) {
         SharedPreferences preferencesCedula = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         SharedPreferences.Editor user = preferencesCedula.edit();
-        user.putString("credenciales", cedula);
+        user.putString("credenciales", codigo);
         user.commit();
     }
 }

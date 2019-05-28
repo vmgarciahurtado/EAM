@@ -1,5 +1,6 @@
 package com.example.victor.eam.docente;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.PrincipalPantallas;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,8 @@ public class ReportesDocentes extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    Button btnCursos,btnNotas,btnGanadores;
 
     public ReportesDocentes() {
         // Required empty public constructor
@@ -62,10 +67,36 @@ public class ReportesDocentes extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reportes_docentes, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View vista = inflater.inflate(R.layout.fragment_reportes_docentes, container, false);
+        btnCursos = vista.findViewById(R.id.btnListarCursos);
+        btnCursos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment miFragment = new FragmentReporteCursos();
+                getFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            }
+        });
+
+        btnNotas = vista.findViewById(R.id.btnListarNotas);
+        btnNotas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment miFragment = new ReporteNotasCurso();
+                getFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            }
+        });
+
+        btnGanadores = vista.findViewById(R.id.btnGanadores);
+        btnGanadores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment miFragment = new ReporteGanadores();
+                getFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+            }
+        });
+
+        return vista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

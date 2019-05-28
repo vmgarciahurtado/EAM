@@ -110,8 +110,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         request = Volley.newRequestQueue(getContext());
         ip = getContext().getString(R.string.ip);
         View vista = inflater.inflate(R.layout.fragment_modificar_estudiante, container, false);
-        txtPrograma = vista.findViewById(R.id.txtPrograma);
-        txtSemestre = vista.findViewById(R.id.txtSemestre);
+       // txtPrograma = vista.findViewById(R.id.txtPrograma);
+        //txtSemestre = vista.findViewById(R.id.txtSemestre);
         txtCedula = vista.findViewById(R.id.txtCedulaEstudiante);
         txtCodigo = vista.findViewById(R.id.txtCodigoEstudiante);
         txtNombre = vista.findViewById(R.id.txtNombreEstudiante);
@@ -125,8 +125,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
         txtDireccion = vista.findViewById(R.id.txtDireccion);
         txtTelefono = vista.findViewById(R.id.txtTelefono);
         txtCorreo = vista.findViewById(R.id.txtCorreo);
-        spnPrograma = vista.findViewById(R.id.spnPrograma);
-        spnSemestre = vista.findViewById(R.id.spnSemestre);
+        //spnPrograma = vista.findViewById(R.id.spnPrograma);
+        //spnSemestre = vista.findViewById(R.id.spnSemestre);
         btnBuscar = vista.findViewById(R.id.btnBuscar);
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,11 +219,11 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     }
 
     private void modificarEstudiante() {
-        final String codigo = "19766";
+        final String codigo = txtCodigo.getText().toString();
         final String cedula = txtCedula.getText().toString();
         final String nombre = txtNombre.getText().toString();
         final String fecha = txtFechaNacimiento.getText().toString();
-        final String estado = "0";
+        final String estado = "1";
         final String direccion = txtDireccion.getText().toString();
         final String telefono = txtTelefono.getText().toString();
         final String correo = txtCorreo.getText().toString();
@@ -260,8 +260,6 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                     parametros.put("direccionEstudiante", direccion);
                     parametros.put("telefonoEstudiante", telefono);
                     parametros.put("correoElectronico", correo);
-                    parametros.put("programaAcademico", "1");
-                    parametros.put("semestre_numeroSemetre", semestre);
                     Log.i("--------PARAMETROS ", parametros.toString());
                     return parametros;
 
@@ -278,7 +276,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
     private void buscarEstudiante() {
         String url;
-        url = ip + getContext().getString(R.string.ipObtenerEstudiante)+"19766";
+        url = ip + getContext().getString(R.string.ipObtenerEstudiante)+txtCodigo.getText().toString();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
@@ -335,8 +333,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
                 estudiante.setDireccion(jsonObjectEstudiante.getString("direccion"));
                 estudiante.setTelefono(jsonObjectEstudiante.getString("telefono"));
                 estudiante.setCorreo(jsonObjectEstudiante.getString("correo"));
-                estudiante.setPrograma(jsonObjectEstudiante.getInt("programa"));
-                estudiante.setSemestre(jsonObjectEstudiante.getInt("semestre"));
+                //estudiante.setPrograma(jsonObjectEstudiante.getInt("programa"));
+                //estudiante.setSemestre(jsonObjectEstudiante.getInt("semestre"));
                 arrayEstudiante.add(estudiante);
             }
 
@@ -347,8 +345,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
             txtDireccion.setText(estudiante.getDireccion());
             txtTelefono.setText(estudiante.getTelefono());
             txtCorreo.setText(estudiante.getCorreo());
-            txtPrograma.setText(""+estudiante.getPrograma());
-            txtSemestre.setText(""+estudiante.getSemestre());
+            //txtPrograma.setText(""+estudiante.getPrograma());
+            //txtSemestre.setText(""+estudiante.getSemestre());
             //cargarPrograma(String.valueOf(estudiante.getPrograma()));
             //spnPrograma.setSelection();
             //spnSemestre.setSelection(estudiante.getSemestre());
@@ -356,7 +354,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
 
         }
 
-        JSONArray jsonPrograma = response.optJSONArray("programa");
+        /*JSONArray jsonPrograma = response.optJSONArray("programa");
         JSONObject jsonObjectPrograma;
         arrayProgramas = new ArrayList();
         try {
@@ -404,7 +402,7 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
             });
         } catch (Exception e) {
 
-        }
+        }*/
 
     }
 

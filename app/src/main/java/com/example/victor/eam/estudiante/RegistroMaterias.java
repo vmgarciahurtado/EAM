@@ -131,6 +131,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
         });
         SharedPreferences preferences = Objects.requireNonNull(this).getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         credenciales = preferences.getString("credenciales", "No existe el valor");
+        Toast.makeText(getContext(), "Credenciales" +  credenciales, Toast.LENGTH_SHORT).show();
         cargarMaterias();
         return vista;
     }

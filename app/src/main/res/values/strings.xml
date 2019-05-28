@@ -4,6 +4,11 @@
     <string name="app_name">EAM</string>
     <string name="ip">http://192.168.0.4/bd/</string>
 
+    <!-- IP REPORTES -->
+    <string name="ipReporteNotas">http://192.168.0.4/bd/reporteListadoNotasDocente.php?codigo=</string>
+    <string name="ipReporteCursos">http://192.168.0.4/bd/reporteListadoCursosDocente.php?codigo=</string>
+    <string name="ipReporteGanadores">http://192.168.0.4/bd/reportePorcentajeMortalidad.php</string>
+
     <!-- IP CONSULTAS-->
     <string name="ipLogin">login.php</string>
     <string name="ipFacultades">consultaFacultades.php</string>
@@ -28,7 +33,7 @@
     <string name="ipRegistro">registroEstudiantes.php</string>
     <string name="ipRegistrarCurso">creacionCurso.php</string>
     <string name="ipCrearAgendaDocente">registrarAgendaDocente.php</string>
-    <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigoestudiante=</string>
+    <string name="ipObtenerEstudiante">obtenerEstudiante.php?codigo=</string>
     <string name="ipObtenerDocente">obtenerDocentes.php?iddocente=</string>
     <string name="ipContratoDocente">registroContradoDocente.php</string>
     <string name="ipRegistrarNotasFallas">IngresarNotasFallas.php</string>

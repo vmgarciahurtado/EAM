@@ -4,7 +4,10 @@ import com.example.victor.eam.director_programa.AsignarMaterias;
 import com.example.victor.eam.docente.ConsultarHorario;
 import com.example.victor.eam.docente.ControlDeClase;
 import com.example.victor.eam.docente.CrearAgenda;
+import com.example.victor.eam.docente.FragmentReporteCursos;
 import com.example.victor.eam.docente.RegistrarNotasFallas;
+import com.example.victor.eam.docente.ReporteGanadores;
+import com.example.victor.eam.docente.ReporteNotasCurso;
 import com.example.victor.eam.docente.VerCursos;
 import com.example.victor.eam.docente.ReportesDocentes;
 import com.example.victor.eam.docente.TomasLista;
@@ -47,6 +50,9 @@ public interface AllFragments extends
         contratoDocentes.OnFragmentInteractionListener,
         GestionMaterias.OnFragmentInteractionListener,
         RegistroMateriasEst.OnFragmentInteractionListener,
-        RegistrarNotasFallas.OnFragmentInteractionListener
+        RegistrarNotasFallas.OnFragmentInteractionListener,
+        ReporteNotasCurso.OnFragmentInteractionListener,
+        ReporteGanadores.OnFragmentInteractionListener,
+        FragmentReporteCursos.OnFragmentInteractionListener
 {
 }

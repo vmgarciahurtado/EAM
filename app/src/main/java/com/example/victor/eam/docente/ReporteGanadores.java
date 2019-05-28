@@ -1,35 +1,30 @@
-package com.example.victor.eam.entidades;
+package com.example.victor.eam.docente;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.example.victor.eam.R;
 
-import static android.content.Context.DOWNLOAD_SERVICE;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PrincipalPantallas.OnFragmentInteractionListener} interface
+ * {@link ReporteGanadores.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PrincipalPantallas#newInstance} factory method to
+ * Use the {@link ReporteGanadores#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PrincipalPantallas extends Fragment {
+public class ReporteGanadores extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,8 +40,9 @@ public class PrincipalPantallas extends Fragment {
     String ip;
     WebView webView;
     Button btnDescargar;
+    String credenciales;
     ///
-    public PrincipalPantallas() {
+    public ReporteGanadores() {
         // Required empty public constructor
     }
 
@@ -56,11 +52,11 @@ public class PrincipalPantallas extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PrincipalPantallas.
+     * @return A new instance of fragment ReporteGanadores.
      */
     // TODO: Rename and change types and number of parameters
-    public static PrincipalPantallas newInstance(String param1, String param2) {
-        PrincipalPantallas fragment = new PrincipalPantallas();
+    public static ReporteGanadores newInstance(String param1, String param2) {
+        ReporteGanadores fragment = new ReporteGanadores();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,9 +75,11 @@ public class PrincipalPantallas extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_principal_pantallas, container, false);
+        View vista = inflater.inflate(R.layout.fragment_reporte_ganadores, container, false);
+        SharedPreferences preferences = Objects.requireNonNull(this).getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        credenciales = preferences.getString("credenciales", "No existe el valor");
 
-        ip = getContext().getString(R.string.ip);
+        ip = getContext().getString(R.string.ipReporteGanadores);
         btnDescargar = vista.findViewById(R.id.btnDescargarPdf);
         btnDescargar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,25 +91,15 @@ public class PrincipalPantallas extends Fragment {
         webView = vista.findViewById(R.id.webViewPrincipal);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(ip);
-
         return vista;
     }
 
     private void descargarPdf() {
         webView.getSettings().setJavaScriptEnabled(true);
-        Uri uri = Uri.parse("http://192.168.0.8/eam/prueba.php");
+        Uri uri = Uri.parse(ip);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
-        }
-        );
-
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
