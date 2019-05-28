@@ -34,6 +34,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:textColor="@android:color/background_dark"
             android:textSize="20dp"
             android:textStyle="italic" />
 
@@ -73,26 +74,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnRegistrarNotasFallasPopup"
-                android:layout_width="wrap_content"
-                android:layout_height="43dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginRight="10dp"
-                android:background="#51BD00"
-                android:text="Registrar"
-                android:textColor="#fff" />
 
             <Button
                 android:id="@+id/btnCancelarNotasFallasPopup"
                 android:layout_width="wrap_content"
                 android:layout_height="43dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#51BD00"
                 android:text="Cancelar"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/btnRegistrarNotasFallasPopup"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_marginLeft="10dp"
+                android:background="#51BD00"
+                android:text="Registrar"
                 android:textColor="#fff" />
         </LinearLayout>
 

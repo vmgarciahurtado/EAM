@@ -102,7 +102,7 @@ public class VerCursos extends Fragment implements Response.ErrorListener, Respo
 
     private void cargarCursos() {
         String url;
-        url = ip + getContext().getString(R.string.ipConsultaCursos);
+        url = ip + getContext().getString(R.string.ipConsultaCursos)+"2";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }

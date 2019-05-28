@@ -29,9 +29,9 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Reportes" />
         <item
-            android:id="@+id/registrarInasistencia"
+            android:id="@+id/registrarNotasFallas"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Registrar inasistencia" />
+            android:title="Registrar seguimiento" />
         <item
             android:id="@+id/controlClase"
             android:icon="@drawable/ic_menu_manage"

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -28,7 +29,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
-import com.example.victor.eam.adapter.AdapterCursos;
 import com.example.victor.eam.adapter.AdapterEstudiantes;
 import com.example.victor.eam.entidades.CursoVO;
 import com.example.victor.eam.entidades.EstudianteVO;
@@ -65,17 +65,21 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
     private RequestQueue request;
     private StringRequest stringRequest;
     Spinner spinnerCurso, spinnerCorte;
+    EditText txtNotas, txtFallas;
+    TextView txtCurso, txtEstudiante;
     ListView listaEstudiantes;
     private Dialog dialogoFallasNotas;
     AdapterEstudiantes adapterEstudiantes;
 
     //Variables
-    String ip, corte, cursoid, estudiante, docente;
-    ArrayList <EstudianteVO> estudiantes;
+    String ip, corte, cursoid, docente;
+    int estudiante;
+    ArrayList <EstudianteVO> arrayEstudiantes;
     ArrayList <CursoVO> cursoDocente;
-    String nombreCurso, nombreEstudiante;
+    String nombreCurso, nombreEstudiante, notas, fallas;
     CursoVO cursoVO;
     EstudianteVO estudianteVO;
+    int accion=0;
 
     public RegistrarNotasFallas() {
         // Required empty public constructor
@@ -117,35 +121,36 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
         request = Volley.newRequestQueue(getContext());
         dialogoFallasNotas = new Dialog(this.getContext());
         spinnerCurso = vista.findViewById(R.id.spinnerCurso);
-        docente = "123";
-        cargarSpinnerCurso(docente);
-        spinnerCurso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                cargarLstEstudiante("123");
-            }
-        });
+        docente = "2";
         listaEstudiantes = vista.findViewById(R.id.lstEstudianteFN);
+        cargarSpinnerCurso(docente);
         return vista;
     }
 
     private void cargarSpinnerCurso(String docente) {
+        accion=1;
         String url;
-        url = ip + getContext().getString(R.string.ipConsultaCursos) + docente;
+        url = ip + getContext().getString(R.string.ipConsultaCursos)+docente;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
-    private void cargarLstEstudiante(String idDocente) {
+    private void cargarLstEstudiante(String curso) {
+        accion=2;
         String url;
-        url = ip + getContext().getString(R.string.ipCargarCursoEstudiantes) + idDocente;
+        url = ip + getContext().getString(R.string.ipCargarCursoEstudiantes)+curso;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void showPopupNotasFallas() {
+        ArrayList <String> arraycorte = new ArrayList<>();
+        arraycorte.add("Corte 1");
+        arraycorte.add("Corte 2");
+        arraycorte.add("Corte 3");
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, arraycorte);
+
         Button registrar, cancelar;
-        final EditText txtNotas, txtFallas;
 
         try {
             dialogoFallasNotas.setContentView(R.layout.popup_notas_fallas);
@@ -156,7 +161,10 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
         }
         txtNotas = dialogoFallasNotas.findViewById(R.id.txtNotasCursoPopup);
         txtFallas = dialogoFallasNotas.findViewById(R.id.txtFallasCursoPopup);
+        txtCurso = dialogoFallasNotas.findViewById(R.id.txtNombreCursoPopup);
+        txtEstudiante = dialogoFallasNotas.findViewById(R.id.txtNombreEstudiantePopup);
         spinnerCorte = dialogoFallasNotas.findViewById(R.id.spinnerCortePopup);
+        spinnerCorte.setAdapter(adapter);
         spinnerCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -169,14 +177,20 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
             }
         });
 
-        final String notas = txtNotas.getText().toString();
-        final String fallas = txtFallas.getText().toString();
+        txtCurso.setText(nombreCurso);
+        txtEstudiante.setText(nombreEstudiante);
         registrar = dialogoFallasNotas.findViewById(R.id.btnRegistrarNotasFallasPopup);
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrarNotasFallas(estudiante, cursoid, fallas, corte, notas);
-                dialogoFallasNotas.hide();
+                notas = txtNotas.getText().toString();
+                if(Integer.parseInt(notas) < 6 || Integer.parseInt(notas)>=1) {
+                    fallas = txtFallas.getText().toString();
+                    registrarNotasFallas(estudiante, cursoid, fallas, corte, notas);
+                    dialogoFallasNotas.hide();
+                }else{
+                    Toast.makeText(getContext(), "Las notas van de 0.0 a 5.0", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -190,7 +204,7 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
         });
     }
 
-    private void registrarNotasFallas(final String estudiante, final String curso, final String fallas, final String corte, final String notas) {
+    private void registrarNotasFallas(final int estudiante, final String curso, final String fallas, final String corte, final String notas) {
         String url;
         url = ip + getContext().getString(R.string.ipRegistrarNotasFallas);
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -257,64 +271,75 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
 
     @Override
     public void onResponse(JSONObject response) {
-        estudianteVO=null;
-        JSONArray jsonCurso = response.optJSONArray("estudiantecurso");
-        JSONObject jsonObjectCurso;
-        estudiantes = new ArrayList();
-        try {
-            for (int i = 0; i < jsonCurso.length(); i++) {
-                jsonObjectCurso = jsonCurso.getJSONObject(i);
-                estudianteVO = new EstudianteVO();
-                estudianteVO.setCodigoEstudiante(jsonCurso.getInt(Integer.parseInt("codigoestudiante")));
-                estudianteVO.setNombreEstudiante(jsonCurso.getString(Integer.parseInt("estudiante")));
-                estudiantes.add(estudianteVO);
-            }
-            adapterEstudiantes=new AdapterEstudiantes(getContext(), estudiantes);
-            listaEstudiantes.setAdapter(adapterEstudiantes);
-            listaEstudiantes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        switch (accion){
+            case 1:
+                cursoVO = null;
+                JSONArray json = response.optJSONArray("cursos");
+                JSONObject jsonObject = null;
+                cursoDocente = new ArrayList<>();
+
+                try {
+
+                    for (int i = 0; i < json.length(); i++) {
+                        jsonObject = json.getJSONObject(i);
+                        cursoVO = new CursoVO();
+                        cursoVO.setNombre(jsonObject.getString("nombreCurso"));
+                        cursoVO.setCodigo(jsonObject.getString("idcurso"));
+                        cursoDocente.add(cursoVO);
+                    }
+                    ArrayAdapter<CharSequence> adapterCuDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, cursoDocente);
+                    spinnerCurso.setAdapter(adapterCuDocente);
+                    spinnerCurso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            cursoid = cursoDocente.get(spinnerCurso.getPositionForView(view)).getCodigo();
+                            Toast.makeText(getContext(), "Codigo curso: " + cursoid, Toast.LENGTH_SHORT).show();
+                            cargarLstEstudiante(cursoid);
+                            nombreCurso = cursoDocente.get(spinnerCurso.getPositionForView(view)).getNombre();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+                }
+                break;
+            case 2:
+                estudianteVO=null;
+                JSONArray jsonCurso = response.optJSONArray("estudiantecurso");
+                JSONObject jsonObjectCurso = null;
+                arrayEstudiantes = new ArrayList();
+                try {
+                    for (int i = 0; i < jsonCurso.length(); i++) {
+                        jsonObjectCurso = jsonCurso.getJSONObject(i);
+                        estudianteVO = new EstudianteVO();
+                        estudianteVO.setCodigoEstudiante(jsonObjectCurso.getInt("codigoestudiante"));
+                        estudianteVO.setNombreEstudiante(jsonObjectCurso.getString("estudiante"));
+                        arrayEstudiantes.add(estudianteVO);
+                    }
+                    adapterEstudiantes=new AdapterEstudiantes(getContext(), arrayEstudiantes);
+                    listaEstudiantes.setAdapter(adapterEstudiantes);
+                    listaEstudiantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            estudiante = arrayEstudiantes.get(listaEstudiantes.getPositionForView(view)).getCodigoEstudiante();
+                            nombreEstudiante = arrayEstudiantes.get(listaEstudiantes.getPositionForView(view)).getNombreEstudiante();
+                            showPopupNotasFallas();
+                        }
+                    });
+
+                } catch (Exception e) {
 
                 }
-            });
-        } catch (Exception e) {
-
+                break;
         }
-        ///////////////////////////
 
-        cursoVO = null;
-        JSONArray json = response.optJSONArray("cursos");
-        JSONObject jsonObject = null;
-        cursoDocente = new ArrayList<>();
 
-        try {
-
-            for (int i = 0; i < json.length(); i++) {
-                jsonObject = json.getJSONObject(i);
-                cursoVO = new CursoVO();
-                cursoVO.setNombre(jsonObject.getString("nombreCurso"));
-                cursoVO.setCodigo(jsonObject.getString("idcurso"));
-                cursoDocente.add(cursoVO);
-            }
-            ArrayAdapter<CharSequence> adapterCuDocente = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, cursoDocente);
-            spinnerCurso.setAdapter(adapterCuDocente);
-            spinnerCurso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    cursoid = cursoDocente.get(spinnerCurso.getPositionForView(view)).getCodigo();
-                    Toast.makeText(getContext(), "Codigo curso: " + cursoid, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
-        }
     }
 
     /**

@@ -19,8 +19,8 @@
     <string name="ipConsultarMateriaEstudiante">listarMateriaEstudiante.php?codigo=</string>
     <string name="ipConsultarDatosMateria">consultarMateriaEstudiante.php?idmateria=</string>
     <string name="ipConsultarSemestre">consultarSemestre.php</string>
-    <string name="ipCargarCorte">obtenerCorte.php</string>
-    <string name="ipCargarCursoEstudiantes">ObtenerEstCursoDocente.php?iddocente=</string>
+    <string name="ipConsultarHorarioDocente">consultarHorarioDocente.php?docente=</string>
+    <string name="ipCargarCursoEstudiantes">ObtenerEstCursoDocente.php?curso=</string>
 
     <!-- IP REGISTROS-->
     <string name="ipRegistroDocentes">registroDocentes.php</string>

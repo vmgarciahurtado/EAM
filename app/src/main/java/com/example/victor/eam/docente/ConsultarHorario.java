@@ -2,15 +2,35 @@ package com.example.victor.eam.docente;
 
 import android.content.Context;
 import android.net.Uri;
+import android.opengl.EGLExt;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.AndroidAuthenticator;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.entidades.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +40,7 @@ import com.example.victor.eam.R;
  * Use the {@link ConsultarHorario#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ConsultarHorario extends Fragment {
+public class ConsultarHorario extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,9 +51,13 @@ public class ConsultarHorario extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private RequestQueue request;
+    private StringRequest stringRequest;
     Spinner spnDiaFiltrar;
     ListView lstHorarioDocente;
+    String docente, ip;
+    ArrayList lstHorario;
+
     public ConsultarHorario() {
         // Required empty public constructor
     }
@@ -70,15 +94,39 @@ public class ConsultarHorario extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_consultar_horario_docente, container, false);
-    spnDiaFiltrar = vista.findViewById(R.id.spnDiaHorarioDocente);
-    lstHorarioDocente = vista.findViewById(R.id.lstHorarioDocente);
-
-    cargarLista();
-    return vista;
+        ip = getContext().getString(R.string.ip);
+        request = Volley.newRequestQueue(getContext());
+        spnDiaFiltrar = vista.findViewById(R.id.spnDiaHorarioDocente);
+        lstHorarioDocente = vista.findViewById(R.id.lstHorarioDocente);
+        docente = "2";
+        configurarDia();
+        return vista;
     }
 
-    private void cargarLista() {
+    public void configurarDia() {
+        String[] dias = {"Lunes", "Martes","Miercoles", "Jueves", "Viernes"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, dias);
+        spnDiaFiltrar.setAdapter(adapter);
+        spnDiaFiltrar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String diahpta= spnDiaFiltrar.getSelectedItem().toString();
+                cargarLista(diahpta);
+                Toast.makeText(getContext(), "Este es el dia: "+diahpta, Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void cargarLista(String dia) {
+        String url;
+        url = ip + getContext().getString(R.string.ipConsultarHorarioDocente) + docente + "&dia=" + dia;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,16 +153,39 @@ public class ConsultarHorario extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+        JSONArray json = response.optJSONArray("horariodocente");
+        JSONObject jsonObject;
+        lstHorario = new ArrayList<>();
+
+        try {
+            if (json.length() > 0) {
+                for (int i = 0; i < json.length(); i++) {
+                    jsonObject = json.getJSONObject(i);
+                    lstHorario.add(jsonObject.getString("horario"));
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, lstHorario);
+                lstHorarioDocente.setAdapter(adapter);
+            } else {
+                lstHorario.add("No hay registros");
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, lstHorario);
+                lstHorarioDocente.setAdapter(adapter);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + " " + response, Toast.LENGTH_LONG).show();
+        }
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

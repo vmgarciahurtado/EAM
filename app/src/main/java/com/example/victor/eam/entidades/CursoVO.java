@@ -1,7 +1,7 @@
 package com.example.victor.eam.entidades;
 
 public class CursoVO {
-    String nombre,codigo;
+    String nombre, codigo;
 
     public CursoVO(String nombre, String codigo) {
         this.nombre = nombre;
@@ -17,6 +17,11 @@ public class CursoVO {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 
     public String getNombre() {

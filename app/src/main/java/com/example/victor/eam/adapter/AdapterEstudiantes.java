@@ -13,9 +13,10 @@ import com.example.victor.eam.entidades.MateriaVO;
 
 import java.util.ArrayList;
 
-public class AdapterEstudiantes extends BaseAdapter {
+public class AdapterEstudiantes extends BaseAdapter implements View.OnClickListener{
     private Context context;
     private ArrayList<EstudianteVO> estudiantesVo;
+    private View.OnClickListener listener;
 
     public AdapterEstudiantes(Context context, ArrayList<EstudianteVO> listaEstudiantes) {
         this.context = context;
@@ -46,5 +47,12 @@ public class AdapterEstudiantes extends BaseAdapter {
         campoMateria.setText("Nombre: " + item.getNombreEstudiante());
 
         return convertView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null) {
+            listener.onClick(view);
+        }
     }
 }

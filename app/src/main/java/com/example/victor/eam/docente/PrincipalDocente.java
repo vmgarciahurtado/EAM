@@ -86,6 +86,10 @@ public class PrincipalDocente extends AppCompatActivity
             Fragment miFragment = new ControlDeClase();
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
 
+        }else if(id==R.id.registrarNotasFallas){
+            Fragment miFragment = new RegistrarNotasFallas();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDocente, miFragment).commit();
+
         }else if (id == R.id.nav_share) {
             //Cerrar sesion
         } else if (id == R.id.nav_send) {
