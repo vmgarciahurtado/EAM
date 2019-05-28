@@ -133,7 +133,7 @@ public class RegistroMateriasEst extends Fragment implements Response.Listener<J
 
     private void cargarMaterias() {
         String url;
-        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + "19766";
+        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + txtCodigoEstudiante.getText().toString();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
