@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="12dp"
     tools:context=".registro_control.ModificarEstudiante">
 
     <LinearLayout
@@ -102,18 +103,27 @@
                 <Button
                     android:id="@+id/btnBuscar"
                     android:layout_width="match_parent"
+                    android:background="@drawable/background_boton"
+                    android:textColor="#fff"
+                    android:layout_marginTop="22dp"
                     android:layout_height="wrap_content"
                     android:text="buscar" />
 
                 <Button
                     android:id="@+id/btnModificar"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/background_boton"
+                    android:textColor="#fff"
                     android:layout_height="wrap_content"
                     android:text="Modificar" />
 
                 <Button
                     android:id="@+id/btnInactivar"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/background_boton"
+                    android:textColor="#fff"
                     android:layout_height="wrap_content"
                     android:text="Inactivar" />
             </LinearLayout>

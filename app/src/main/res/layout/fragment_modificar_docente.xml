@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="22dp"
     tools:context=".registro_control.ModificarDocente">
 
     <LinearLayout
@@ -66,6 +67,8 @@
         <Button
             android:id="@+id/btnBuscarDocente"
             android:layout_width="match_parent"
+            android:background="@drawable/background_boton"
+            android:textColor="#fff"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="buscar" />
@@ -74,14 +77,18 @@
             android:id="@+id/btnModificarDocente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:background="@drawable/background_boton"
+            android:textColor="#fff"
+            android:layout_marginTop="12dp"
             android:text="Modificar" />
 
         <Button
             android:id="@+id/btnInactivarDocente"
             android:layout_width="match_parent"
+            android:background="@drawable/background_boton"
+            android:textColor="#fff"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="12dp"
             android:text="Inactivar" />
 
     </LinearLayout>

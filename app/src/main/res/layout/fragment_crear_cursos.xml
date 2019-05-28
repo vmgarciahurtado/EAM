@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="15dp"
     android:layout_height="match_parent"
     tools:context=".registro_control.CrearCursos">
 
@@ -39,23 +40,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Inicio del curso"
-            android:inputType="textPersonName"
-            android:text="" />
+            android:text="Inicio del curso"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="19dp"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/txtHoraFinCurso"
             android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="19dp"
+            android:layout_marginTop="12dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Fin del curso"
             android:inputType="textPersonName"
-            android:text="" />
+            android:text="Fin del curso" />
 
         <Button
             android:id="@+id/btnCrearCurso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:layout_marginTop="44dp"
+            android:background="@drawable/background_boton"
             android:text="Crear" />
     </LinearLayout>
 </FrameLayout>
