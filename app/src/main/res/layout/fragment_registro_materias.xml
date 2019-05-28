@@ -38,6 +38,9 @@
         <Button
             android:id="@+id/btnRegistrarMaterias"
             android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:textColor="#fff"
+            android:background="@drawable/background_boton"
             android:layout_height="wrap_content"
             android:text="Registrar" />
     </LinearLayout>
