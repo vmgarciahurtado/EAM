@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -60,7 +61,8 @@ public class ModificarEstudiante extends Fragment implements Response.Listener<J
     private RequestQueue request;
     private StringRequest stringRequest;
 
-    EditText txtCodigo, txtCedula, txtNombre, txtFechaNacimiento, txtPrograma,txtSemestre, txtDireccion, txtTelefono, txtCorreo;
+    EditText txtCodigo, txtCedula, txtNombre,txtPrograma,txtSemestre, txtDireccion, txtTelefono, txtCorreo;
+    TextView txtFechaNacimiento;
     Spinner spnPrograma, spnSemestre;
     Button btnBuscar, btnModificar, btnInactivar;
     String ip, programaAcademico, semestre;

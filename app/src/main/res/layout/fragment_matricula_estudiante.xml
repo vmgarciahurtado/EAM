@@ -15,6 +15,7 @@
         <EditText
             android:layout_width="match_parent"
             android:textColor="#000"
+            android:inputType="number"
             android:id="@+id/campoCodigoMatricula"
             android:hint="Codigo estudiante"
             android:layout_height="wrap_content" />

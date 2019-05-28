@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -59,7 +60,8 @@ public class CrearCursos extends Fragment implements Response.Listener<JSONObjec
     private RequestQueue request;
     private StringRequest stringRequest;
     String ip, materia, docente, dia;
-    EditText txtNombreCurso, txthoraInicio, txtHoraFin;
+    EditText txtNombreCurso;
+    TextView txthoraInicio, txtHoraFin;
     Spinner spnMateria, spnDocente, spnDiaCurso;
     Button btnAgregar;
     ArrayList arrayMaterias;

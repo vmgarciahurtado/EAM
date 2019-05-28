@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
+        <TextView
             android:id="@+id/txtHoraInicioCurso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:inputType="textPersonName"
             android:text="" />
 
-        <EditText
+        <TextView
             android:id="@+id/txtHoraFinCurso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

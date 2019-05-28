@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -50,7 +51,7 @@ public class CrearAgenda extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     Spinner spnDiaAgenda;
-    EditText txtHoraIClase, txtHoraFClase, txtHoraIAsesori, txtHoraFAsesoria;
+    TextView txtHoraIClase, txtHoraFClase, txtHoraIAsesori, txtHoraFAsesoria;
     Button btnCrearAgenda;
 String ip;
     private RequestQueue request;

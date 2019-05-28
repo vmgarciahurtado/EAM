@@ -23,12 +23,14 @@
                     android:id="@+id/txtCodigoEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:hint="Codigo estudiante" />
 
                 <EditText
                     android:id="@+id/txtCedulaEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:ems="10"
                     android:hint="Cedula estudiante" />
 
@@ -39,7 +41,7 @@
                     android:ems="10"
                     android:hint="Nombre estudiante" />
 
-                <EditText
+                <TextView
                     android:id="@+id/txtFechaEstudiante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:inputType="number"
                     android:hint="Telefono estudiante" />
 
                 <EditText

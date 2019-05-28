@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText
+            <TextView
                 android:id="@+id/txtHoraInicioClase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="20dp"
                 android:text="" />
 
-            <EditText
+            <TextView
                 android:id="@+id/txtHoraFinClase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText
+            <TextView
                 android:id="@+id/txtHoraInicioAsesoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                 android:layout_marginTop="20dp"
                 android:text="" />
 
-            <EditText
+            <TextView
                 android:id="@+id/txtHoraFinAsesoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
