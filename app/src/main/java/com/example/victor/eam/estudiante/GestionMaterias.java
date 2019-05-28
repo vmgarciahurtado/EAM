@@ -2,6 +2,7 @@ package com.example.victor.eam.estudiante;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -81,7 +82,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     Dialog dialogDatos;
 
     int accion;
-
+    String credenciales;
     AdapterConsultaMaterias adapterConsultaMaterias;
 
     ArrayList<MateriaVO> listaMaterias;
@@ -131,6 +132,8 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
         ip = getContext().getString(R.string.ip);
         lstMaterias = vista.findViewById(R.id.lstMateriasGestion);
         dialogDatos = new Dialog(getContext());
+        SharedPreferences preferences = Objects.requireNonNull(this).getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        credenciales = preferences.getString("credenciales", "No existe el valor");
         cargarMaterias();
         return vista;
     }
@@ -138,7 +141,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private void cargarMaterias() {
         accion = 1;
         String url;
-        url = ip + getContext().getString(R.string.ipConsultarMateriaEstudiante)+"19766";
+        url = ip + getContext().getString(R.string.ipConsultarMateriaEstudiante)+credenciales;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
 
@@ -300,6 +303,9 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             public void onClick(View v) {
                if (checkBoxCancelarMateria.isChecked()){
                    cancelarMateria();
+                   cargarMaterias();
+                   dialogDatos.hide();
+
                }else {
                    dialogDatos.hide();
                }
@@ -328,8 +334,8 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
             protected Map<String, String> getParams() {
 
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("idmateria", "1");
-                parametros.put("codigo", "19766");
+                parametros.put("idmateria", codigo);
+                parametros.put("codigo", credenciales);
                 return parametros;
 
             }
@@ -342,7 +348,7 @@ public class GestionMaterias extends Fragment implements Response.Listener<JSONO
     private void cargarDatosMateria(String codigo) {
         accion = 2;
         String url;
-        url = ip + getContext().getString(R.string.ipConsultarDatosMateria)+1+"&codigo=19766";
+        url = ip + getContext().getString(R.string.ipConsultarDatosMateria)+codigo+"&codigo="+credenciales;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
 

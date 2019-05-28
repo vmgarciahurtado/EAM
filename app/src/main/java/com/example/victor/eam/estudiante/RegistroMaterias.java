@@ -1,6 +1,7 @@
 package com.example.victor.eam.estudiante;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,6 +66,7 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
     ArrayList<MateriaVO> arrayMateria;
     ArrayList lista = new ArrayList();
     ArrayList agregarLista = new ArrayList();
+    String credenciales;
 
     public RegistroMaterias() {
         // Required empty public constructor
@@ -126,19 +129,21 @@ public class RegistroMaterias extends Fragment implements Response.Listener<JSON
                 registrarMateria();
             }
         });
+        SharedPreferences preferences = Objects.requireNonNull(this).getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        credenciales = preferences.getString("credenciales", "No existe el valor");
         cargarMaterias();
         return vista;
     }
 
     private void cargarMaterias() {
         String url;
-        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + "19766";
+        url = ip + getContext().getString(R.string.ipCargarMateriasEstudiante) + credenciales;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void registrarMateria() {
-        final String codigoEstudiante = "19766";
+        final String codigoEstudiante = credenciales;
         if (lista.size() > 0) {
             String url;
             url = ip + getContext().getString(R.string.ipRegistroMateriasEstudiante);

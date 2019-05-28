@@ -1,6 +1,7 @@
 package com.example.victor.eam.docente;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.opengl.EGLExt;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +59,7 @@ public class ConsultarHorario extends Fragment implements Response.Listener<JSON
     ListView lstHorarioDocente;
     String docente, ip;
     ArrayList lstHorario;
+    String credenciales;
 
     public ConsultarHorario() {
         // Required empty public constructor
@@ -98,7 +101,8 @@ public class ConsultarHorario extends Fragment implements Response.Listener<JSON
         request = Volley.newRequestQueue(getContext());
         spnDiaFiltrar = vista.findViewById(R.id.spnDiaHorarioDocente);
         lstHorarioDocente = vista.findViewById(R.id.lstHorarioDocente);
-        docente = "2";
+        SharedPreferences preferences = Objects.requireNonNull(this).getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        credenciales = preferences.getString("credenciales", "No existe el valor");
         configurarDia();
         return vista;
     }
@@ -124,7 +128,7 @@ public class ConsultarHorario extends Fragment implements Response.Listener<JSON
 
     private void cargarLista(String dia) {
         String url;
-        url = ip + getContext().getString(R.string.ipConsultarHorarioDocente) + docente + "&dia=" + dia;
+        url = ip + getContext().getString(R.string.ipConsultarHorarioDocente) + credenciales + "&dia=" + dia;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }

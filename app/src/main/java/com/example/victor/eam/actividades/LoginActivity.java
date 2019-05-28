@@ -1,6 +1,8 @@
 package com.example.victor.eam.actividades;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,29 +58,31 @@ public class LoginActivity extends AppCompatActivity {
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-
                     switch (response){
                         case "director":
                             Intent intent1 = new Intent(getApplicationContext(),PrincipalDirectorPrograma.class);
+                            guardaCredenciales(true,cedula);
                             startActivity(intent1);
                             finish();
                             break;//campos
 
                         case "estudiante":
                             Intent intent3 = new Intent(getApplicationContext(),PrincipalEstudiante.class);
+                            guardaCredenciales(true,cedula);
                             startActivity(intent3);
                             finish();
                             break;
 
                         case "registroycontrol":
                             Intent intent2 = new Intent(getApplicationContext(),PrincipalRegistroControl.class);
+                            guardaCredenciales(true,cedula);
                             startActivity(intent2);
                             finish();
                             break;
 
                         case "docente":
                             Intent intent4 = new Intent(getApplicationContext(),PrincipalDocente.class);
+                            guardaCredenciales(true,cedula);
                             startActivity(intent4);
                             finish();
                             break;
@@ -109,5 +113,12 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             Toast.makeText(getApplicationContext(), "¡¡ Existen campos vacios !!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void guardaCredenciales(boolean b, String cedula) {
+        SharedPreferences preferencesCedula = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        SharedPreferences.Editor user = preferencesCedula.edit();
+        user.putString("credenciales", cedula);
+        user.commit();
     }
 }

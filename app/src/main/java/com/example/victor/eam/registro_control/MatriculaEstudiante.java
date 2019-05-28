@@ -166,7 +166,7 @@ public class MatriculaEstudiante extends Fragment implements Response.Listener<J
 
     private void buscarEstudiante() {
         String url;
-        url = ip + getContext().getString(R.string.ipConsultaEstudiantePrograma)+"192584";
+        url = ip + getContext().getString(R.string.ipConsultaEstudiantePrograma)+campoCodigo.getText().toString();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
     }

@@ -2,6 +2,7 @@ package com.example.victor.eam.docente;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -70,9 +71,9 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
     ListView listaEstudiantes;
     private Dialog dialogoFallasNotas;
     AdapterEstudiantes adapterEstudiantes;
-
+    String credenciales;
     //Variables
-    String ip, corte, cursoid, docente;
+    String ip, corte, cursoid;
     int estudiante;
     ArrayList <EstudianteVO> arrayEstudiantes;
     ArrayList <CursoVO> cursoDocente;
@@ -121,9 +122,10 @@ public class RegistrarNotasFallas extends Fragment implements Response.Listener<
         request = Volley.newRequestQueue(getContext());
         dialogoFallasNotas = new Dialog(this.getContext());
         spinnerCurso = vista.findViewById(R.id.spinnerCurso);
-        docente = "2";
+        SharedPreferences preferences = Objects.requireNonNull(this).getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        credenciales = preferences.getString("credenciales", "No existe el valor");
         listaEstudiantes = vista.findViewById(R.id.lstEstudianteFN);
-        cargarSpinnerCurso(docente);
+        cargarSpinnerCurso(credenciales);
         return vista;
     }
 
