@@ -5,6 +5,7 @@
     <string name="ip">http://192.168.0.4/bd/</string>
 
     <!-- IP REPORTES -->
+    <string name="ipPaginaPrincipal">https://www.eam.edu.co/</string>
     <string name="ipReporteNotas">http://192.168.0.4/bd/reporteListadoNotasDocente.php?codigo=</string>
     <string name="ipReporteCursos">http://192.168.0.4/bd/reporteListadoCursosDocente.php?codigo=</string>
     <string name="ipReporteGanadores">http://192.168.0.4/bd/reportePorcentajeMortalidad.php</string>

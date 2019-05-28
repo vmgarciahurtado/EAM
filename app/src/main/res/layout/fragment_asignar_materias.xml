@@ -7,6 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="33dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -17,11 +18,15 @@
 
         <Spinner
             android:id="@+id/spnDocente"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/btnAsignar"
+            android:background="@drawable/background_boton"
+            android:textColor="#fff"
+            android:layout_marginTop="33dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Asignar" />

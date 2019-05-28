@@ -6,44 +6,44 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_send"
             android:title="Inicio" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_send"
             android:title="Registro de notas" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_send"
             android:title="Tomar listado" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_send"
             android:title="Consultar horario" />
         <item
             android:id="@+id/agregarAgenda"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_send"
             android:title="Agregar agenda" />
         <item
             android:id="@+id/reportes"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_send"
             android:title="Reportes" />
         <item
             android:id="@+id/registrarNotasFallas"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_send"
             android:title="Registrar seguimiento" />
         <item
             android:id="@+id/controlClase"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_send"
             android:title="Control de clase" />
 
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Otras opciones">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Cerrar sesion" />
             <item
                 android:id="@+id/nav_send"

@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="12dp"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo3"
     tools:context=".registro_control.contratoDocentes">
 
     <LinearLayout
@@ -14,7 +16,12 @@
             android:id="@+id/txtCodigoDocente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:layout_marginTop="33dp"
+            android:textColorHint="#fff"
+            android:backgroundTint="#fff"
             android:ems="10"
+
             android:hint="Cedula docente"
             android:inputType="number"
             android:text="" />
@@ -24,6 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:backgroundTint="#fff"
             android:hint="Duración contrato"
             android:inputType="number"
             android:text="" />
@@ -32,6 +42,9 @@
             android:id="@+id/btnRenovar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/background_boton"
             android:text="Guardar" />
     </LinearLayout>
 </FrameLayout>

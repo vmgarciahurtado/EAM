@@ -1,5 +1,6 @@
 package com.example.victor.eam.registro_control;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.actividades.LoginActivity;
 import com.example.victor.eam.entidades.VolleySingleton;
 
 import org.json.JSONArray;
@@ -52,7 +54,7 @@ public class RegistroDocentes extends Fragment implements Response.ErrorListener
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+        ProgressDialog pd;
     Spinner spinnerTipoDocente;
     EditText campoNombre,campoCedula;
     String ip,tipoDocente;
@@ -120,6 +122,11 @@ public class RegistroDocentes extends Fragment implements Response.ErrorListener
     }
 
     private void registrar() {
+
+        pd = new ProgressDialog(this.getActivity());
+        pd.setMessage("Cargando...");
+        pd.show();
+
         final String nombre = campoNombre.getText().toString();
         final String cedula = campoCedula.getText().toString();
 
@@ -129,6 +136,7 @@ public class RegistroDocentes extends Fragment implements Response.ErrorListener
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                pd.dismiss();
                 if (response.trim().equalsIgnoreCase("registra")) {
                 //    Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
                 } else {

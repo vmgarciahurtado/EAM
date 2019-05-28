@@ -69,9 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
                 android:background="@drawable/background_boton"
+                android:textColor="#fff"
                 android:onClick="ingresar"
                 android:text="Continuar"
-                android:textColor="#fff" />
+                 />
 
 
             <!--<Button

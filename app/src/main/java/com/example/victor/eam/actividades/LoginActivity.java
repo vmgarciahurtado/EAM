@@ -1,5 +1,6 @@
 package com.example.victor.eam.actividades;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     String ip;
     RequestQueue request;
     private StringRequest stringRequest;
-
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void ingresar(View view) {
+        pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Cargando...");
+        pd.show();
 
         final String codigo = campoCodigo.getText().toString();
         final String cedula = campoCedula.getText().toString();
@@ -58,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    pd.dismiss();
                     switch (response){
                         case "director":
                             Intent intent1 = new Intent(getApplicationContext(),PrincipalDirectorPrograma.class);

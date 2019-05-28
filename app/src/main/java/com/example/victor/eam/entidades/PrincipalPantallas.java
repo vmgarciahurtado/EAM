@@ -44,7 +44,6 @@ public class PrincipalPantallas extends Fragment {
     ////
     String ip;
     WebView webView;
-    Button btnDescargar;
     ///
     public PrincipalPantallas() {
         // Required empty public constructor
@@ -81,35 +80,12 @@ public class PrincipalPantallas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_principal_pantallas, container, false);
 
-        ip = getContext().getString(R.string.ip);
-        btnDescargar = vista.findViewById(R.id.btnDescargarPdf);
-        btnDescargar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                descargarPdf();
-            }
-        });
-
+        ip = getContext().getString(R.string.ipPaginaPrincipal);
         webView = vista.findViewById(R.id.webViewPrincipal);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(ip);
 
         return vista;
-    }
-
-    private void descargarPdf() {
-        webView.getSettings().setJavaScriptEnabled(true);
-        Uri uri = Uri.parse("http://192.168.0.8/eam/prueba.php");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
-        }
-        );
-
     }
 
 

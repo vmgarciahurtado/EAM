@@ -1,6 +1,7 @@
 package com.example.victor.eam.registro_control;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,6 +29,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.victor.eam.R;
+import com.example.victor.eam.actividades.LoginActivity;
 import com.example.victor.eam.entidades.MateriaVO;
 import com.example.victor.eam.entidades.VolleySingleton;
 
@@ -58,6 +60,7 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    ProgressDialog pd;
     Button btnRegistrar, btnSumarHoras, btnRestarHoras, btnSumarCreditos, btnRestarCreditos, btnActa, btnPrerrequisitos;
     TextView campoHoras, campoCreditos, campoNombre, campoCosto;
     Spinner spinnerEntorno;
@@ -207,11 +210,16 @@ public class CreacionMaterias extends Fragment implements Response.Listener<JSON
     }
 
     private void registrar() {
+        pd = new ProgressDialog(this.getActivity());
+        pd.setMessage("Cargando...");
+        pd.show();
+
         String url;
         url = ip + getContext().getString(R.string.ipRegistroMaterias);
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                pd.dismiss();
                 if (response.trim().equalsIgnoreCase("registra")) {
                     //Log.i("********RESULTADO", "Respuesta server" + response);
                     Toast.makeText(getContext(), "response: " + response, Toast.LENGTH_SHORT).show();
