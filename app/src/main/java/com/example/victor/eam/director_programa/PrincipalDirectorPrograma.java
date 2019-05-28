@@ -74,7 +74,10 @@ public class PrincipalDirectorPrograma extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.containerDirectorPrograma, miFragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
-            //Este es el fragmet que se carga de primero
+
+        } else if (id == R.id.reportes) {
+            Fragment miFragment = new Reportes();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerDirectorPrograma, miFragment).commit();
 
 
         } else if (id == R.id.nav_share) {

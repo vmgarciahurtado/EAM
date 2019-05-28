@@ -17,6 +17,11 @@
             android:icon="@drawable/ic_menu_send"
             android:title="Crear cursos" />
 
+        <item
+            android:id="@+id/reportes"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Reportes" />
+
     </group>
 
     <item android:title="Otras opciones">

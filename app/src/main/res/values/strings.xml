@@ -10,7 +10,7 @@
     <string name="ipReporteCursos">http://192.168.0.4/bd/reporteListadoCursosDocente.php?codigo=</string>
     <string name="ipReporteGanadores">http://192.168.0.4/bd/reportePorcentajeMortalidad.php</string>
 
-    <string name="ipReporteMortalidad">http://192.168.0.4/bd/</string>
+    <string name="ipReporteMortalidad">http://192.168.0.4/bd/reportePorcentajeMortalidad.php</string>
     <string name="ipReporteInacistencias">http://192.168.0.4/bd/</string>
 
     <!-- IP CONSULTAS-->
