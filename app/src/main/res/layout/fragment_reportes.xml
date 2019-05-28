@@ -2,9 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="22dp"
     android:layout_height="match_parent"
-    tools:context=".docente.ReportesDocentes">
+    tools:context=".director_programa.Reportes">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -15,11 +14,11 @@
 
         <Button
             android:layout_width="match_parent"
-            android:text="Listar cursos"
+            android:text="Reporte Mortalidad"
             android:background="@drawable/background_boton"
             android:textColor="#fff"
             android:layout_marginTop="135dp"
-            android:id="@+id/btnListarCursos"
+            android:id="@+id/btnMortalidad"
             android:layout_height="wrap_content"/>
 
         <Button
@@ -27,18 +26,10 @@
             android:background="@drawable/background_boton"
             android:textColor="#fff"
             android:layout_marginTop="12dp"
-            android:text="Listar cursos notas"
-            android:id="@+id/btnListarNotas"
+            android:text="Reporte Inacistencias"
+            android:id="@+id/btnInacistencias"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:text="perdedores ganadores"
-            android:layout_marginTop="12dp"
-            android:id="@+id/btnGanadores"
-            android:background="@drawable/background_boton"
-            android:textColor="#fff"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </FrameLayout>
